@@ -1,6 +1,6 @@
 const annotations = [
   {
-    tags: ['title-quote', 'foreshadowing'],
+    tags: ['foreshadowing'],
     text: `
 Beneath the moonlight glints a tiny fragment of silver, a fraction of a line...
 
