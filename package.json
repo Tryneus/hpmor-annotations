@@ -1,0 +1,25 @@
+{
+  "name": "hpmor-annotations",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tryneus/hpmor-annotations.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tryneus/hpmor-annotations/issues"
+  },
+  "homepage": "https://github.com/Tryneus/hpmor-annotations#readme",
+  "devDependencies": {
+    "website-scraper": "^4.0.0"
+  }
+}
