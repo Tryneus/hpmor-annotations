@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Tryneus/hpmor-annotations#readme",
   "devDependencies": {
+    "uglify-js": "^3.4.9",
     "website-scraper": "^4.0.0"
   }
 }
