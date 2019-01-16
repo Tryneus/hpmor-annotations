@@ -45,5 +45,14 @@ javascript:(function () {
 
   const windowLoadListener = window.addEventListener('load', () => console.log('window load'));
 
+  // Load the script that applies annotations
+  // TODO: make this work with local testing
+  const script = document.createElement('script');
+  script.src = 'https://tryneus.github.io/hpmor-annotations/dist/annotate.js';
+
+  script.addEventListener('load', () => {
+  });
+
   document.body.appendChild(frame);
+  document.body.appendChild(script);
 })();
