@@ -14,17 +14,26 @@ javascript:(function () {
   frame.style.border = 'none';
 
   const frameLoadListener = frame.addEventListener('load', () => {
-    console.log('frame load');
     // Rewrite links to open in this frame
     Array.from(frame.contentDocument.getElementsByTagName('a')).map((x) => {
       if (x.target === '_top') {
         x.target = '_self';
       }
     });
+
+    // Update the window title/url and get the chapter number for annotations
+    const href = frame.contentWindow.location.href;
+    window.history.replaceState({}, '', href);
+    document.title = frame.contentDocument.title;
+
+    const matches = href.match(/\/([0-9]+)$/)[0];
+    const chapter = matches && parseInt(matches[1]);
+    console.log('chapter', chapter);
+
+    // TODO: load the json object for annotations, apply them
   });
 
   const windowLoadListener = window.addEventListener('load', () => console.log('window load'));
 
   document.body.appendChild(frame);
-  console.log('frame', frame);
 })();
