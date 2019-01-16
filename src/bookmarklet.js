@@ -3,6 +3,14 @@ javascript:(function () {
   // page in an iframe, then apply the annotations to the iframe any time a new
   // chapter is loaded.
   // TODO: do we need to do some cleanup if the user navigates away from hpmor?
+
+  // Only do the thing if we're viewing an official HPMoR chapter
+  // TODO: allow local testing using cached chapters
+  if (window.location.hostname !== 'www.hpmor.com' || !window.location.pathname.match(/\/chapter\/[0-9]+/)) {
+    console.error('hpmor-annotations: Unrecognized site, aborting.');
+    return;
+  }
+
   while (document.body.children.length > 0) {
     document.body.removeChild(document.body.children[0]);
   }
@@ -30,6 +38,8 @@ javascript:(function () {
     const chapter = matches && parseInt(matches[1]);
     console.log('chapter', chapter);
 
+    const content = frame.contentDocument.getElementById('storycontent');
+    if (!content) { return; }
     // TODO: load the json object for annotations, apply them
   });
 

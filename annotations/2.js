@@ -1,4 +1,4 @@
-const annotations = [
+module.exports = [
   {
     tags: ['reference'],
     text: `
