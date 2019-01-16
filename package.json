@@ -7,7 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node script/genBookmarklet.js",
+    "cache": "node script/downloadChapters.js",
+    "clean": "rm -rf dist/* chapters"
   },
   "repository": {
     "type": "git",
