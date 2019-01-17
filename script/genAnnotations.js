@@ -6,7 +6,7 @@ const annotationDestDir = path.join(__dirname, '../dist/annotation');
 
 fs.mkdirSync(annotationDestDir, {recursive: true});
 
-const normalizeText = (text) => text.split('\n\n').map((y) => y.trim().replace(/[/r/n ]+/g, ' ')).filter((y) => y.length > 0);
+const normalizeText = (text) => text.split('\n\n').map((y) => y.trim().replace(/[\r\n ]+/g, ' ')).filter((y) => y.length > 0);
 const normalizeNote = (note) => note.trim().replace(/[\r\n ]+/g, ' ');
 
 // Load the annotations from the easy-to-edit JS file and output a JSON
