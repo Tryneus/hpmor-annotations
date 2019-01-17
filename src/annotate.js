@@ -1,5 +1,25 @@
-function annotate(frame, overlay, chapter) {
-  console.log('annotate', frame, overlay, chapter);
+function annotate() {
+  const frame = document.getElementById('hpmor-annotations-frame');
+  const overlay = document.getElementById('hpmor-annotations-overlay');
+
+  if (!frame) {
+    console.error('hpmor-annotations: Could not find iframe.');
+  } else {
+    const href = frame.contentWindow.location.href;
+    const matches = href.match(/\/([0-9]+)(\.html)?$/);
+    const chapter = matches && parseInt(matches[1]);
+    const content = frame.contentDocument.getElementById('storycontent');
+
+    if (!overlay) {
+      console.error('hpmor-annotations: Could not find overlay.');
+    } else if (!chapter) {
+      console.error('hpmor-annotations: Could not determine chapter.', href);
+    } else if (!content) {
+      console.error('hpmor-annotations: Could not find story content.');
+    } else {
+      console.log('annotate', frame, overlay, chapter);
+    }
+  }
 }
 
 // Dev function for ease-of-use
@@ -16,7 +36,7 @@ function reload_script() {
   } else {
     const oldScript = scripts[0];
     const newScript = document.createElement('script');
-    newScript.src = oldScript.src;
+    newScript.src = oldScript.src.replace('dist', 'src');
 
     oldScript.parentNode.removeChild(oldScript);
     document.body.appendChild(newScript);

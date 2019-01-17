@@ -17,11 +17,17 @@ javascript:(function () {
     return;
   }
 
+  if (document.getElementById('hpmor-annotations-frame') || document.getElementById('hpmor-annotations-overlay')) {
+    console.error('hpmor-annotations: Bookmarklet already applied, aborting.');
+    return;
+  }
+
   while (document.body.children.length > 0) {
     document.body.removeChild(document.body.children[0]);
   }
 
   const frame = document.createElement('iframe');
+  frame.id = 'hpmor-annotations-frame';
   frame.src = window.location.href;
   frame.style.width = '100vw';
   frame.style.height = '100vh';
@@ -32,13 +38,16 @@ javascript:(function () {
   script.src = is_local ? '../dist/annotate.js' : 'https://tryneus.github.io/hpmor-annotations/dist/annotate.js';
 
   const overlay = document.createElement('div');
-  overlay.style.position = 'absolute';
-  overlay.style.left = '0';
-  overlay.style.top = '0';
-  overlay.style.width = '100vw';
-  overlay.style.height = '100vh';
-  overlay.style.border = 'none';
-  overlay.style['pointer-events'] = 'none';
+  overlay.id = 'hpmor-annotations-overlay';
+  overlay.style = {
+    position: 'absolute',
+    left: '0',
+    top: '0',
+    width: '100vw',
+    height: '100vh',
+    border: 'none',
+    'pointer-events': 'none',
+  };
 
   const frameLoadListener = frame.addEventListener('load', () => {
     // Rewrite links to open in this frame
@@ -52,20 +61,13 @@ javascript:(function () {
     frame.contentDocument.getElementById('nav-form-top').target = '_self';
 
     // Update the window title/url and get the chapter number for annotations
-    const href = frame.contentWindow.location.href;
-    window.history.replaceState({}, '', href);
+    window.history.replaceState({}, '', frame.contentWindow.location.href);
     document.title = frame.contentDocument.title;
 
-    const matches = href.match(/\/([0-9]+)$/);
-    const chapter = matches && parseInt(matches[1]);
-
-    const content = frame.contentDocument.getElementById('storycontent');
-    if (!content) {
-      console.error('hpmor-annotations: Could not find story content.');
-    } else if (annotate) {
-      annotate(frame, overlay, chapter);
+    if (annotate) {
+      annotate();
     } else {
-      script.onload = () => annotate(frame, overlay, chapter);
+      script.onload = () => annotate();
     }
   });
 
