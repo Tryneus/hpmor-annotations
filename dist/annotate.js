@@ -1,3 +1,1 @@
-function annotate(chapter) {
-  console.log(`annotate ${chapter}`);
-}
+function annotate(e,t,r){console.log('annotate',e,t,r)}function reload_script(){let e=Array.from(document.getElementsByTagName('script')).filter(e=>Boolean(e.src.match(/\/annotate.js$/)));if(e.length===0)console.error('Could not find script to reload.');else if(e.length>1)console.error('Found too many matching script elements.',e);else{let t=e[0],r=document.createElement('script');r.src=t.src;t.parentNode.removeChild(t);document.body.appendChild(r)}}

@@ -4,7 +4,7 @@ module.exports = [
     text: `
 If J. K. Rowling asks you about this story, you know nothing.
     `,
-    annotation: `
+    note: `
 This doesn't appear to be a well-known reference.  It's either
 obscure, or a reference to the shaky legal status of fanfiction.
     `,
@@ -15,7 +15,7 @@ obscure, or a reference to the shaky legal status of fanfiction.
     text: `
 "But then the question is - who?"
     `,
-    annotation: `
+    note: `
 This is *not* a flash-forward like the others.  This quote appears in
 the third paragraph of the chapter: "Am I - could I be - maybe - you
 never know - if I'm not - but then the question is - who?".  In the
@@ -33,7 +33,7 @@ forehead. "And that I shouldn't ought to shake his hand." Like meeting
 someone who had been a friend, once, before something went drastically
 wrong... that wasn't really it at all, but Harry couldn't find words.
     `,
-    annotation: `
+    note: `
 More hints about Harry's **mysterious dark side**, and the first minor
 occurance of the **sense of doom** surrounding Professor Quirrell.
     `,
@@ -44,7 +44,7 @@ occurance of the **sense of doom** surrounding Professor Quirrell.
     text: `
 Bounce Boots ("Made with real Flubber!")
     `,
-    annotation: `
+    note: `
 A reference to The Absent-Minded Professor, where the professor
 discovers a humorous substance known as "Flubber" which has various
 bouncing-related properties.
@@ -56,7 +56,7 @@ bouncing-related properties.
     text: `
 "Knives +3! Forks +2! Spoons with a +4 bonus!"
     `,
-    annotation: `
+    note: `
 Dungeons and Dragons reference.
     `,
   },
@@ -66,7 +66,7 @@ Dungeons and Dragons reference.
     text: `
 There were goggles that would turn anything you looked at green
     `,
-    annotation: `
+    note: `
 Possibly a reference to the Wizard of Oz, where everyone entering the
 Emerald City is made to wear green-tinted glasses in order to make the
 city appear green.
@@ -80,7 +80,7 @@ Harry desperately didn't want to miss a single item for sale, in case
 it was one of the three you needed to complete the cycle of infinite
 wish spells.
     `,
-    annotation: `
+    note: `
 Apparently the author did not have a particular set of three items in
 mind.  The most common infinite wish hack in modern times uses a
 single candle of invocation, but infinite wishes can be achieved with
@@ -98,7 +98,7 @@ yielding flesh. A chill swept over Harry even as he pronounced the
 word, and he resolved then and there to use safer terms like
 You-Know-Who.
     `,
-    annotation: `
+    note: `
 It is unclear whether this is a magical property of the name or
 related to Harry's **mysterious dark side**.
     `,
@@ -109,7 +109,7 @@ related to Harry's **mysterious dark side**.
     text: `
 The bystander effect
     `,
-    annotation: `
+    note: `
 See https://en.wikipedia.org/wiki/Bystander_effect .
     `,
   },
@@ -122,7 +122,7 @@ confusion, a sense of something wrong about that story; and it should
 have been a part of Harry's art to notice that tiny note, but he was
 distracted.
     `,
-    annotation: `
+    note: `
 Several things are obviously wrong with this story.  If it was just
 Voldemort and the Potters in the home, how does anyone know that
 happened?  See **the real story behind the scar**.

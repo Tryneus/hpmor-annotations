@@ -8,7 +8,7 @@ Beneath the moonlight glints a tiny fragment of silver, a fraction of a line...
 
 ...blood spills out in litres, and someone screams a word.
     `,
-    annotation: `
+    note: `
 Flash-forward to when Harry kills the death eaters (114/'(Black robes,
 falling.)').  The fragment of silver/fraction of a line is the
 transfigured spider silk, the black robes falling are the death
@@ -21,7 +21,7 @@ eaters, and the word is Harry screaming "STUPORFY".
     text: `
 "Listen. Michael. I wasn't - always like this -"
     `,
-    annotation: `
+    note: `
 This is one of the major points of departure from the original series.
 Petunia married an Oxford professor instead of Vernon Dursley because
 she was more attractive, which is why Harry was raised in an
@@ -37,7 +37,7 @@ like the world would end if she were nice to her sister, or a centaur
 told her not to - the most ridiculous things, and I hated her for
 it."
     `,
-    annotation: `
+    note: `
 A centaur calls him "Son of Lily" (101/'All I can say, son of Lily'),
 and then tries to kill him, after asking whether the Muggles say that
 soon the skies will be empty (a reference to the **second prophecy**
@@ -59,7 +59,7 @@ to me," her voice broke, "and after that I couldn't hate my sister any
 more, especially when I learned what her magic brought her in the end
 -"
     `,
-    annotation: `
+    note: `
 Dumbledore gave the recipe for this potion to Lily (17/'You'd get sick
 for weeks and maybe die') (119/'I wrote a strange hint in your
 mother's Potions textbook, having no idea why I must; and this proved
@@ -75,7 +75,7 @@ Petunia Evans's heartfelt love.') as part of his
 Harry had been sent to the best primary schools - and when that didn't
 work out...
     `,
-    annotation: `
+    note: `
 This didn't work out because of Harry's **mysterious dark side**, and
 also because of the potion Dumbledore secretly gave to Harry that
 messes with his sleep schedule as part of his **prophecy-threading**
@@ -94,7 +94,7 @@ requires, and it is all wrong, because the only rule in science is
 that the final arbiter is observation - that you just have to look at
 the world and report what you see.
     `,
-    annotation: `
+    note: `
 See http://www.feynmanlectures.caltech.edu/I_02.html#Ch2-S3-p3 .
     `,
   },
@@ -106,7 +106,7 @@ Except that some part of Harry was utterly convinced that magic was
 real, and had been since the instant he saw the putative letter from
 the Hogwarts School of Witchcraft and Wizardry.
     `,
-    annotation: `
+    note: `
 This "part of Harry" is likely his **mysterious dark side**.
     `,
   },
@@ -116,7 +116,7 @@ This "part of Harry" is likely his **mysterious dark side**.
     text: `
 Don't believe everything you think, one of his books had said.
     `,
-    annotation: `
+    note: `
 This is probably "Don't Believe Everything You Think: The 6 Basic
 Mistakes We Make in Thinking".
     `,
@@ -127,7 +127,7 @@ Mistakes We Make in Thinking".
     text: `
 Mrs. Figg
     `,
-    annotation: `
+    note: `
 In the original, Mrs. Figg is the witch that the Order of the Phoenix
 sent to keep an eye on Harry.
     `,

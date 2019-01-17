@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "build": "node script/genBookmarklet.js",
+    "build": "node script/genCode.js && node script/genAnnotations.js",
     "cache": "node script/downloadChapters.js",
     "clean": "rm -rf dist/* chapters"
   },

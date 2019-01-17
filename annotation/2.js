@@ -4,7 +4,7 @@ module.exports = [
     text: `
 #include "stddisclaimer.h"
     `,
-    annotation: `
+    note: `
 This is the code you would write in the C programming language to
 include the standard disclaimer.
     `,
@@ -16,7 +16,7 @@ include the standard disclaimer.
 "Of course it was my fault. There's no one else here who could be
 responsible for anything."
     `,
-    annotation: `
+    note: `
 Flash-forward to when Harry is blaming himself for Hermione's death
 (90/'Of course it's my fault.').
     `,
@@ -28,7 +28,7 @@ Flash-forward to when Harry is blaming himself for Hermione's death
 Harry ruffled a hand through his own hair. Maybe it was just that
 strange part of him which had already been convinced
     `,
-    annotation: `
+    note: `
 This "part of Harry" is likely his **mysterious dark side**.
     `,
   },
@@ -39,7 +39,7 @@ This "part of Harry" is likely his **mysterious dark side**.
 discovering that the music of the planets was the same tune as a
 falling apple
     `,
-    annotation: `
+    note: `
 A reference to the story of Isaac Newton discovering gravity when an
 apple fell on his head.
     `,
@@ -56,7 +56,7 @@ the next day I go to sleep two hours later than that. 10PM, 12AM, 2AM,
 it makes no difference and I'm a wreck that whole day. That's why I
 haven't been going to a normal school up until now."
     `,
-    annotation: `
+    note: `
 Dumbledore caused this condition by secretly giving Harry the potion
 meant for students using Time-Turners (119/'I snuck invisibly into
 your bedroom in Oxford and administered the potion that is given to
@@ -71,7 +71,7 @@ project.
 '"Oh," said Harry's father, eyes bright, "is that why you bit a maths
 teacher in third year."'
     `,
-    annotation: `
+    note: `
 A reference to Harry's **mysterious dark side**.
     `,
   },
@@ -81,7 +81,7 @@ A reference to Harry's **mysterious dark side**.
     text: `
 "No, I'm sure this won't be a problem - I'll find a solution in time.
     `,
-    annotation: `
+    note: `
 The solution is, in fact, a Time-Turner.
     `,
   },
