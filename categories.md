@@ -7,6 +7,7 @@ Categories of annotation tags:
 * original - an explanation of how a character or situation unfolded in the original that happens differently in HPMoR
 * speculation - an annotation that does not have enough evidence to support it, but may be of interest
 * background - extra information about something in the HPMoR universe (and not the original) which is not explained during the story
+* spoiler - the annotation contains spoilers (implied for foreshadowing/consequence?)
 
 
 TODO:

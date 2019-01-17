@@ -47,16 +47,26 @@ function parse_annotations(raw) {
   }
 }
 
-function apply_annotations(content, overlay, annotations) {
-  const paras = Array.from(content.getElementsByTagName('p'));
-  annotations.map((annotation, j) => {
-    const matches = annotation.text.map((text, i) => {
-      if (i === 0 || i === annotation.text.length - 1) {
-        return paras.filter((p) => p.innerText.includes(text));
+function find_matches(lines, paragraphs) {
+  return lines.map((text, i) => {
+    if (lines.length > 1) {
+      if (i === 0) {
+        return paragraphs.filter((p) => p.innerText.endsWith(text));
+      } else if (i === lines.length - 1) {
+        return paragraphs.filter((p) => p.innerText.startsWith(text));
       } else {
-        return paras.filter((p) => p.innerText === text);
+        return paragraphs.filter((p) => p.innerText === text);
       }
-    });
+    } else {
+      return paragraphs.filter((p) => p.innerText.includes(text));
+    }
+  });
+}
+
+function apply_annotations(content, overlay, annotations) {
+  const paragraphs = Array.from(content.getElementsByTagName('p'));
+  annotations.map((annotation, j) => {
+    const matches = find_matches(annotation.text, paragraphs);
     console.log(`annotation ${j}:`, matches.map((x, i) => [annotation.text[i], x]));
   });
 }
@@ -80,4 +90,16 @@ function reload_script() {
     oldScript.parentNode.removeChild(oldScript);
     document.body.appendChild(newScript);
   }
+}
+
+// Export everything for unit tests
+if (module && module.exports) {
+  module.exports = {
+    annotate,
+    fetch_annotations,
+    parse_annotations,
+    find_matches,
+    apply_annotations,
+    reload_script,
+  };
 }

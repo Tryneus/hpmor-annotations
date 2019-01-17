@@ -9,6 +9,7 @@
   "scripts": {
     "build": "node script/genCode.js && node script/genAnnotations.js",
     "cache": "node script/downloadChapters.js",
+    "test": "npm run build; ./node_modules/mocha/bin/mocha test",
     "clean": "rm -rf dist/* chapters"
   },
   "repository": {
@@ -23,6 +24,9 @@
   "homepage": "https://github.com/Tryneus/hpmor-annotations#readme",
   "devDependencies": {
     "butternut": "^0.4.6",
+    "jsdom": "^13.1.0",
+    "mocha": "^5.2.0",
     "website-scraper": "^4.0.0"
-  }
+  },
+  "dependencies": {}
 }
