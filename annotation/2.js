@@ -68,8 +68,8 @@ project.
   {
     tags: ['foreshadowing'],
     text: `
-'"Oh," said Harry's father, eyes bright, "is that why you bit a maths
-teacher in third year."'
+"Oh," said Harry's father, eyes bright, "is that why you bit a maths
+teacher in third year."
     `,
     note: `
 A reference to Harry's **mysterious dark side**.

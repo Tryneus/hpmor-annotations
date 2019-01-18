@@ -21,10 +21,11 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
     // Perform some normalization here because why not
     const annotations = require(sourceFile);
 
-    const normalizedAnnotations = annotations.map((x) => ({
+    const normalizedAnnotations = annotations.map((x, i) => ({
       ...x,
       text: normalizeText(x.text),
       note: normalizeNote(x.note),
+      id: `hpmor-${chapter}-${i}`,
     }));
 
     fs.writeFileSync(outputFile, JSON.stringify(normalizedAnnotations));

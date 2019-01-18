@@ -32,10 +32,10 @@ intellectually stimulating environment.
   {
     tags: ['foreshadowing'],
     text: `
-"And Lily would tell me no, and make up the most ridiculous excuses,
+And Lily would tell me no, and make up the most ridiculous excuses,
 like the world would end if she were nice to her sister, or a centaur
 told her not to - the most ridiculous things, and I hated her for
-it."
+it.
     `,
     note: `
 A centaur calls him "Son of Lily" (101/'All I can say, son of Lily'),
@@ -73,7 +73,7 @@ Petunia Evans's heartfelt love.') as part of his
     tags: ['foreshadowing'],
     text: `
 Harry had been sent to the best primary schools - and when that didn't
-work out...
+work out
     `,
     note: `
 This didn't work out because of Harry's **mysterious dark side**, and
@@ -131,5 +131,9 @@ Mrs. Figg
 In the original, Mrs. Figg is the witch that the Order of the Phoenix
 sent to keep an eye on Harry.
     `,
+    disambiguation: {
+      expect: 2,
+      useIndex: 0,
+    },
   },
 ];

@@ -28,52 +28,71 @@ const validTags = [
   'spoiler',
 ];
 
-const annotationsSchema = {
+const schema = {
   type: 'array',
+  required: true,
   items: {
     type: 'object',
+    required: true,
     properties: {
-      tags: {type: 'array', items: {type: 'string', enum: validTags}},
-      text: {type: 'array', items: {type: 'string'}},
-      note: {type: 'string'},
+      id: {type: 'string', required: true},
+      tags: {type: 'array', required: true, items: {type: 'string', enum: validTags}},
+      text: {type: 'array', required: true, items: {type: 'string'}},
+      note: {type: 'string', required: true},
+      disambiguation: {
+        type: 'object',
+        required: false,
+        properties: {
+          expect: {type: 'number', required: true},
+          useIndex: {type: 'number', required: true},
+        },
+        additionalProperties: false,
+      },
     },
     additionalProperties: false,
   },
 };
 
-describe('annotations', () => {
-  const annotationValidator = new jsonschema.Validator();
+const parseChapterNumber = (path) => path.match(/\/([0-9]+)\.[A-z]+$/)[1];
 
-  annotationFiles.forEach((filepath) => {
-    const chapter = filepath.match(/\/([0-9]+)\.json$/)[1];
-    const annotations = JSON.parse(fs.readFileSync(filepath, 'utf8'));
-    const html = fs.readFileSync(path.join(chapterDir, `${chapter}.html`), 'utf8');
+describe('annotations', () => {
+  const validator = new jsonschema.Validator();
+
+  const chapters = annotationFiles.map((filepath) => {
+    const html = fs.readFileSync(path.join(chapterDir, `${parseChapterNumber(filepath)}.html`), 'utf8');
     const dom = new jsdom(html);
     const content = dom.window.document.getElementById('storycontent');
     const paragraphs = Array.from(content.getElementsByTagName('p'));
 
     // jsdom doesn't provide inner text, do some mangling that hopefully
     // doesn't make this test worthless
-    paragraphs.forEach((p) => (p.innerText = p.textContent.replace(/ ?\r?\n ?/, ' ')));
+    paragraphs.forEach((p) => (p.innerText = p.textContent.replace(/ ?\r?\n ?/g, ' ')));
+    return paragraphs;
+  });
 
-    describe(`Chapter ${chapter}`, () => {
+  annotationFiles.forEach((filepath, i) => {
+    describe(`Chapter ${parseChapterNumber(filepath)}`, () => {
+      const annotations = JSON.parse(fs.readFileSync(filepath, 'utf8'));
+
       it('annotations match schema', () => {
-        const result = annotationValidator.validate(annotations, annotationsSchema);
-        assert.strictEqual(result.errors.length, 0,
-          `Schema validation failed:\n${result.errors.map((x) => x.stack).join('\n')}`);
+        const result = validator.validate(annotations, schema);
+        assert(
+          result.errors.length == 0,
+          `Schema validation failed:\n${result.errors.map((x) => x.stack).join('\n')}`,
+        );
       });
 
       annotations.forEach((a, annotationNumber) => {
         describe(`Annotation ${annotationNumber}`, () => {
           it('text uniquely matches lines', () => {
-            const matches = find_matches(a.text, paragraphs);
-            matches.forEach((x, fragmentNumber) => {
-              assert.strictEqual(x.length, 1, `Fragment ${fragmentNumber} matches ${x.length} lines.`);
-            });
+            assert(
+              find_matches(a, chapters[i]) !== null,
+              `Could not find matches.`,
+            );
           });
 
-          it('links resolve', () => {
-            // TODO: gotta have the other pages loaded
+          // TODO: only generate this test if the note links to a chapter
+          it('links uniquely resolve', () => {
           });
         });
       });

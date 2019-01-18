@@ -47,26 +47,66 @@ function parse_annotations(raw) {
   }
 }
 
-function find_matches(lines, paragraphs) {
-  return lines.map((text, i) => {
-    if (lines.length > 1) {
+function find_matches(annotation, paragraphs) {
+  const {id, text, disambiguation} = annotation;
+
+  // For each line that we're looking for, find the matching paragraphs
+  const indices = Array.from(Array(paragraphs.length).keys());
+  const matches = text.map((line, i) => {
+    if (text.length > 1) {
       if (i === 0) {
-        return paragraphs.filter((p) => p.innerText.endsWith(text));
-      } else if (i === lines.length - 1) {
-        return paragraphs.filter((p) => p.innerText.startsWith(text));
+        return indices.filter((x) => paragraphs[x].innerText.endsWith(line));
+      } else if (i === text.length - 1) {
+        return indices.filter((x) => paragraphs[x].innerText.startsWith(line));
       } else {
-        return paragraphs.filter((p) => p.innerText === text);
+        return indices.filter((x) => paragraphs[x].innerText === line);
       }
     } else {
-      return paragraphs.filter((p) => p.innerText.includes(text));
+      return indices.filter((x) => paragraphs[x].innerText.includes(line));
     }
   });
+
+  if (matches[0].length === 0) {
+    console.error(`hpmor-annotations: Could not find text for annotation ${id}.`);
+    return null;
+  }
+
+  // For each match that we found, find any sets of in-order paragraphs
+  const startIndices = matches[0].filter((startIndex) => {
+    for (let i = 1; i < matches.length; ++i) {
+      if (!matches[i].includes(startIndex + i)) {
+        return false;
+      }
+    }
+    return true;
+  });
+
+  // Disambiguate from the configuration on the annotation, if provided
+  if (startIndices.length === 0) {
+    console.error(`hpmor-annotations: Could not find text for annotation ${id}.`);
+    return null;
+  } else if (disambiguation) {
+    if (startIndices.length === disambiguation.expect) {
+      return startIndices[disambiguation.useIndex];
+    } else {
+      console.error(`hpmor-annotations: Unexpected number of matches for annotation ${id}.` +
+        ` Found ${startIndices.length}, expected ${disambiguation.expect}.`);
+      return null;
+    }
+  } else if (startIndices.length === 1) {
+    // The text uniquely matched the text in one spot, return the index of the starting paragraph
+    return startIndices[0];
+  } else {
+    console.error(`hpmor-annotations: Found multiple matches for annotation ${id}.` +
+      ` Matching paragraph indices: ${startIndices.join(', ')}.`);
+    return null;
+  }
 }
 
 function apply_annotations(content, overlay, annotations) {
   const paragraphs = Array.from(content.getElementsByTagName('p'));
   annotations.map((annotation, j) => {
-    const matches = find_matches(annotation.text, paragraphs);
+    const matches = find_matches(annotation, paragraphs);
     console.log(`annotation ${j}:`, matches.map((x, i) => [annotation.text[i], x]));
   });
 }
