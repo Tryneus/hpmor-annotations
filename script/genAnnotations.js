@@ -22,7 +22,7 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
     const annotations = require(sourceFile);
 
     const normalizedAnnotations = annotations.map((x) => ({
-      tags: x.tags,
+      ...x,
       text: normalizeText(x.text),
       note: normalizeNote(x.note),
     }));

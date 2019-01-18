@@ -4,15 +4,47 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 const jsdom = require('jsdom').JSDOM;
+const jsonschema = require('jsonschema');
 
 const {find_matches} = require('../src/annotate');
 
 const chapterDir = path.join(__dirname, '../chapter/');
 const annotationDir = path.join(__dirname, '../dist/annotation/');
-const annotationFiles = fs.readdirSync(annotationDir).filter((x) => Boolean(x.match(/^[0-9]+\.json$/))).map((x) => path.join(annotationDir, x));
+
+const annotationFiles =
+  fs.readdirSync(annotationDir)
+    .filter((x) => Boolean(x.match(/^[0-9]+\.json$/)))
+    .map((x) => path.join(annotationDir, x));
+
+// TODO: put valid tags into actual code somewhere
+const validTags = [
+  'foreshadowing',
+  'consequence',
+  'reference',
+  'departure',
+  'original',
+  'speculation',
+  'background',
+  'spoiler',
+];
+
+const annotationsSchema = {
+  type: 'array',
+  items: {
+    type: 'object',
+    properties: {
+      tags: {type: 'array', items: {type: 'string', enum: validTags}},
+      text: {type: 'array', items: {type: 'string'}},
+      note: {type: 'string'},
+    },
+    additionalProperties: false,
+  },
+};
 
 describe('annotations', () => {
-  annotationFiles.map((filepath) => {
+  const annotationValidator = new jsonschema.Validator();
+
+  annotationFiles.forEach((filepath) => {
     const chapter = filepath.match(/\/([0-9]+)\.json$/)[1];
     const annotations = JSON.parse(fs.readFileSync(filepath, 'utf8'));
     const html = fs.readFileSync(path.join(chapterDir, `${chapter}.html`), 'utf8');
@@ -22,35 +54,22 @@ describe('annotations', () => {
 
     // jsdom doesn't provide inner text, do some mangling that hopefully
     // doesn't make this test worthless
-    paragraphs.map((p) => (p.innerText = p.textContent.replace(/ ?\r?\n ?/, ' ')));
+    paragraphs.forEach((p) => (p.innerText = p.textContent.replace(/ ?\r?\n ?/, ' ')));
 
     describe(`Chapter ${chapter}`, () => {
+      it('annotations match schema', () => {
+        const result = annotationValidator.validate(annotations, annotationsSchema);
+        assert.strictEqual(result.errors.length, 0,
+          `Schema validation failed:\n${result.errors.map((x) => x.stack).join('\n')}`);
+      });
 
-      annotations.map((a, annotationNumber) => {
+      annotations.forEach((a, annotationNumber) => {
         describe(`Annotation ${annotationNumber}`, () => {
           it('text uniquely matches lines', () => {
             const matches = find_matches(a.text, paragraphs);
-            matches.map((x, fragmentNumber) => {
+            matches.forEach((x, fragmentNumber) => {
               assert.strictEqual(x.length, 1, `Fragment ${fragmentNumber} matches ${x.length} lines.`);
             });
-          });
-
-          it('tags are valid', () => {
-            // TODO: put valid tags into actual code somewhere
-            const validTags = [
-              'foreshadowing',
-              'consequence',
-              'reference',
-              'departure',
-              'original',
-              'speculation',
-              'background',
-              'spoiler',
-            ];
-
-            assert.notStrictEqual(a.tags.length, 0, 'Annotation has no tags.');
-            const invalidTags = a.tags.filter((tag) => !validTags.includes(tag));
-            assert.strictEqual(invalidTags.length, 0, `Invalid tags: ${invalidTags.join(', ')}`);
           });
 
           it('links resolve', () => {
