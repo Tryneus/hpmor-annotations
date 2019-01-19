@@ -18,10 +18,25 @@ function annotate() {
       console.error('hpmor-annotations: Could not find story content.');
     } else {
       fetchAnnotations(chapter, (annotations) => {
-        annotations.forEach((annotation) => insertAnnotation(annotation, content));
+        // Normalize the HTML so we can find and replace
+        innerHTML = content.innerHTML.replace(/[\n ]+/g, ' ');
+        Object.values(annotations).forEach((annotation) => {
+          innerHTML = innerHTML.replace(annotation.text, annotation.replacement);
+        });
+        content.innerHTML = innerHTML;
+        clearNotes(content);
+        addNotes(content, annotations);
       });
     }
   }
+}
+
+function getAnnotationSpans(content) {
+  return Array.from(content.getElementsByTagName('span'))
+    .filter((span) =>
+      span.attributes.annotation &&
+        span.attributes.annotation.value.match(/^hpmor-[0-9]+-[0-9]+$/)
+    );
 }
 
 function fetchAnnotations(chapter, callback) {
@@ -49,8 +64,33 @@ function parseAnnotations(raw) {
   }
 }
 
-function insertAnnotation(annotation, content) {
-  content.innerHTML = content.innerHTML.replace(annotation.text, annotation.replacement);
+function clearNotes(content) {
+  // TODO: remove spans?
+}
+
+function addNotes(content, annotations) {
+  const colors = {
+    'foreshadowing': '#888',
+    'consequence': '#f6f',
+    'reference': '#66f',
+    'departure': '#f90',
+    'original': '#6f0',
+    'speculation': '#e0f',
+    'background': '#30f',
+    'spoiler': '#f00',
+  };
+
+  getAnnotationSpans(content).forEach((span) => {
+    const id = span.attributes.annotation.value;
+    const annotation = annotations[id];
+
+    if (!annotation) {
+      console.error('hpmor-annotations: Could not find annotation', id);
+    } else {
+      const color = colors[annotation.tags[0]];
+      span.style['text-decoration'] = `dotted ${color} underline`;
+    }
+  });
 }
 
 // Dev function for ease-of-use
@@ -80,7 +120,7 @@ if (typeof module !== 'undefined' && module.exports) {
     annotate,
     fetchAnnotations,
     parseAnnotations,
-    insertAnnotation,
+    addNotes,
     reloadScript,
   };
 }

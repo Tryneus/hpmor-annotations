@@ -38,7 +38,7 @@ const schema = {
     additionalProperties: false,
     properties: {
       id: {type: 'string'},
-      tags: {type: 'array', items: {type: 'string', enum: validTags}},
+      tags: {type: 'array', items: {type: 'string', enum: validTags}, minItems: 1},
       text: {type: 'string'},
       replacement: {type: 'string'},
       note: {type: 'string'},

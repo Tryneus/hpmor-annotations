@@ -24,6 +24,9 @@ const generateReplacement = (text, id) => {
   return start + text.replace(/<\/p> <p>/g, end + '</p> <p>' + start) + end;
 };
 
+const orderTags = (annotations) => {
+};
+
 // Load the annotations from the easy-to-edit JS file and output a JSON file for
 // consumption
 fs.readdir(annotationSourceDir, (err, filelist) => {
@@ -38,11 +41,12 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
 
     const normalizedAnnotations = annotations.map((x, i) => {
       const id = `hpmor-${chapter}-${i}`;
+      const tags = orderTags(x.tags);
       const text = normalizeText(x.text);
       const note = normalizeNote(x.note);
       const replacement = generateReplacement(text, id);
       const disambiguation = {expect: 1, useIndex: 0}; // default, may be overridden by x
-      return {disambiguation, ...x, id, text, replacement, note};
+      return {disambiguation, ...x, id, tags, text, replacement, note};
     });
 
     fs.writeFileSync(outputFile, JSON.stringify(_.keyBy(normalizedAnnotations, 'id')));
