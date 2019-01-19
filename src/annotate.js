@@ -65,7 +65,11 @@ function parseAnnotations(raw) {
 }
 
 function clearNotes(content) {
-  // TODO: remove spans?
+  getAnnotationSpans(content).forEach((span) => {
+    span.outerHTML = span.innerHTML;
+  });
+
+  // TODO: deal with hidden note elements
 }
 
 function addNotes(content, annotations) {
@@ -86,10 +90,11 @@ function addNotes(content, annotations) {
 
     if (!annotation) {
       console.error('hpmor-annotations: Could not find annotation', id);
-    } else {
-      const color = colors[annotation.tags[0]];
-      span.style['text-decoration'] = `dotted ${color} underline`;
+      return;
     }
+
+    const color = colors[annotation.tags[0]];
+    span.style['text-decoration'] = `dotted ${color} underline`;
   });
 }
 
