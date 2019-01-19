@@ -18,13 +18,15 @@ function annotate() {
       console.error('hpmor-annotations: Could not find story content.');
     } else {
       fetchAnnotations(chapter, (annotations) => {
+        clearNotes(content);
+
         // Normalize the HTML so we can find and replace
         innerHTML = content.innerHTML.replace(/[\n ]+/g, ' ');
         Object.values(annotations).forEach((annotation) => {
           innerHTML = innerHTML.replace(annotation.text, annotation.replacement);
         });
         content.innerHTML = innerHTML;
-        clearNotes(content);
+
         addNotes(content, annotations);
       });
     }
@@ -37,6 +39,11 @@ function getAnnotationSpans(content) {
       span.attributes.annotation &&
         span.attributes.annotation.value.match(/^hpmor-[0-9]+-[0-9]+$/)
     );
+}
+
+function getNoteDivs(content) {
+  return Array.from(content.getElementsByTagName('div'))
+    .filter((div) => div.id.match(/^hpmor-[0-9]+-[0-9]+-note$/));
 }
 
 function fetchAnnotations(chapter, callback) {
@@ -69,7 +76,9 @@ function clearNotes(content) {
     span.outerHTML = span.innerHTML;
   });
 
-  // TODO: deal with hidden note elements
+  getNoteDivs(content).forEach((div) => {
+    div.parentNode.removeChild(div);
+  });
 }
 
 function addNotes(content, annotations) {
@@ -84,17 +93,39 @@ function addNotes(content, annotations) {
     'spoiler': '#f00',
   };
 
-  getAnnotationSpans(content).forEach((span) => {
+  const items = getAnnotationSpans(content).map((span) => {
     const id = span.attributes.annotation.value;
     const annotation = annotations[id];
 
     if (!annotation) {
       console.error('hpmor-annotations: Could not find annotation', id);
-      return;
+      return null;
     }
 
     const color = colors[annotation.tags[0]];
     span.style['text-decoration'] = `dotted ${color} underline`;
+
+    return {annotation, span};
+  });
+
+  // Group spans by annotation id
+  const groups = items.reduce((acc, item) => {
+    if (!acc[item.annotation.id]) {
+      acc[item.annotation.id] = {annotation: item.annotation, spans: []};
+    }
+    acc[item.annotation.id].spans.push(item.span);
+    return acc;
+  }, {});
+
+  Object.values(groups).forEach((group) => {
+    group.spans.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+    const topSpan = group.spans[0];
+    const bottomSpan = group.spans[group.spans.length - 1];
+    const height = bottomSpan.getBoundingClientRect().bottom -topSpan.getBoundingClientRect().top;
+
+    console.log(`${group.annotation.id} height: ${height}`);
+
+    topSpan.innerHTML = topSpan.innerHTML + `<div style="position: absolute;" id="${group.annotation.id}-note"><span style="position: relative;"><div style="position: absolute;right: 0;"><div>${group.annotation.tags.join(' ')}</div><div>${group.annotation.note}</div></div></span></div>`;
   });
 }
 
