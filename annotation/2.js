@@ -26,7 +26,7 @@ Flash-forward to when Harry is blaming himself for Hermione's death
     tags: ['foreshadowing'],
     text: `
 Harry ruffled a hand through his own hair. Maybe it was just that
-strange part of him which had already been convinced
+strange part of him which had <em>already</em> been convinced
     `,
     note: `
 This "part of Harry" is likely his **mysterious dark side**.
@@ -51,10 +51,10 @@ apple fell on his head.
 "I don't sleep right," Harry said. He waved his hands helplessly. "My
 sleep cycle is twenty-six hours long, I always go to sleep two hours
 later, every day. I can't fall asleep any earlier than that, and then
-the next day I go to sleep two hours later than that. 10PM, 12AM, 2AM,
-4AM, until it goes around the clock. Even if I try to wake up early,
-it makes no difference and I'm a wreck that whole day. That's why I
-haven't been going to a normal school up until now."
+the next day I go to sleep two hours later than <em>that.</em> 10PM,
+12AM, 2AM, 4AM, until it goes around the clock. Even if I try to wake
+up early, it makes no difference and I'm a wreck that whole day.
+That's why I haven't been going to a normal school up until now."
     `,
     note: `
 Dumbledore caused this condition by secretly giving Harry the potion
@@ -68,8 +68,8 @@ project.
   {
     tags: ['foreshadowing'],
     text: `
-"Oh," said Harry's father, eyes bright, "is that why you bit a maths
-teacher in third year."
+"Oh," said Harry's father, eyes bright, "is <em>that</em> why you bit
+a maths teacher in third year."
     `,
     note: `
 A reference to Harry's **mysterious dark side**.

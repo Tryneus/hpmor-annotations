@@ -1,16 +1,31 @@
+'use strict';
+
 const fs = require('fs');
 const path = require('path');
+
+const _ = require('lodash');
 
 const annotationSourceDir = path.join(__dirname, '../annotation');
 const annotationDestDir = path.join(__dirname, '../dist/annotation');
 
 fs.mkdirSync(annotationDestDir, {recursive: true});
 
-const normalizeText = (text) => text.split('\n\n').map((y) => y.trim().replace(/[\r\n ]+/g, ' ')).filter((y) => y.length > 0);
-const normalizeNote = (note) => note.trim().replace(/[\r\n ]+/g, ' ');
+const normalizeText = (text) =>
+  text
+    .trim()
+    .replace(/\n\n/g, '</p> <p>')
+    .replace(/[\n ]+/g, ' ');
 
-// Load the annotations from the easy-to-edit JS file and output a JSON
-// file for consumption
+const normalizeNote = (note) => note.trim().replace(/[\n ]+/g, ' ');
+
+const generateReplacement = (text, id) => {
+  const start = `<span annotation=${id}>`;
+  const end = '</span>';
+  return start + text.replace(/<\/p> <p>/g, end + '</p> <p>' + start) + end;
+};
+
+// Load the annotations from the easy-to-edit JS file and output a JSON file for
+// consumption
 fs.readdir(annotationSourceDir, (err, filelist) => {
   const files = filelist.filter((x) => Boolean(x.match(/^[0-9]+\.js$/)));
   files.map((filename) => {
@@ -21,14 +36,16 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
     // Perform some normalization here because why not
     const annotations = require(sourceFile);
 
-    const normalizedAnnotations = annotations.map((x, i) => ({
-      ...x,
-      text: normalizeText(x.text),
-      note: normalizeNote(x.note),
-      id: `hpmor-${chapter}-${i}`,
-    }));
+    const normalizedAnnotations = annotations.map((x, i) => {
+      const id = `hpmor-${chapter}-${i}`;
+      const text = normalizeText(x.text);
+      const note = normalizeNote(x.note);
+      const replacement = generateReplacement(text, id);
+      const disambiguation = {expect: 1, useIndex: 0}; // default, may be overridden by x
+      return {disambiguation, ...x, id, text, replacement, note};
+    });
 
-    fs.writeFileSync(outputFile, JSON.stringify(normalizedAnnotations));
+    fs.writeFileSync(outputFile, JSON.stringify(_.keyBy(normalizedAnnotations, 'id')));
     console.log('Generated annotations json:', outputFile);
   });
 });

@@ -3,10 +3,10 @@
 const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
+
+const _ = require('lodash');
 const jsdom = require('jsdom').JSDOM;
 const jsonschema = require('jsonschema');
-
-const {find_matches} = require('../src/annotate');
 
 const chapterDir = path.join(__dirname, '../chapter/');
 const annotationDir = path.join(__dirname, '../dist/annotation/');
@@ -29,27 +29,29 @@ const validTags = [
 ];
 
 const schema = {
-  type: 'array',
+  type: 'object',
   required: true,
-  items: {
+  propertyNames: {pattern: '^hpmor-[0-9]+-[0-9]+$'},
+  additionalProperties: {
     type: 'object',
-    required: true,
+    required: ['id', 'tags', 'text', 'replacement', 'note', 'disambiguation'],
+    additionalProperties: false,
     properties: {
-      id: {type: 'string', required: true},
-      tags: {type: 'array', required: true, items: {type: 'string', enum: validTags}},
-      text: {type: 'array', required: true, items: {type: 'string'}},
-      note: {type: 'string', required: true},
+      id: {type: 'string'},
+      tags: {type: 'array', items: {type: 'string', enum: validTags}},
+      text: {type: 'string'},
+      replacement: {type: 'string'},
+      note: {type: 'string'},
       disambiguation: {
         type: 'object',
-        required: false,
-        properties: {
-          expect: {type: 'number', required: true},
-          useIndex: {type: 'number', required: true},
-        },
+        required: ['expect', 'useIndex'],
         additionalProperties: false,
+        properties: {
+          expect: {type: 'number'},
+          useIndex: {type: 'number'},
+        },
       },
     },
-    additionalProperties: false,
   },
 };
 
@@ -61,13 +63,7 @@ describe('annotations', () => {
   const chapters = annotationFiles.map((filepath) => {
     const html = fs.readFileSync(path.join(chapterDir, `${parseChapterNumber(filepath)}.html`), 'utf8');
     const dom = new jsdom(html);
-    const content = dom.window.document.getElementById('storycontent');
-    const paragraphs = Array.from(content.getElementsByTagName('p'));
-
-    // jsdom doesn't provide inner text, do some mangling that hopefully
-    // doesn't make this test worthless
-    paragraphs.forEach((p) => (p.innerText = p.textContent.replace(/ ?\r?\n ?/g, ' ')));
-    return paragraphs;
+    return dom.window.document.getElementById('storycontent').innerHTML.replace(/[\n ]+/g, ' ');
   });
 
   annotationFiles.forEach((filepath, i) => {
@@ -80,14 +76,16 @@ describe('annotations', () => {
           result.errors.length == 0,
           `Schema validation failed:\n${result.errors.map((x) => x.stack).join('\n')}`,
         );
+
+        // TODO: perform some extra validation, like id matches key and disambiguation index is less than number of expected matches
       });
 
-      annotations.forEach((a, annotationNumber) => {
-        describe(`Annotation ${annotationNumber}`, () => {
+      _.forEach(_.toPairs(annotations), ([id, a], annotationNumber) => {
+        describe(`Annotation ${annotationNumber}: ${a.id}`, () => {
           it('text uniquely matches lines', () => {
             assert(
-              find_matches(a, chapters[i]) !== null,
-              `Could not find matches.`,
+              chapters[i].includes(a.text),
+              'Could not find matching text. Make sure inner tags like "<em>" are present.',
             );
           });
 

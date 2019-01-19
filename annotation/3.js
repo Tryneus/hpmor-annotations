@@ -78,7 +78,7 @@ city appear green.
     text: `
 Harry desperately didn't want to miss a single item for sale, in case
 it was one of the three you needed to complete the cycle of infinite
-wish spells.
+<em>wish</em> spells.
     `,
     note: `
 Apparently the author did not have a particular set of three items in

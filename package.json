@@ -26,6 +26,7 @@
     "butternut": "^0.4.6",
     "jsdom": "^13.1.0",
     "jsonschema": "^1.2.4",
+    "lodash": "^4.17.11",
     "mocha": "^5.2.0",
     "website-scraper": "^4.0.0"
   },

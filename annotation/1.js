@@ -2,11 +2,11 @@ module.exports = [
   {
     tags: ['foreshadowing'],
     text: `
-Beneath the moonlight glints a tiny fragment of silver, a fraction of a line...
+<em>Beneath the moonlight glints a tiny fragment of silver, a fraction of a line...</em>
 
-(black robes, falling)
+<em>(black robes, falling)</em>
 
-...blood spills out in litres, and someone screams a word.
+<em>...blood spills out in litres, and someone screams a word.</em>
     `,
     note: `
 Flash-forward to when Harry kills the death eaters (114/'(Black robes,
@@ -54,7 +54,7 @@ the world.
 "Anyway," Petunia said, her voice small, "she gave in. She told me it
 was dangerous, and I said I didn't care any more, and I drank this
 potion and I was sick for weeks, but when I got better my skin cleared
-up and I finally filled out and... I was beautiful, people were nice
+up and I finally filled out and... I was beautiful, people were <em>nice</em>
 to me," her voice broke, "and after that I couldn't hate my sister any
 more, especially when I learned what her magic brought her in the end
 -"
@@ -114,7 +114,7 @@ This "part of Harry" is likely his **mysterious dark side**.
   {
     tags: ['reference'],
     text: `
-Don't believe everything you think, one of his books had said.
+<em>Don't believe everything you think,</em> one of his books had said.
     `,
     note: `
 This is probably "Don't Believe Everything You Think: The 6 Basic

@@ -28,7 +28,7 @@ javascript:(function () {
 
   const frame = document.createElement('iframe');
   frame.id = 'hpmor-annotations-frame';
-  frame.src = window.location.href;
+  frame.src = window.location.href; // TODO: is it possible to move the existing body into the iframe without reloading?
   frame.style.width = '100vw';
   frame.style.height = '100vh';
   frame.style.border = 'none';
