@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "build": "node script/genCode.js && node script/genAnnotations.js",
+    "build": "node script/genCode.js && node script/genAnnotations.js && node script/genBookmarkletMarkdown.js",
     "cache": "node script/downloadChapters.js",
     "test": "npm run build && ./node_modules/mocha/bin/mocha",
     "clean": "rm -rf dist/* chapters"
