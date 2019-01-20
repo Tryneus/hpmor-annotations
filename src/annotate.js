@@ -125,7 +125,15 @@ function addNotes(content, annotations) {
 
     console.log(`${group.annotation.id} height: ${height}`);
 
-    topSpan.innerHTML = topSpan.innerHTML + `<div style="position: absolute;" id="${group.annotation.id}-note"><span style="position: relative;"><div style="position: absolute;right: 0;"><div>${group.annotation.tags.join(' ')}</div><div>${group.annotation.note}</div></div></span></div>`;
+    topSpan.innerHTML = topSpan.innerHTML + `
+      <div style="position: absolute;" id="${group.annotation.id}-note">
+        <span style="position: relative;">
+          <div style="position: absolute;right: 0;">
+            <div style="font: all-small-caps 600 15px \"PT Sans\", Georgia;">${group.annotation.tags.join(' ')}</div>
+            <div>${group.annotation.note}</div>
+          </div>
+        </span>
+      </div>`;
   });
 }
 

@@ -24,8 +24,24 @@ const generateReplacement = (text, id) => {
   return start + text.replace(/<\/p> <p>/g, end + '</p> <p>' + start) + end;
 };
 
-const orderTags = (annotations) => {
-};
+// The first tag determines the color used for the annotation, so we should
+// have a consistent ordering
+const tagsInOrder = [
+  // These two are a subset of spoilers, so they should take precedence
+  'foreshadowing',
+  'consequence',
+
+  'spoiler',
+
+  // No particular order in mind here, TODO: revisit this later in case it matters
+  'departure',
+  'original',
+  'background',
+  'reference',
+  'speculation',
+];
+
+const orderTags = (annotations) => _.sortBy(annotations, (x) => tagsInOrder.indexOf(x));
 
 // Load the annotations from the easy-to-edit JS file and output a JSON file for
 // consumption
