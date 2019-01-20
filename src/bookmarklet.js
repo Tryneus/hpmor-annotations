@@ -37,32 +37,25 @@ javascript:(function () {
   const script = document.createElement('script');
   script.src = is_local ? '../dist/annotate.js' : 'https://tryneus.github.io/hpmor-annotations/dist/annotate.js';
 
-  const overlay = document.createElement('div');
-  overlay.id = 'hpmor-annotations-overlay';
-  overlay.style = {
-    position: 'absolute',
-    left: '0',
-    top: '0',
-    width: '100vw',
-    height: '100vh',
-    border: 'none',
-    'pointer-events': 'none',
-  };
-
   const frameLoadListener = frame.addEventListener('load', () => {
+    const innerDocument = frame.contentDocument;
+    const notes = innerDocument.createElement('div');
+    notes.id = 'hpmor-annotations-notes';
+    innerDocument.body.insertBefore(notes, innerDocument.body.childNodes[0]);
+
     // Rewrite links to open in this frame
-    Array.from(frame.contentDocument.getElementsByTagName('a')).map((x) => {
+    Array.from(innerDocument.getElementsByTagName('a')).map((x) => {
       if (x.target === '_top') {
         x.target = '_self';
       }
     });
 
     // The chapter select drop-down navigates from the top as well
-    frame.contentDocument.getElementById('nav-form-top').target = '_self';
+    innerDocument.getElementById('nav-form-top').target = '_self';
 
     // Update the window title/url and get the chapter number for annotations
     window.history.replaceState({}, '', frame.contentWindow.location.href);
-    document.title = frame.contentDocument.title;
+    document.title = innerDocument.title;
 
     if (annotate) {
       annotate();
@@ -72,6 +65,5 @@ javascript:(function () {
   });
 
   document.body.appendChild(frame);
-  document.body.appendChild(overlay);
   document.body.appendChild(script);
 })();

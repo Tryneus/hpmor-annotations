@@ -1,6 +1,7 @@
 function annotate() {
   const frame = document.getElementById('hpmor-annotations-frame');
-  const overlay = document.getElementById('hpmor-annotations-overlay');
+  const notes = frame.contentDocument.getElementById('hpmor-annotations-notes');
+  // const overlay = document.getElementById('hpmor-annotations-overlay');
 
   if (!frame) {
     console.error('hpmor-annotations: Could not find iframe.');
@@ -10,24 +11,26 @@ function annotate() {
     const chapter = matches && parseInt(matches[1]);
     const content = frame.contentDocument.getElementById('storycontent');
 
-    if (!overlay) {
-      console.error('hpmor-annotations: Could not find overlay.');
+    if (!notes) {
+      console.error('hpmor-annotations: Could not find notes.');
     } else if (!chapter) {
       console.error('hpmor-annotations: Could not determine chapter.', href);
     } else if (!content) {
       console.error('hpmor-annotations: Could not find story content.');
     } else {
       fetchAnnotations(chapter, (annotations) => {
-        clearNotes(content);
+        clearNotes(content, notes);
 
         // Normalize the HTML so we can find and replace
         innerHTML = content.innerHTML.replace(/[\n ]+/g, ' ');
+
+        // Wrap the annotated text in spans so we can underline and expand on click
         Object.values(annotations).forEach((annotation) => {
           innerHTML = innerHTML.replace(annotation.text, annotation.replacement);
         });
         content.innerHTML = innerHTML;
 
-        addNotes(content, annotations);
+        addNotes(content, notes, annotations);
       });
     }
   }
@@ -39,11 +42,6 @@ function getAnnotationSpans(content) {
       span.attributes.annotation &&
         span.attributes.annotation.value.match(/^hpmor-[0-9]+-[0-9]+$/)
     );
-}
-
-function getNoteDivs(content) {
-  return Array.from(content.getElementsByTagName('div'))
-    .filter((div) => div.id.match(/^hpmor-[0-9]+-[0-9]+-note$/));
 }
 
 function fetchAnnotations(chapter, callback) {
@@ -71,17 +69,15 @@ function parseAnnotations(raw) {
   }
 }
 
-function clearNotes(content) {
+function clearNotes(content, notes) {
   getAnnotationSpans(content).forEach((span) => {
     span.outerHTML = span.innerHTML;
   });
 
-  getNoteDivs(content).forEach((div) => {
-    div.parentNode.removeChild(div);
-  });
+  notes.innerHTML = '';
 }
 
-function addNotes(content, annotations) {
+function addNotes(content, notes, annotations) {
   const colors = {
     'foreshadowing': '#888',
     'consequence': '#f6f',
@@ -93,6 +89,7 @@ function addNotes(content, annotations) {
     'spoiler': '#f00',
   };
 
+  // Collect the spans that we will be adding the notes to, apply style
   const items = getAnnotationSpans(content).map((span) => {
     const id = span.attributes.annotation.value;
     const annotation = annotations[id];
@@ -105,36 +102,70 @@ function addNotes(content, annotations) {
     const color = colors[annotation.tags[0]];
     span.style['text-decoration'] = `dotted ${color} underline`;
 
+    span.onclick = toggleNote;
+    // TODO: onhover handler to show tooltip with tags
+
     return {annotation, span};
   });
 
-  // Group spans by annotation id
-  const groups = items.reduce((acc, item) => {
-    if (!acc[item.annotation.id]) {
-      acc[item.annotation.id] = {annotation: item.annotation, spans: []};
-    }
-    acc[item.annotation.id].spans.push(item.span);
-    return acc;
+  // For each annotation, add a div which is hidden until the annotation is clicked
+  Object.values(annotations).forEach((a) => {
+    const note = document.createElement('div');
+    note.id = `${a.id}-note`;
+    note.style.position = 'absolute';
+    note.style.display = 'none';
+    note.onclick = () => (note.style.display = 'none');
+    note.innerHTML = `
+      <div style="position: absolute;right: 0;">
+        <div style="font: all-small-caps 600 15px PT\\ Sans, Georgia;">${a.tags.join(' ')}</div>
+        <div>${a.note}</div>
+      </div>`;
+    notes.appendChild(note);
+  });
+}
+
+function getNoteDiv(id) {
+  return document.getElementById('hpmor-annotations-frame').contentDocument.getElementById(`${id}-note`);
+}
+
+function toggleNote(ev) {
+  // TODO: are these necessary?
+  ev.preventDefault();
+  ev.stopPropagation();
+
+  const span = ev.currentTarget;
+  const id = span.attributes.annotation.value;
+  const note = getNoteDiv(id);
+
+  activeNote = id;
+  note.style.display = null;
+  positionNote(note, id);
+}
+
+function positionNote(note, id) {
+  const frame = document.getElementById('hpmor-annotations-frame');
+  const content = frame.contentDocument.getElementById('storycontent');
+  const spans = Array.from(frame.contentDocument.getElementsByTagName('span'))
+    .filter((span) =>
+      span.attributes.annotation &&
+        span.attributes.annotation.value === id);
+
+  // Find the top/bottom offsets of the annotation
+  const dimensions = spans.reduce((acc, span) => {
+    const {top, bottom} = span.getBoundingClientRect();
+    return {
+      top: (acc && (acc.top < top ? acc.top : top)) || top,
+      bottom: (acc && (acc.bottom > bottom ? acc.bottom : bottom)) || bottom,
+    };
   }, {});
 
-  Object.values(groups).forEach((group) => {
-    group.spans.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
-    const topSpan = group.spans[0];
-    const bottomSpan = group.spans[group.spans.length - 1];
-    const height = bottomSpan.getBoundingClientRect().bottom -topSpan.getBoundingClientRect().top;
+  // Position the note so that it sits next to the annotated text
+  note.style.left = '0px';
+  note.style.width = `${content.getBoundingClientRect().left + frame.contentWindow.pageXOffset}px`;
+  note.style.top = `${dimensions.top + frame.contentWindow.pageYOffset}px`;
+  note.style.height = `${dimensions.bottom - dimensions.top}px`;
 
-    console.log(`${group.annotation.id} height: ${height}`);
-
-    topSpan.innerHTML = topSpan.innerHTML + `
-      <div style="position: absolute;" id="${group.annotation.id}-note">
-        <span style="position: relative;">
-          <div style="position: absolute;right: 0;">
-            <div style="font: all-small-caps 600 15px \"PT Sans\", Georgia;">${group.annotation.tags.join(' ')}</div>
-            <div>${group.annotation.note}</div>
-          </div>
-        </span>
-      </div>`;
-  });
+  // TODO: use an overlay layout if not enough x space
 }
 
 // Dev function for ease-of-use
