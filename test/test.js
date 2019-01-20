@@ -9,7 +9,7 @@ const jsdom = require('jsdom').JSDOM;
 const jsonschema = require('jsonschema');
 
 const chapterDir = path.join(__dirname, '../chapter/');
-const annotationDir = path.join(__dirname, '../dist/annotation/');
+const annotationDir = path.join(__dirname, '../docs/annotation/');
 
 const annotationFiles =
   fs.readdirSync(annotationDir)

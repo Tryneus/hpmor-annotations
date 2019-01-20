@@ -35,7 +35,7 @@ javascript:(function () {
 
   // Load the script that applies annotations
   const script = document.createElement('script');
-  script.src = is_local ? '../dist/annotate.js' : 'https://tryneus.github.io/hpmor-annotations/dist/annotate.js';
+  script.src = is_local ? '../docs/annotate.js' : 'https://tryneus.github.io/hpmor-annotations/docs/annotate.js';
 
   const frameLoadListener = frame.addEventListener('load', () => {
     const innerDocument = frame.contentDocument;

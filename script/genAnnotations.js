@@ -6,7 +6,7 @@ const path = require('path');
 const _ = require('lodash');
 
 const annotationSourceDir = path.join(__dirname, '../annotation');
-const annotationDestDir = path.join(__dirname, '../dist/annotation');
+const annotationDestDir = path.join(__dirname, '../docs/annotation');
 
 fs.mkdirSync(annotationDestDir, {recursive: true});
 
