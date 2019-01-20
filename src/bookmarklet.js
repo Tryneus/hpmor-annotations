@@ -53,6 +53,9 @@ javascript:(function () {
     // The chapter select drop-down navigates from the top as well
     innerDocument.getElementById('nav-form-top').target = '_self';
 
+    // Reposition the active note if the frame is resized
+    innerDocument.onresize = () => positionNote();
+
     // Update the window title/url and get the chapter number for annotations
     window.history.replaceState({}, '', frame.contentWindow.location.href);
     document.title = innerDocument.title;

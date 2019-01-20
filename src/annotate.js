@@ -1,3 +1,6 @@
+// Used to track the currently displayed note
+window.activeNote = null;
+
 function annotate() {
   const frame = document.getElementById('hpmor-annotations-frame');
   const notes = frame.contentDocument.getElementById('hpmor-annotations-notes');
@@ -101,24 +104,29 @@ function addNotes(content, notes, annotations) {
 
     const color = colors[annotation.tags[0]];
     span.style['text-decoration'] = `dotted ${color} underline`;
+    span.style.cursor = 'pointer';
 
-    span.onclick = toggleNote;
+    span.onclick = (ev) => toggleNote(id, ev);
     // TODO: onhover handler to show tooltip with tags
 
     return {annotation, span};
   });
 
   // For each annotation, add a div which is hidden until the annotation is clicked
-  Object.values(annotations).forEach((a) => {
+  Object.values(annotations).forEach((annotation) => {
+    const color = colors[annotation.tags[0]];
     const note = document.createElement('div');
-    note.id = `${a.id}-note`;
+    note.id = `${annotation.id}-note`;
     note.style.position = 'absolute';
     note.style.display = 'none';
-    note.onclick = () => (note.style.display = 'none');
+    note.onclick = dismissNote;
     note.innerHTML = `
-      <div style="position: absolute;right: 0;">
-        <div style="font: all-small-caps 600 15px PT\\ Sans, Georgia;">${a.tags.join(' ')}</div>
-        <div>${a.note}</div>
+      <div style="display: flex; height: 100%; margin-left: 5px">
+        <div>
+          <div style="font: all-small-caps 600 15px PT\\ Sans, Georgia; border-radius: 5px 5px 0 0; background: ${color}; padding: 0 7px">${annotation.tags.join(' / ')}</div>
+          <div style="border-radius: 0 0 5px 5px; background: #f0f0f0; border: 1px solid ${color}; font: 12px sans-serif; padding: 7px">${annotation.note}</div>
+        </div>
+        <div style="width: 15px; border-left: 2px solid ${color}; border-top: 2px solid ${color}; border-bottom: 2px solid ${color}; margin: 0 5px"></div>
       </div>`;
     notes.appendChild(note);
   });
@@ -128,27 +136,39 @@ function getNoteDiv(id) {
   return document.getElementById('hpmor-annotations-frame').contentDocument.getElementById(`${id}-note`);
 }
 
-function toggleNote(ev) {
+function toggleNote(id, ev) {
+  const note = getNoteDiv(id);
+
   // TODO: are these necessary?
   ev.preventDefault();
   ev.stopPropagation();
 
-  const span = ev.currentTarget;
-  const id = span.attributes.annotation.value;
-  const note = getNoteDiv(id);
+  if (window.activeNote) {
+    if (window.activeNote !== note) {
+      dismissNote();
+    } else {
+      dismissNote();
+      return;
+    }
+  }
 
-  activeNote = id;
+  window.activeNote = note;
   note.style.display = null;
-  positionNote(note, id);
+  positionNote();
 }
 
-function positionNote(note, id) {
+function positionNote() {
+  if (!window.activeNote) { return; }
+
+  const id = window.activeNote.id.match(/^(hpmor-[0-9]+-[0-9]+)-note$/)[1];
   const frame = document.getElementById('hpmor-annotations-frame');
   const content = frame.contentDocument.getElementById('storycontent');
   const spans = Array.from(frame.contentDocument.getElementsByTagName('span'))
     .filter((span) =>
       span.attributes.annotation &&
         span.attributes.annotation.value === id);
+
+  console.log(spans);
 
   // Find the top/bottom offsets of the annotation
   const dimensions = spans.reduce((acc, span) => {
@@ -159,13 +179,20 @@ function positionNote(note, id) {
     };
   }, {});
 
+  console.log(dimensions);
+
   // Position the note so that it sits next to the annotated text
-  note.style.left = '0px';
-  note.style.width = `${content.getBoundingClientRect().left + frame.contentWindow.pageXOffset}px`;
-  note.style.top = `${dimensions.top + frame.contentWindow.pageYOffset}px`;
-  note.style.height = `${dimensions.bottom - dimensions.top}px`;
+  window.activeNote.style.left = '0px';
+  window.activeNote.style.width = `${content.getBoundingClientRect().left + frame.contentWindow.pageXOffset}px`;
+  window.activeNote.style.top = `${dimensions.top + frame.contentWindow.pageYOffset}px`;
+  window.activeNote.style.height = `${dimensions.bottom - dimensions.top}px`;
 
   // TODO: use an overlay layout if not enough x space
+}
+
+function dismissNote() {
+  window.activeNote.style.display = 'none';
+  window.activeNote = null;
 }
 
 // Dev function for ease-of-use
