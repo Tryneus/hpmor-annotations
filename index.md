@@ -1,4 +1,4 @@
-Bookmark this [bookmarklet]({% include_relative dist/bookmarklet.js %}).
+Bookmark this [bookmarklet]("{% include_relative dist/bookmarklet.js %}").
 
 Then visit any of the chapters on the [official HPMOR site](http://www.hpmor.com/chapter/1) and run the bookmarklet.  The bookmarklet will persist when you switch chapters.
 
