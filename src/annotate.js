@@ -22,21 +22,45 @@ function annotate() {
       console.error('hpmor-annotations: Could not find story content.');
     } else {
       fetchAnnotations(chapter, (annotations) => {
+        const innerContent = wrapContent(frame.contentDocument, content);
+
         clearNotes(content, notes);
 
         // Normalize the HTML so we can find and replace
-        innerHTML = content.innerHTML.replace(/[\n ]+/g, ' ');
+        innerHTML = innerContent.innerHTML.replace(/[\n ]+/g, ' ');
 
         // Wrap the annotated text in spans so we can underline and expand on click
         Object.values(annotations).forEach((annotation) => {
           innerHTML = innerHTML.replace(annotation.text, annotation.replacement);
         });
-        content.innerHTML = innerHTML;
 
-        addNotes(content, notes, annotations);
+        innerContent.innerHTML = innerHTML;
+
+        addNotes(innerContent, notes, annotations);
       });
     }
   }
+}
+
+// Weight the left and right margins differently so we get a little more space
+// to put the annotations in.
+function wrapContent(frameDocument, content) {
+  // Check if we've already wrapped content and return the inner div
+  if (!frameDocument.getElementById('hpmor-annotations-wrapped-content')) {
+    content.innerHTML = `
+      <div style="flex: 1 1 300px"></div>
+      <div id="hpmor-annotations-wrapped-content" style="flex: 0 0 auto; max-width: 42em">
+        ${content.innerHTML}
+      </div>
+      <div style="flex: 1 3 300px"></div>`;
+    content.style.display = 'flex';
+    content.style['flex-direction'] = 'vertical';
+    content.style['margin-right'] = null;
+    content.style['margin-left'] = null;
+    content.style['max-width'] = 'none';
+  }
+
+  return frameDocument.getElementById('hpmor-annotations-wrapped-content');
 }
 
 function getAnnotationSpans(content) {
@@ -82,7 +106,7 @@ function clearNotes(content, notes) {
 
 function addNotes(content, notes, annotations) {
   const colors = {
-    'foreshadowing': '#888',
+    'foreshadowing': '#aaa',
     'consequence': '#f6f',
     'reference': '#66f',
     'departure': '#f90',
@@ -121,12 +145,12 @@ function addNotes(content, notes, annotations) {
     note.style.display = 'none';
     note.onclick = dismissNote;
     note.innerHTML = `
-      <div style="display: flex; height: 100%; margin-left: 5px">
+      <div style="display: flex; height: 100%; margin-left: 5px; cursor: default; justify-content: flex-end">
         <div>
           <div style="font: all-small-caps 600 15px PT\\ Sans, Georgia; border-radius: 5px 5px 0 0; background: ${color}; padding: 0 7px">${annotation.tags.join(' / ')}</div>
-          <div style="border-radius: 0 0 5px 5px; background: #f0f0f0; border: 1px solid ${color}; font: 12px sans-serif; padding: 7px">${annotation.note}</div>
+          <div style="border-radius: 0 0 5px 5px; background: #f0f0f0; border: 1px solid ${color}; font: 12px sans-serif; padding: 7px; flex-shrink: 0">${annotation.note}</div>
         </div>
-        <div style="width: 15px; border-left: 2px solid ${color}; border-top: 2px solid ${color}; border-bottom: 2px solid ${color}; margin: 0 5px"></div>
+        <div style="min-width: 3px; border-left: 2px solid ${color}; border-top: 2px solid ${color}; border-bottom: 2px solid ${color}; margin: 0 5px"></div>
       </div>`;
     notes.appendChild(note);
   });
@@ -162,13 +186,11 @@ function positionNote() {
 
   const id = window.activeNote.id.match(/^(hpmor-[0-9]+-[0-9]+)-note$/)[1];
   const frame = document.getElementById('hpmor-annotations-frame');
-  const content = frame.contentDocument.getElementById('storycontent');
+  const content = frame.contentDocument.getElementById('hpmor-annotations-wrapped-content');
   const spans = Array.from(frame.contentDocument.getElementsByTagName('span'))
     .filter((span) =>
       span.attributes.annotation &&
         span.attributes.annotation.value === id);
-
-  console.log(spans);
 
   // Find the top/bottom offsets of the annotation
   const dimensions = spans.reduce((acc, span) => {
@@ -178,8 +200,6 @@ function positionNote() {
       bottom: (acc && (acc.bottom > bottom ? acc.bottom : bottom)) || bottom,
     };
   }, {});
-
-  console.log(dimensions);
 
   // Position the note so that it sits next to the annotated text
   window.activeNote.style.left = '0px';

@@ -54,7 +54,7 @@ javascript:(function () {
     innerDocument.getElementById('nav-form-top').target = '_self';
 
     // Reposition the active note if the frame is resized
-    innerDocument.onresize = () => positionNote();
+    window.onresize = positionNote;
 
     // Update the window title/url and get the chapter number for annotations
     window.history.replaceState({}, '', frame.contentWindow.location.href);
