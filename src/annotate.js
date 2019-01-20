@@ -73,7 +73,7 @@ function getAnnotationSpans(content) {
 
 function fetchAnnotations(chapter, callback) {
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', `https://tryneus.github.io/hpmor-annotations/docs/annotation/${chapter}.json`);
+  xhr.open('GET', `https://tryneus.github.io/hpmor-annotations/dist/annotation/${chapter}.json`);
   xhr.send();
   xhr.onerror = () => {
     console.error('hpmor-annotations: Could not load annotations.');
@@ -229,7 +229,7 @@ function reloadScript() {
   } else {
     const oldScript = scripts[0];
     const newScript = document.createElement('script');
-    newScript.src = oldScript.src.replace('docs', 'src');
+    newScript.src = oldScript.src.replace('dist', 'src');
 
     oldScript.parentNode.removeChild(oldScript);
     document.body.appendChild(newScript);
