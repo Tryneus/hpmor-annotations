@@ -18,7 +18,7 @@ responsible for anything."
     `,
     note: `
 Flash-forward to when Harry is blaming himself for Hermione's death
-(90/'Of course it's my fault.').
+{90/Of course it's my fault.}.
     `,
   },
 
@@ -58,9 +58,9 @@ That's why I haven't been going to a normal school up until now."
     `,
     note: `
 Dumbledore caused this condition by secretly giving Harry the potion
-meant for students using Time-Turners (119/'I snuck invisibly into
+meant for students using Time-Turners {119/I snuck invisibly into
 your bedroom in Oxford and administered the potion that is given to
-students with Time-Turners') as part of his **prophecy-threading**
+students with Time-Turners} as part of his **prophecy-threading**
 project.
     `,
   },

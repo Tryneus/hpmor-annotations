@@ -9,8 +9,8 @@ module.exports = [
 <em>...blood spills out in litres, and someone screams a word.</em>
     `,
     note: `
-Flash-forward to when Harry kills the death eaters (114/'(Black robes,
-falling.)').  The fragment of silver/fraction of a line is the
+Flash-forward to when Harry kills the death eaters {114/(Black robes,
+falling.)}.  The fragment of silver/fraction of a line is the
 transfigured spider silk, the black robes falling are the death
 eaters, and the word is Harry screaming "STUPORFY".
     `,
@@ -38,11 +38,11 @@ told her not to - the most ridiculous things, and I hated her for
 it.
     `,
     note: `
-A centaur calls him "Son of Lily" (101/'All I can say, son of Lily'),
+A centaur calls him "Son of Lily" {101/All I can say, son of Lily},
 and then tries to kill him, after asking whether the Muggles say that
-soon the skies will be empty (a reference to the **second prophecy**
-about Harry tearing apart the stars in heaven (89/'TEAR APART THE VERY
-STARS IN HEAVEN')).  It's thus quite plausible that the centaurs did
+soon the skies will be empty (a reference to the second prophecy
+about Harry tearing apart the stars in heaven {89/TEAR APART THE VERY
+STARS IN HEAVEN}).  It's thus quite plausible that the centaurs did
 in fact warn Lily that being nice to her sister would cause the end of
 the world.
     `,
@@ -60,11 +60,11 @@ more, especially when I learned what her magic brought her in the end
 -"
     `,
     note: `
-Dumbledore gave the recipe for this potion to Lily (17/'You'd get sick
-for weeks and maybe die') (119/'I wrote a strange hint in your
+Dumbledore gave the recipe for this potion to Lily {17/You'd get sick
+for weeks and maybe die} {119/I wrote a strange hint in your
 mother's Potions textbook, having no idea why I must; and this proved
 to show Lily how to help her sister, and ensured you would gain
-Petunia Evans's heartfelt love.') as part of his
+Petunia Evans's heartfelt love.} as part of his
 **prophecy-threading** project.
     `,
   },
@@ -79,8 +79,8 @@ work out
 This didn't work out because of Harry's **mysterious dark side**, and
 also because of the potion Dumbledore secretly gave to Harry that
 messes with his sleep schedule as part of his **prophecy-threading**
-project (119/'I snuck invisibly into your bedroom in Oxford and
-administered the potion that is given to students with Time-Turners').
+project {119/I snuck invisibly into your bedroom in Oxford and
+administered the potion that is given to students with Time-Turners}.
     `,
   },
 

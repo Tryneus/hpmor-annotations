@@ -147,10 +147,10 @@ function addNotes(content, notes, annotations) {
     note.innerHTML = `
       <div style="display: flex; height: 100%; margin-left: 5px; cursor: default; justify-content: flex-end">
         <div>
-          <div style="font: all-small-caps 600 15px PT\\ Sans, Georgia; border-radius: 5px 5px 0 0; background: ${color}; padding: 0 7px">${annotation.tags.join(' / ')}</div>
+          <div style="font: 600 15px PT\\ Sans, Georgia; font-variant: all-small-caps; border-radius: 5px 5px 0 0; background: ${color}; padding: 0 7px">${annotation.tags.join(' / ')}</div>
           <div style="border-radius: 0 0 5px 5px; background: #f0f0f0; border: 1px solid ${color}; font: 12px sans-serif; padding: 7px; flex-shrink: 0">${annotation.note}</div>
         </div>
-        <div style="min-width: 3px; border-left: 2px solid ${color}; border-top: 2px solid ${color}; border-bottom: 2px solid ${color}; margin: 0 5px"></div>
+        <div style="min-width: 3px; border-left: 2px solid ${color}; border-top: 2px solid ${color}; border-bottom: 2px solid ${color}; border-right: 2px solid #fff0; margin: 0 5px"></div>
       </div>`;
     notes.appendChild(note);
   });
