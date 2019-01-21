@@ -31,6 +31,7 @@ function annotate() {
 
         // Wrap the annotated text in spans so we can underline and expand on click
         Object.values(annotations).forEach((annotation) => {
+          // TODO: this is only replacing the first occurence, use expect/useIndex
           innerHTML = innerHTML.replace(annotation.text, annotation.replacement);
         });
 
@@ -110,7 +111,7 @@ function addNotes(content, notes, annotations) {
     'consequence': '#f6f',
     'reference': '#66f',
     'departure': '#f90',
-    'original': '#6f0',
+    'original': '#af0',
     'speculation': '#e0f',
     'background': '#30f',
     'spoiler': '#f00',

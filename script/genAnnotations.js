@@ -56,13 +56,18 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
     const annotations = require(sourceFile);
 
     const normalizedAnnotations = annotations.map((x, i) => {
+      // Fields that are not required to be explicitly defined in the source
+      const defaults = {
+        disambiguation: {expect: 1, useIndex: 0},
+        subjects: [],
+      };
+
       const id = `hpmor-${chapter}-${i}`;
       const tags = orderTags(x.tags);
       const text = normalizeText(x.text);
       const note = normalizeNote(x.note);
       const replacement = generateReplacement(text, id);
-      const disambiguation = {expect: 1, useIndex: 0}; // default, may be overridden by x
-      return {disambiguation, ...x, id, tags, text, replacement, note};
+      return {...defaults, ...x, id, tags, text, replacement, note};
     });
 
     fs.writeFileSync(outputFile, JSON.stringify(_.keyBy(normalizedAnnotations, 'id')));

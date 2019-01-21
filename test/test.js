@@ -34,11 +34,12 @@ const schema = {
   propertyNames: {pattern: '^hpmor-[0-9]+-[0-9]+$'},
   additionalProperties: {
     type: 'object',
-    required: ['id', 'tags', 'text', 'replacement', 'note', 'disambiguation'],
+    required: ['id', 'tags', 'text', 'replacement', 'note', 'disambiguation', 'subjects'],
     additionalProperties: false,
     properties: {
       id: {type: 'string'},
       tags: {type: 'array', items: {type: 'string', enum: validTags}, minItems: 1},
+      subjects: {type: 'array', items: {type: 'string'}},
       text: {type: 'string'},
       replacement: {type: 'string'},
       note: {type: 'string'},
@@ -47,8 +48,8 @@ const schema = {
         required: ['expect', 'useIndex'],
         additionalProperties: false,
         properties: {
-          expect: {type: 'number'},
-          useIndex: {type: 'number'},
+          expect: {type: 'integer', minimum: 1},
+          useIndex: {type: 'integer', minimum: 0},
         },
       },
     },
@@ -57,40 +58,70 @@ const schema = {
 
 const parseChapterNumber = (path) => path.match(/\/([0-9]+)\.[A-z]+$/)[1];
 
-describe('annotations', () => {
-  const validator = new jsonschema.Validator();
-
-  const chapters = annotationFiles.map((filepath) => {
+const chapterCache = [];
+const chapter = (i) => {
+  if (!chapterCache[i]) {
+    const filepath = path.join(chapterDir, `${i}.html`);
     const html = fs.readFileSync(path.join(chapterDir, `${parseChapterNumber(filepath)}.html`), 'utf8');
     const dom = new jsdom(html);
-    return dom.window.document.getElementById('storycontent').innerHTML.replace(/[\n ]+/g, ' ');
-  });
+    chapterCache[i] = dom.window.document.getElementById('storycontent').innerHTML.replace(/[\n ]+/g, ' ');
+  }
+  return chapterCache[i];
+};
 
+const checkUnique = (text, html, expect) => {
+  const searches = [];
+  while (searches[searches.length - 1] !== -1) {
+    searches.push(html.indexOf(text, (searches[searches.length - 1] + 1) || 0));
+  }
+
+  const indices = searches.filter((x) => x > 0);
+  assert(indices.length > 0, 'Could not find matching text.');
+  assert.notStrictEqual(indices.length, expect, 'Text matches the wrong number of places in the chapter.');
+};
+
+describe('annotations', () => {
   annotationFiles.forEach((filepath, i) => {
     describe(`Chapter ${parseChapterNumber(filepath)}`, () => {
       const annotations = JSON.parse(fs.readFileSync(filepath, 'utf8'));
 
       it('annotations match schema', () => {
+        const validator = new jsonschema.Validator();
         const result = validator.validate(annotations, schema);
         assert(
           result.errors.length == 0,
           `Schema validation failed:\n${result.errors.map((x) => x.stack).join('\n')}`,
         );
 
-        // TODO: perform some extra validation, like id matches key and disambiguation index is less than number of expected matches
+        _.forEach(_.toPairs(annotations), ([id, a]) => {
+          assert.strictEqual(id, a.id, 'Annotation ids are inconsistent.');
+          assert(
+            a.disambiguation.useIndex < a.disambiguation.expect,
+            `Annotation ${id} disambiguation index is larger than expected matches.`,
+          );
+        });
       });
 
       _.forEach(_.toPairs(annotations), ([id, a], annotationNumber) => {
         describe(`Annotation ${annotationNumber}: ${a.id}`, () => {
           it('text uniquely matches lines', () => {
-            assert(
-              chapters[i].includes(a.text),
-              'Could not find matching text. Make sure inner tags like "<em>" are present.',
-            );
+            checkUnique(a.text, chapter(i + 1));
           });
 
-          // TODO: only generate this test if the note links to a chapter
-          it('links uniquely resolve', () => {
+          const brackets = a.note.match(/\{/g) || [];
+          const linkRegex = RegExp('\{([0-9]+)\/([^\}]+)\}', 'g');
+          const matches = brackets.reduce((acc) => {
+            acc.push(linkRegex.exec(a.note) || []);
+            return acc;
+          }, []);
+          console.log('brackets', brackets, 'matches', matches);
+
+          matches.forEach((match) => {
+            it(`Link ${i}: ${match[1] ? 'Chapter ' + match[1] : 'unknown chapter'}`, () => {
+              assert(match.length === 3, 'Unexpected link format.');
+              const chapterNumber = parseInt(match[1]);
+              checkUnique(match[2], chapter(chapterNumber));
+            });
           });
         });
       });
