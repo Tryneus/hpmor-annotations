@@ -114,7 +114,6 @@ describe('annotations', () => {
             acc.push(linkRegex.exec(a.note) || []);
             return acc;
           }, []);
-          console.log('brackets', brackets, 'matches', matches);
 
           matches.forEach((match) => {
             it(`Link ${i}: ${match[1] ? 'Chapter ' + match[1] : 'unknown chapter'}`, () => {

@@ -16,7 +16,13 @@ const normalizeText = (text) =>
     .replace(/\n\n/g, '</p> <p>')
     .replace(/[\n ]+/g, ' ');
 
-const normalizeNote = (note) => note.trim().replace(/[\n ]+/g, ' ');
+// TODO: for every link, append an 'anchor' annotation for the linked chapter
+const normalizeNote = (note) => {
+  return note
+    .trim()
+    .replace(/[\n ]+/g, ' ')
+    .replace(/\{([0-9]+)\/([^\}]+)\}/g, '<a href="$1#dummy-anchor">Ch. $1</a>');
+}
 
 const generateReplacement = (text, id) => {
   const start = `<span annotation=${id}>`;
