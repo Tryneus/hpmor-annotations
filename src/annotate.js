@@ -1,6 +1,91 @@
 // Used to track the currently displayed note
 window.activeNote = null;
 
+function installCss(frameDocument) {
+  if (!frameDocument.getElementById('hpmor-annotations-css')) {
+    const styleElement = frameDocument.createElement('style');
+    styleElement.id = 'hpmor-annotations-css';
+    styleElement.type = 'text/css';
+    frameDocument.head.appendChild(styleElement);
+  }
+
+  const css = frameDocument.getElementById('hpmor-annotations-css');
+  console.log('setting innerhtml of', css)
+  css.innerHTML = `
+#storycontent {
+  display: flex;
+  flex-direction: row;
+  margin-left: unset;
+  margin-right: unset;
+  max-width: none;
+}
+
+#hpmor-annotations-wrapped-content {
+  flex: 0 0 auto;
+  max-width: 42em;
+}
+
+.hpmor-annotations-left-panel {
+  flex: 1 1 300px;
+}
+
+.hpmor-annotations-right-panel {
+  flex: 1 3 300px;
+}
+
+.hpmor-annotations-note {
+  position: absolute;
+  display: none;
+  left: 0;
+}
+
+.hpmor-annotations-note-container {
+  display: flex;
+  height: 100%;
+  margin-left: 5px;
+  cursor: default;
+  justify-content: flex-end;
+}
+
+.hpmor-annotations-note-tags {
+  font: 600 15px "PT Sans", Georgia;
+  font-variant: all-small-caps;
+  border-radius: 5px 5px 0 0;
+  padding: 0 7px;
+}
+
+.hpmor-annotations-note-text {
+  border-radius: 0 0 5px 5px;
+  background: #f0f0f0;
+  border-width: 1px;
+  font: 12px sans-serif;
+  padding: 7px;
+  flex-shrink: 0;
+}
+
+.hpmor-annotations-note-bracket {
+  min-width: 3px;
+  border-width: 2px;
+  border-right-color: #fff0;
+  margin: 0 5px;
+}
+
+.hpmor-annotations-link {
+  text-decoration: none;
+}
+
+.hpmor-annotations-link:hover {
+  text-decoration: underline;
+}
+
+.hpmor-annotations-span {
+  text-decoration-line: dotted;
+  text-decoration-style: underline;
+  cursor: pointer;
+}
+  `;
+}
+
 function annotate() {
   const frame = document.getElementById('hpmor-annotations-frame');
   const notes = frame.contentDocument.getElementById('hpmor-annotations-notes');
@@ -22,6 +107,8 @@ function annotate() {
       console.error('hpmor-annotations: Could not find story content.');
     } else {
       fetchAnnotations(chapter, (annotations) => {
+        installCss(frame.contentDocument);
+
         const innerContent = wrapContent(frame.contentDocument, content);
 
         clearNotes(content, notes);
@@ -39,6 +126,9 @@ function annotate() {
 
         addNotes(innerContent, notes, annotations);
       });
+
+      // Set CSS used by annotations
+
     }
   }
 }
@@ -49,16 +139,11 @@ function wrapContent(frameDocument, content) {
   // Check if we've already wrapped content and return the inner div
   if (!frameDocument.getElementById('hpmor-annotations-wrapped-content')) {
     content.innerHTML = `
-      <div style="flex: 1 1 300px"></div>
-      <div id="hpmor-annotations-wrapped-content" style="flex: 0 0 auto; max-width: 42em">
+      <div class="hpmor-annotations-left-panel"></div>
+      <div id="hpmor-annotations-wrapped-content">
         ${content.innerHTML}
       </div>
-      <div style="flex: 1 3 300px"></div>`;
-    content.style.display = 'flex';
-    content.style['flex-direction'] = 'vertical';
-    content.style['margin-right'] = null;
-    content.style['margin-left'] = null;
-    content.style['max-width'] = 'none';
+      <div class="hpmor-annotations-right-panel"></div>`;
   }
 
   return frameDocument.getElementById('hpmor-annotations-wrapped-content');
@@ -128,8 +213,7 @@ function addNotes(content, notes, annotations) {
     }
 
     const color = colors[annotation.tags[0]];
-    span.style['text-decoration'] = `dotted ${color} underline`;
-    span.style.cursor = 'pointer';
+    span.style['text-decoration-color'] = color;
 
     span.onclick = (ev) => toggleNote(id, ev);
     // TODO: onhover handler to show tooltip with tags
@@ -142,16 +226,15 @@ function addNotes(content, notes, annotations) {
     const color = colors[annotation.tags[0]];
     const note = document.createElement('div');
     note.id = `${annotation.id}-note`;
-    note.style.position = 'absolute';
-    note.style.display = 'none';
+    note.className = 'hpmor-annotations-note';
     note.onclick = dismissNote;
     note.innerHTML = `
-      <div style="display: flex; height: 100%; margin-left: 5px; cursor: default; justify-content: flex-end">
+      <div class="hpmor-annotations-note-container">
         <div>
-          <div style="font: 600 15px PT\\ Sans, Georgia; font-variant: all-small-caps; border-radius: 5px 5px 0 0; background: ${color}; padding: 0 7px">${annotation.tags.join(' / ')}</div>
-          <div style="border-radius: 0 0 5px 5px; background: #f0f0f0; border: 1px solid ${color}; font: 12px sans-serif; padding: 7px; flex-shrink: 0">${annotation.note}</div>
+          <div class="hpmor-annotations-note-tags" style="background: ${color}">${annotation.tags.join(' / ')}</div>
+          <div class="hpmor-annotations-note-text" style="border-color: ${color}">${annotation.note}</div>
         </div>
-        <div style="min-width: 3px; border-left: 2px solid ${color}; border-top: 2px solid ${color}; border-bottom: 2px solid ${color}; border-right: 2px solid #fff0; margin: 0 5px"></div>
+        <div class="hpmor-annotations-note-bracket" style="border-color: ${color}"></div>
       </div>`;
     notes.appendChild(note);
   });
@@ -178,7 +261,7 @@ function toggleNote(id, ev) {
   }
 
   window.activeNote = note;
-  note.style.display = null;
+  note.style.display = 'block';
   positionNote();
 }
 
@@ -203,7 +286,6 @@ function positionNote() {
   }, {});
 
   // Position the note so that it sits next to the annotated text
-  window.activeNote.style.left = '0px';
   window.activeNote.style.width = `${content.getBoundingClientRect().left + frame.contentWindow.pageXOffset}px`;
   window.activeNote.style.top = `${dimensions.top + frame.contentWindow.pageYOffset}px`;
   window.activeNote.style.height = `${dimensions.bottom - dimensions.top}px`;
@@ -212,7 +294,7 @@ function positionNote() {
 }
 
 function dismissNote() {
-  window.activeNote.style.display = 'none';
+  window.activeNote.style.display = null;
   window.activeNote = null;
 }
 
