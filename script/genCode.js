@@ -32,7 +32,7 @@ fs.readdir(sourceDir, (err, filelist) => {
           if (err) {
             console.log('Error writing map output:', err);
           } else {
-            console.log('Generated minified source map file:', outputFile);
+            console.log('Generated minified source map file:', outputMapFile);
           }
         });
       }
