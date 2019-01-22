@@ -16,6 +16,6 @@ javascript:(function () {
     script.id = 'hpmor-annotations-script';
     script.src = is_local ? '../dist/annotate.js' : 'https://tryneus.github.io/hpmor-annotations/dist/annotate.js';
     script.onload = () => window.hpmorAnnotations.installFrame();
-    document.body.appendChild(script);
+    document.head.appendChild(script);
   }
 })();

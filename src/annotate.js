@@ -366,7 +366,7 @@
 
       // Drop the old script element and add a new one
       oldScript.parentNode.removeChild(oldScript);
-      document.body.appendChild(newScript);
+      document.head.appendChild(newScript);
     }
   }
 
