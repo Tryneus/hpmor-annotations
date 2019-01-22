@@ -370,7 +370,7 @@
     }
   }
 
-  const exports = {annotate, reloadScript};
+  const exports = {installFrame, annotate, reloadScript};
 
   // Export everything for unit tests
   if (typeof module !== 'undefined' && module.exports) {
