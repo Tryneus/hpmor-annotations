@@ -102,14 +102,14 @@ describe('annotations', () => {
         });
       });
 
-      _.forEach(_.toPairs(annotations), ([id, a], annotationNumber) => {
-        describe(`Annotation ${annotationNumber}: ${a.id}`, () => {
+      Object.values(annotations).map((a) => {
+        describe(`Annotation ${a.id}`, () => {
           it('text uniquely matches lines', () => {
             checkUnique(a.text, chapter(i + 1));
           });
 
           const brackets = a.note.match(/\{/g) || [];
-          const linkRegex = RegExp('\{([0-9]+)\/([^\}]+)\}', 'g');
+          const linkRegex = RegExp('\\{([0-9]+)/([^}]+)\\}', 'g');
           const matches = brackets.reduce((acc) => {
             acc.push(linkRegex.exec(a.note) || []);
             return acc;

@@ -10,7 +10,6 @@ function installCss(frameDocument) {
   }
 
   const css = frameDocument.getElementById('hpmor-annotations-css');
-  console.log('setting innerhtml of', css)
   css.innerHTML = `
 #storycontent {
   display: flex;
@@ -114,7 +113,7 @@ function annotate() {
         clearNotes(content, notes);
 
         // Normalize the HTML so we can find and replace
-        innerHTML = innerContent.innerHTML.replace(/[\n ]+/g, ' ');
+        let innerHTML = innerContent.innerHTML.replace(/[\n ]+/g, ' ');
 
         // Wrap the annotated text in spans so we can underline and expand on click
         Object.values(annotations).forEach((annotation) => {
@@ -203,7 +202,7 @@ function addNotes(content, notes, annotations) {
   };
 
   // Collect the spans that we will be adding the notes to, apply style
-  const items = getAnnotationSpans(content).map((span) => {
+  getAnnotationSpans(content).forEach((span) => {
     const id = span.attributes.annotation.value;
     const annotation = annotations[id];
 
@@ -217,8 +216,6 @@ function addNotes(content, notes, annotations) {
 
     span.onclick = (ev) => toggleNote(id, ev);
     // TODO: onhover handler to show tooltip with tags
-
-    return {annotation, span};
   });
 
   // For each annotation, add a div which is hidden until the annotation is clicked

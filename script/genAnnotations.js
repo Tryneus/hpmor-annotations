@@ -21,8 +21,8 @@ const normalizeNote = (note) => {
   return note
     .trim()
     .replace(/[\n ]+/g, ' ')
-    .replace(/\{([0-9]+)\/([^\}]+)\}/g, `<a href="$1#dummy-anchor" class="hpmor-annotations-link">Ch. $1</a>`);
-}
+    .replace(/\{([0-9]+)\/([^}]+)\}/g, '<a href="$1#dummy-anchor" class="hpmor-annotations-link">Ch. $1</a>');
+};
 
 const generateReplacement = (text, id) => {
   const start = `<span annotation="${id}" class="hpmor-annotations-span">`;
