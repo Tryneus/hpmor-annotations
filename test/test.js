@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 const _ = require('lodash');
+const eslint = require('eslint');
 const jsdom = require('jsdom').JSDOM;
 const jsonschema = require('jsonschema');
 
@@ -126,4 +127,20 @@ describe('annotations', () => {
       });
     });
   });
+});
+
+describe('eslint', () => {
+  before(() => {
+  });
+});
+it('passes eslint', () => {
+  const dirs = [
+    path.join(__dirname, '../src'),
+    path.join(__dirname, '../script'),
+    path.join(__dirname, '../test'),
+  ];
+
+  const engine = new eslint.CLIEngine();
+  const results = engine.executeOnFiles(dirs);
+  console.log(results);
 });
