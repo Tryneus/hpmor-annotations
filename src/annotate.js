@@ -151,7 +151,7 @@
       } else if (!content) {
         console.error('hpmor-annotations: Could not find story content.');
       } else {
-        fetchAnnotations(chapter, (annotations) => {
+        fetchAnnotations(frame, chapter, (annotations) => {
           installCss(frame.contentDocument);
           const innerContent = wrapContent(frame.contentDocument, content);
           installSpans(innerContent, annotations);
@@ -273,32 +273,26 @@
       );
   }
 
-  function fetchAnnotations(chapter, callback) {
+  function fetchAnnotations(frame, chapter, callback) {
+    const oldScript = frame.contentDocument.getElementById('hpmor-annotations-data');
+    if (oldScript) {
+      oldScript.parentNode.removeChild(oldScript);
+    }
+
+    const newScript = frame.contentDocument.createElement('script');
+    newScript.id = 'hpmor-annotations-data';
+
     if (isLocal) {
+      newScript.src = `../dist/annotation/${chapter}.js`;
     } else {
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', `https://tryneus.github.io/hpmor-annotations/dist/annotation/${chapter}.json`);
-      xhr.send();
-      xhr.onerror = () => {
-        console.error('hpmor-annotations: Could not load annotations.');
-      };
-
-      xhr.onload = () => {
-        if (xhr.status !== 200) {
-          console.error('hpmor-annotations: Loading annotations failed, status:', xhr.status);
-        } else {
-          callback(parseAnnotations(xhr.response));
-        }
-      };
+      newScript.src = `https://tryneus.github.io/hpmor-annotations/dist/annotation/${chapter}.js`
     }
-  }
 
-  function parseAnnotations(raw) {
-    try {
-      return JSON.parse(raw);
-    } catch (err) {
-      console.error('hpmor-annotations: Failed to parse annotations', err);
-    }
+    newScript.onload = () => {
+      callback(frame.contentWindow.hpmorAnnotationsData);
+    };
+
+    frame.contentDocument.head.appendChild(newScript);
   }
 
   function getNoteDiv(id) {

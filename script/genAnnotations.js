@@ -115,9 +115,10 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
   });
 
   Object.values(allChapters).forEach((info) => {
-    const outputFile = path.join(annotationDestDir, `${info.chapter}.json`);
+    const outputFile = path.join(annotationDestDir, `${info.chapter}.js`);
     const {annotations, anchors} = info;
-    fs.writeFileSync(outputFile, JSON.stringify({annotations, anchors}));
-    console.log('Generated annotations json:', outputFile);
+    const data = JSON.stringify({annotations, anchors});
+    fs.writeFileSync(outputFile, `window.hpmorAnnotationsData = ${data};`);
+    console.log('Generated annotations js:', outputFile);
   });
 });
