@@ -1,9 +1,9 @@
 javascript:(function () {
   // Only do the thing if we're viewing an official HPMoR chapter
-  const is_local =
+  const isLocal =
     window.location.hostname === '' &&
     window.location.pathname.match(/\/chapter\/[0-9]+\.html$/);
-  const is_remote =
+  const isRemote =
     window.location.hostname === 'www.hpmor.com' &&
     window.location.pathname.match(/\/chapter\/[0-9]+$/);
 

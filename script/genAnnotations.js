@@ -4,30 +4,48 @@ const fs = require('fs');
 const path = require('path');
 
 const _ = require('lodash');
+const escapeHtml = require('escape-html');
 
 const annotationSourceDir = path.join(__dirname, '../annotation');
 const annotationDestDir = path.join(__dirname, '../dist/annotation');
 
 fs.mkdirSync(annotationDestDir, {recursive: true});
 
-const normalizeText = (text) =>
+const processText = (text) =>
   text
     .trim()
     .replace(/\n\n/g, '</p> <p>')
     .replace(/[\n ]+/g, ' ');
 
-// TODO: for every link, append an 'anchor' annotation for the linked chapter
-const normalizeNote = (note) => {
-  return note
+const processNote = (originalNote, id, annotationChapter) => {
+  const chapterLinks = [];
+  const note = originalNote
     .trim()
     .replace(/[\n ]+/g, ' ')
-    .replace(/\{([0-9]+)\/([^}]+)\}/g, '<a href="$1#dummy-anchor" class="hpmor-annotations-link">Ch. $1</a>');
+    .replace(/\{([0-9]+)\/([^}]+)\}/g, (match, chapter, text) => {
+      const linkId = `${id}-${chapterLinks.length}`;
+      chapterLinks.push({
+        text,
+        destChapter: chapter,
+        annotationChapter,
+        linkId,
+        id,
+      });
+      return `<a href="${chapter}#${linkId}" class="hpmor-annotations-link">Ch. ${chapter}</a>`;
+    })
+    .replace(/\[([^\]]+)\]\((http[^)]+)\)/g, (match, text, link) => {
+      return `<a href="${link.replace(/"/g, '%22')}">${escapeHtml(text)}</a>`;
+    });
+  
+  return {note, chapterLinks};
 };
 
 const generateReplacement = (text, id) => {
+  // Include an id on the first span so we can link to it with a fragment
+  const firstStart = `<span id="${id}" annotation="${id}" class="hpmor-annotations-span">`;
   const start = `<span annotation="${id}" class="hpmor-annotations-span">`;
   const end = '</span>';
-  return start + text.replace(/<\/p> <p>/g, end + '</p> <p>' + start) + end;
+  return firstStart + text.replace(/<\/p> <p>/g, end + '</p> <p>' + start) + end;
 };
 
 // The first tag determines the color used for the annotation, so we should
@@ -53,15 +71,16 @@ const orderTags = (annotations) => _.sortBy(annotations, (x) => tagsInOrder.inde
 // consumption
 fs.readdir(annotationSourceDir, (err, filelist) => {
   const files = filelist.filter((x) => Boolean(x.match(/^[0-9]+\.js$/)));
-  files.map((filename) => {
+  const links = [];
+
+  const allChapters = _.keyBy(files.map((filename) => {
     const sourceFile = path.join(annotationSourceDir, filename);
     const chapter = filename.match(/^([0-9]+)\.js$/)[1];
-    const outputFile = path.join(annotationDestDir, `${chapter}.json`);
 
     // Perform some normalization here because why not
-    const annotations = require(sourceFile);
+    const originalAnnotations = require(sourceFile);
 
-    const normalizedAnnotations = annotations.map((x, i) => {
+    const annotations = originalAnnotations.map((x, i) => {
       // Fields that are not required to be explicitly defined in the source
       const defaults = {
         disambiguation: {expect: 1, useIndex: 0},
@@ -70,13 +89,35 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
 
       const id = `hpmor-${chapter}-${i}`;
       const tags = orderTags(x.tags);
-      const text = normalizeText(x.text);
-      const note = normalizeNote(x.note);
+      const text = processText(x.text);
       const replacement = generateReplacement(text, id);
+      const {note, chapterLinks} = processNote(x.note, id, chapter);
+
+      chapterLinks.forEach((x) => links.push(x));
+
       return {...defaults, ...x, id, tags, text, replacement, note};
     });
 
-    fs.writeFileSync(outputFile, JSON.stringify(_.keyBy(normalizedAnnotations, 'id')));
+    return {chapter, annotations, anchors: []};
+  }), 'chapter');
+
+  // add anchors to each chapter linked to
+  links.forEach((info) => {
+    const destChapter = allChapters[info.destChapter];
+    const {id, linkId, text, annotationChapter} = info;
+    const data = {id, linkId, text, annotationChapter};
+
+    if (!destChapter) {
+      console.error(`No chapter annotations file for link from annotation ${id} to chapter ${info.destChapter}`);
+    } else {
+      destChapter.anchors.push(data);
+    }
+  });
+
+  Object.values(allChapters).forEach((info) => {
+    const outputFile = path.join(annotationDestDir, `${info.chapter}.json`);
+    const {annotations, anchors} = info;
+    fs.writeFileSync(outputFile, JSON.stringify({annotations, anchors}));
     console.log('Generated annotations json:', outputFile);
   });
 });

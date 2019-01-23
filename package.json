@@ -26,6 +26,7 @@
   "devDependencies": {
     "bookmarklet": "^1.0.2",
     "butternut": "^0.4.6",
+    "escape-html": "^1.0.3",
     "eslint": "^5.12.1",
     "eslint-plugin-mocha": "^5.2.1",
     "jsdom": "^13.1.0",

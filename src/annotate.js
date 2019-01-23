@@ -3,6 +3,11 @@
   // Used to track the currently displayed note
   let activeNote;
 
+  // Used for development environment shortcuts
+  const isLocal =
+    window.location.hostname === '' &&
+    window.location.pathname.match(/\/chapter\/[0-9]+\.html$/);
+
   const colors = {
     'foreshadowing': '#aaa',
     'consequence': '#f6f',
@@ -85,6 +90,7 @@
       note.id = `${annotation.id}-note`;
       note.className = 'hpmor-annotations-note';
       note.onclick = dismissNote;
+      // TODO: include an icon linking to the source code for the annotation
       note.innerHTML = `
         <div class="hpmor-annotations-note-content">
           <div class="hpmor-annotations-note-tags" style="background: ${color}">${annotation.tags.join(' / ')}</div>
@@ -268,20 +274,23 @@
   }
 
   function fetchAnnotations(chapter, callback) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', `https://tryneus.github.io/hpmor-annotations/dist/annotation/${chapter}.json`);
-    xhr.send();
-    xhr.onerror = () => {
-      console.error('hpmor-annotations: Could not load annotations.');
-    };
+    if (isLocal) {
+    } else {
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', `https://tryneus.github.io/hpmor-annotations/dist/annotation/${chapter}.json`);
+      xhr.send();
+      xhr.onerror = () => {
+        console.error('hpmor-annotations: Could not load annotations.');
+      };
 
-    xhr.onload = () => {
-      if (xhr.status !== 200) {
-        console.error('hpmor-annotations: Loading annotations failed, status:', xhr.status);
-      } else {
-        callback(parseAnnotations(xhr.response));
-      }
-    };
+      xhr.onload = () => {
+        if (xhr.status !== 200) {
+          console.error('hpmor-annotations: Loading annotations failed, status:', xhr.status);
+        } else {
+          callback(parseAnnotations(xhr.response));
+        }
+      };
+    }
   }
 
   function parseAnnotations(raw) {
@@ -350,30 +359,31 @@
     activeNote = null;
   }
 
-  // Dev function for ease-of-use
-  // TODO: remove this later
-  function reloadScript() {
-    const oldScript = document.getElementById('hpmor-annotations-script');
+  const exports = {installFrame, annotate};
 
-    if (!oldScript) {
-      console.error('Could not find script to reload.');
-    } else {
-      // Clear any event listeners that we installed
-      const frame = document.getElementById('hpmor-annotations-frame');
-      frame.removeEventListener('load', handleFrameLoad);
-      window.removeEventListener('resize', positionNote);
+  // Dev function for quicker debugging
+  if (isLocal) {
+    exports.reloadScript = () => {
+      const oldScript = document.getElementById('hpmor-annotations-script');
 
-      const newScript = document.createElement('script');
-      newScript.src = oldScript.src.replace('dist', 'src');
-      newScript.id = 'hpmor-annotations-script';
+      if (!oldScript) {
+        console.error('Could not find script to reload.');
+      } else {
+        // Clear any event listeners that we installed
+        const frame = document.getElementById('hpmor-annotations-frame');
+        frame.removeEventListener('load', handleFrameLoad);
+        window.removeEventListener('resize', positionNote);
 
-      // Drop the old script element and add a new one
-      oldScript.parentNode.removeChild(oldScript);
-      document.head.appendChild(newScript);
+        const newScript = document.createElement('script');
+        newScript.src = oldScript.src.replace('dist', 'src');
+        newScript.id = 'hpmor-annotations-script';
+
+        // Drop the old script element and add a new one
+        oldScript.parentNode.removeChild(oldScript);
+        document.head.appendChild(newScript);
+      }
     }
   }
-
-  const exports = {installFrame, annotate, reloadScript};
 
   // Export everything for unit tests
   if (typeof module !== 'undefined' && module.exports) {
