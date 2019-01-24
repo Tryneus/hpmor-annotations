@@ -11,7 +11,7 @@
   const colors = {
     'foreshadowing': '#aaa',
     'consequence': '#f6f',
-    'reference': '#66f',
+    'reference': '#77f',
     'departure': '#f90',
     'original': '#af0',
     'speculation': '#e0f',
@@ -67,7 +67,7 @@
     frame.addEventListener('load', handleFrameLoad);
 
     // Reposition the active note if the window is resized
-    window.addEventListener('resize', positionNote);
+    window.addEventListener('resize', positionNotes);
 
     return frame;
   }
@@ -92,18 +92,32 @@
       note.onclick = dismissNote;
       // TODO: include an icon linking to the source code for the annotation
       note.innerHTML = `
-        <div class="hpmor-annotations-note-content">
-          <div class="hpmor-annotations-note-tags" style="background: ${color}">${annotation.tags.join(' / ')}</div>
-          <div class="hpmor-annotations-note-text" style="border-color: ${color}">${annotation.note}</div>
+        <div class="hpmor-annotations-note-container">
+          <div class="hpmor-annotations-note-content">
+            <div class="hpmor-annotations-note-tags" style="background: ${color}">${annotation.tags.join(' / ')}</div>
+            <div class="hpmor-annotations-note-text" style="border-color: ${color}">${annotation.note}</div>
+          </div>
+          <div class="hpmor-annotations-note-bracket" style="border-color: ${color}"></div>
         </div>
-        <div class="hpmor-annotations-note-bracket" style="border-color: ${color}"></div>
+        <div class="hpmor-annotations-note-dot-container">
+          <div class="hpmor-annotations-note-dot" style="border-color: ${color}"></div>
+        </div>
       `;
+
+      // Allow clicking the dot to toggle notes
+      const dot = note.getElementsByClassName('hpmor-annotations-note-dot')[0];
+      dot.onclick = (ev) => toggleNote(annotation.id, ev);
+
       notes.appendChild(note);
     });
   }
 
+  function getTextSpans(content) {
+    return Array.from(content.getElementsByClassName('hpmor-annotations-span'));
+  }
+
   function installSpans(content, annotations) {
-    getAnnotationSpans(content).forEach((span) => {
+    getTextSpans(content).forEach((span) => {
       span.outerHTML = span.innerHTML;
     });
 
@@ -118,7 +132,7 @@
 
     content.innerHTML = innerHTML;
 
-    getAnnotationSpans(content).forEach((span) => {
+    getTextSpans(content).forEach((span) => {
       const id = span.attributes.annotation.value;
       const annotation = annotations[id];
 
@@ -151,11 +165,12 @@
       } else if (!content) {
         console.error('hpmor-annotations: Could not find story content.');
       } else {
-        fetchAnnotations(frame, chapter, (annotations) => {
+        fetchAnnotations(frame, chapter, ({annotations, anchors}) => {
           installCss(frame.contentDocument);
           const innerContent = wrapContent(frame.contentDocument, content);
           installSpans(innerContent, annotations);
           installNotes(frame.contentDocument, annotations);
+          positionNotes();
         });
       }
     }
@@ -194,9 +209,13 @@
 
   .hpmor-annotations-note {
     position: absolute;
-    display: none;
     left: 0;
     cursor: default;
+  }
+
+  .hpmor-annotations-note-container {
+    display: none;
+    height: inherit;
     justify-content: flex-end;
   }
 
@@ -233,6 +252,23 @@
     flex: 0 0 auto;
   }
 
+  .hpmor-annotations-note-dot-container {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .hpmor-annotations-note-dot {
+    width: 7px;
+    height: 7px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 7px;
+    margin-right: 5px;
+    cursor: pointer
+  }
+
   .hpmor-annotations-link {
     text-decoration: none;
   }
@@ -263,14 +299,6 @@
     }
 
     return frameDocument.getElementById('hpmor-annotations-wrapped-content');
-  }
-
-  function getAnnotationSpans(content) {
-    return Array.from(content.getElementsByTagName('span'))
-      .filter((span) =>
-        span.attributes.annotation &&
-          span.attributes.annotation.value.match(/^hpmor-[0-9]+-[0-9]+$/)
-      );
   }
 
   function fetchAnnotations(frame, chapter, callback) {
@@ -314,42 +342,74 @@
       }
     }
 
+    // Turn note on and dot off
+    const noteDot = note.getElementsByClassName('hpmor-annotations-note-dot-container');
+    const noteContent = note.getElementsByClassName('hpmor-annotations-note-container');
+
+    if (noteDot.length === 1) {
+      noteDot[0].style.display = 'none';
+    } else {
+      console.error('hpmor-annotations: could not find dot container', id);
+    }
+
+    if (noteContent.length === 1) {
+      noteContent[0].style.display = 'flex';
+    } else {
+      console.error('hpmor-annotations: could not find note container', id);
+    }
+
     activeNote = note;
-    note.style.display = 'flex';
-    positionNote();
   }
 
-  function positionNote() {
-    console.log('positionNote', activeNote);
-    if (!activeNote) { return; }
-
-    const id = activeNote.id.match(/^(hpmor-[0-9]+-[0-9]+)-note$/)[1];
+  function positionNotes() {
+    // TODO: use an overlay layout if not enough x space
     const frame = document.getElementById('hpmor-annotations-frame');
     const content = frame.contentDocument.getElementById('hpmor-annotations-wrapped-content');
-    const spans = Array.from(frame.contentDocument.getElementsByTagName('span'))
-      .filter((span) =>
-        span.attributes.annotation &&
-          span.attributes.annotation.value === id);
+    const notes = Array.from(frame.contentDocument.getElementsByClassName('hpmor-annotations-note'));
 
-    // Find the top/bottom offsets of the annotation
-    const dimensions = spans.reduce((acc, span) => {
-      const {top, bottom} = span.getBoundingClientRect();
-      return {
-        top: (acc && (acc.top < top ? acc.top : top)) || top,
-        bottom: (acc && (acc.bottom > bottom ? acc.bottom : bottom)) || bottom,
-      };
-    }, {});
+    notes.forEach((note) => {
+      const id = note.id.match(/^(hpmor-[0-9]+-[0-9]+)-note$/)[1];
+      const spans = Array.from(frame.contentDocument.getElementsByTagName('span'))
+        .filter((span) =>
+          span.attributes.annotation &&
+            span.attributes.annotation.value === id);
 
-    // Position the note so that it sits next to the annotated text
-    activeNote.style.width = `${content.getBoundingClientRect().left + frame.contentWindow.pageXOffset}px`;
-    activeNote.style.top = `${dimensions.top + frame.contentWindow.pageYOffset}px`;
-    activeNote.style.height = `${dimensions.bottom - dimensions.top}px`;
+      // Find the top/bottom offsets of the annotation
+      const dimensions = spans.reduce((acc, span) => {
+        const {top, bottom} = span.getBoundingClientRect();
+        return {
+          top: (acc && (acc.top < top ? acc.top : top)) || top,
+          bottom: (acc && (acc.bottom > bottom ? acc.bottom : bottom)) || bottom,
+        };
+      }, {});
 
-    // TODO: use an overlay layout if not enough x space
+      // Position the note so that it sits next to the annotated text
+      note.style.width = `${content.getBoundingClientRect().left + frame.contentWindow.pageXOffset}px`;
+      note.style.top = `${dimensions.top + frame.contentWindow.pageYOffset}px`;
+      note.style.height = `${dimensions.bottom - dimensions.top}px`;
+    });
   }
 
   function dismissNote() {
-    activeNote.style.display = null;
+    // This happens if someone clicks on the div of a hidden note
+    if (!activeNote) { return; }
+
+    // Turn note off and dot on
+    const noteDot = activeNote.getElementsByClassName('hpmor-annotations-note-dot-container');
+    const noteContent = activeNote.getElementsByClassName('hpmor-annotations-note-container');
+
+    if (noteDot.length === 1) {
+      noteDot[0].style.display = null;
+    } else {
+      console.error('hpmor-annotations: could not find dot container', id);
+    }
+
+    if (noteContent.length === 1) {
+      noteContent[0].style.display = null;
+    } else {
+      console.error('hpmor-annotations: could not find note container', id);
+    }
+
     activeNote = null;
   }
 
@@ -366,7 +426,7 @@
         // Clear any event listeners that we installed
         const frame = document.getElementById('hpmor-annotations-frame');
         frame.removeEventListener('load', handleFrameLoad);
-        window.removeEventListener('resize', positionNote);
+        window.removeEventListener('resize', positionNotes);
 
         const newScript = document.createElement('script');
         newScript.src = oldScript.src.replace('dist', 'src');

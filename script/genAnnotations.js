@@ -117,7 +117,12 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
   Object.values(allChapters).forEach((info) => {
     const outputFile = path.join(annotationDestDir, `${info.chapter}.js`);
     const {annotations, anchors} = info;
-    const data = JSON.stringify({annotations, anchors});
+
+    const data = JSON.stringify({
+      annotations: _.keyBy(annotations, 'id'),
+      anchors,
+    });
+
     fs.writeFileSync(outputFile, `window.hpmorAnnotationsData = ${data};`);
     console.log('Generated annotations js:', outputFile);
   });
