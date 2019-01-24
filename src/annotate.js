@@ -94,13 +94,11 @@
 
       // TODO: include an icon linking to the source code for the annotation
       note.innerHTML = `
-        <div class="hpmor-annotations-note-container">
-          <div class="hpmor-annotations-note-content">
-            <div class="hpmor-annotations-note-tags" style="background: ${color}">${annotation.tags.join(' / ')}</div>
-            <div class="hpmor-annotations-note-text" style="border-color: ${color}">${annotation.note}</div>
-          </div>
-          <div class="hpmor-annotations-note-bracket" style="border-color: ${color}"></div>
+        <div class="hpmor-annotations-note-content">
+          <div class="hpmor-annotations-note-tags" style="background: ${color}">${annotation.tags.join(' / ')}</div>
+          <div class="hpmor-annotations-note-text" style="border-color: ${color}">${annotation.note}</div>
         </div>
+        <div class="hpmor-annotations-note-bracket" style="border-color: ${color}"></div>
       `;
 
       notes.appendChild(note);
@@ -237,11 +235,7 @@
     position: absolute;
     left: 0;
     cursor: default;
-  }
-
-  .hpmor-annotations-note-container {
     display: none;
-    height: inherit;
     justify-content: flex-end;
   }
 
@@ -290,7 +284,7 @@
   .hpmor-annotations-dash-box {
     height: 10px;
     width: 10px;
-    margin-right: 5px;
+    margin-left: 5px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
