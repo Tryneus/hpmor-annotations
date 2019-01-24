@@ -123,7 +123,18 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
       anchors,
     });
 
-    fs.writeFileSync(outputFile, `window.hpmorAnnotationsData = ${data};`);
+    const code = `
+(function(){
+  const data = ${data};
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = data;
+  } else {
+    window.hpmorAnnotationsData = data;
+  }
+})();
+    `;
+
+    fs.writeFileSync(outputFile, code.trim());
     console.log('Generated annotations js:', outputFile);
   });
 });

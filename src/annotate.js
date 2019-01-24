@@ -342,7 +342,7 @@
     if (isLocal) {
       newScript.src = `../dist/annotation/${chapter}.js`;
     } else {
-      newScript.src = `https://tryneus.github.io/hpmor-annotations/dist/annotation/${chapter}.js`
+      newScript.src = `https://tryneus.github.io/hpmor-annotations/dist/annotation/${chapter}.js`;
     }
 
     newScript.onload = () => {
@@ -440,7 +440,7 @@
         oldScript.parentNode.removeChild(oldScript);
         document.head.appendChild(newScript);
       }
-    }
+    };
   }
 
   // Export everything for unit tests
