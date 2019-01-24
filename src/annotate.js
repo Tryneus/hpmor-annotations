@@ -55,6 +55,7 @@
       frame.id = 'hpmor-annotations-frame';
 
       // TODO: is it possible to move the existing body into the iframe without reloading?
+      // maybe set innerHTML?
       frame.src = window.location.href;
       document.body.appendChild(frame);
     }
@@ -90,6 +91,7 @@
       note.id = `${annotation.id}-note`;
       note.className = 'hpmor-annotations-note';
       note.onclick = dismissNote;
+
       // TODO: include an icon linking to the source code for the annotation
       note.innerHTML = `
         <div class="hpmor-annotations-note-container">
@@ -99,16 +101,39 @@
           </div>
           <div class="hpmor-annotations-note-bracket" style="border-color: ${color}"></div>
         </div>
-        <div class="hpmor-annotations-note-dot-container">
-          <div class="hpmor-annotations-note-dot" style="border-color: ${color}"></div>
+      `;
+
+      notes.appendChild(note);
+    });
+  }
+
+  function installDashes(innerDocument, annotations) {
+    const oldDashes = innerDocument.getElementById('hpmor-annotations-dashes');
+    
+    if (oldDashes) {
+      oldDashes.parentNode.removeChild(oldDashes);
+    }
+
+    const dashes = innerDocument.createElement('div');
+    dashes.id = 'hpmor-annotations-dashes';
+    innerDocument.body.insertBefore(dashes, innerDocument.body.childNodes[0]);
+
+    Object.values(annotations).forEach((annotation) => {
+      const color = colors[annotation.tags[0]];
+      const dash = document.createElement('div');
+      dash.id = `${annotation.id}-dash`;
+      dash.className = 'hpmor-annotations-dash-container';
+      dash.innerHTML = `
+        <div class="hpmor-annotations-dash-box">
+          <div class="hpmor-annotations-dash" style="background: ${color}"></div>
         </div>
       `;
 
-      // Allow clicking the dot to toggle notes
-      const dot = note.getElementsByClassName('hpmor-annotations-note-dot')[0];
-      dot.onclick = (ev) => toggleNote(annotation.id, ev);
+      // Allow clicking the dash to toggle notes
+      const dashBox = dash.getElementsByClassName('hpmor-annotations-dash-box')[0];
+      dashBox.onclick = (ev) => toggleNote(annotation.id, ev);
 
-      notes.appendChild(note);
+      dashes.appendChild(dash);
     });
   }
 
@@ -170,6 +195,7 @@
           const innerContent = wrapContent(frame.contentDocument, content);
           installSpans(innerContent, annotations);
           installNotes(frame.contentDocument, annotations);
+          installDashes(frame.contentDocument, annotations);
           positionNotes();
         });
       }
@@ -252,21 +278,30 @@
     flex: 0 0 auto;
   }
 
-  .hpmor-annotations-note-dot-container {
+  .hpmor-annotations-dash-container {
+    position: absolute;
     display: flex;
     height: 100%;
     align-items: center;
     justify-content: flex-end;
+    pointer-events: none;
   }
 
-  .hpmor-annotations-note-dot {
-    width: 7px;
-    height: 7px;
-    border-style: solid;
-    border-width: 2px;
-    border-radius: 7px;
+  .hpmor-annotations-dash-box {
+    height: 10px;
+    width: 10px;
     margin-right: 5px;
-    cursor: pointer
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+  }
+
+  .hpmor-annotations-dash {
+    width: 8px;
+    height: 2px;
   }
 
   .hpmor-annotations-link {
@@ -342,22 +377,7 @@
       }
     }
 
-    // Turn note on and dot off
-    const noteDot = note.getElementsByClassName('hpmor-annotations-note-dot-container');
-    const noteContent = note.getElementsByClassName('hpmor-annotations-note-container');
-
-    if (noteDot.length === 1) {
-      noteDot[0].style.display = 'none';
-    } else {
-      console.error('hpmor-annotations: could not find dot container', id);
-    }
-
-    if (noteContent.length === 1) {
-      noteContent[0].style.display = 'flex';
-    } else {
-      console.error('hpmor-annotations: could not find note container', id);
-    }
-
+    note.style.display = 'flex';
     activeNote = note;
   }
 
@@ -369,6 +389,7 @@
 
     notes.forEach((note) => {
       const id = note.id.match(/^(hpmor-[0-9]+-[0-9]+)-note$/)[1];
+      const dash = frame.contentDocument.getElementById(`${id}-dash`);
       const spans = Array.from(frame.contentDocument.getElementsByTagName('span'))
         .filter((span) =>
           span.attributes.annotation &&
@@ -387,6 +408,10 @@
       note.style.width = `${content.getBoundingClientRect().left + frame.contentWindow.pageXOffset}px`;
       note.style.top = `${dimensions.top + frame.contentWindow.pageYOffset}px`;
       note.style.height = `${dimensions.bottom - dimensions.top}px`;
+
+      dash.style.left = `${content.getBoundingClientRect().right + frame.contentWindow.pageXOffset}px`;
+      dash.style.top = note.style.top;
+      dash.style.height = note.style.height;
     });
   }
 
@@ -394,22 +419,7 @@
     // This happens if someone clicks on the div of a hidden note
     if (!activeNote) { return; }
 
-    // Turn note off and dot on
-    const noteDot = activeNote.getElementsByClassName('hpmor-annotations-note-dot-container');
-    const noteContent = activeNote.getElementsByClassName('hpmor-annotations-note-container');
-
-    if (noteDot.length === 1) {
-      noteDot[0].style.display = null;
-    } else {
-      console.error('hpmor-annotations: could not find dot container', id);
-    }
-
-    if (noteContent.length === 1) {
-      noteContent[0].style.display = null;
-    } else {
-      console.error('hpmor-annotations: could not find note container', id);
-    }
-
+    activeNote.style.display = null;
     activeNote = null;
   }
 
