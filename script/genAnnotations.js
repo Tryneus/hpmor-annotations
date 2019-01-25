@@ -23,7 +23,7 @@ const processNote = (originalNote, id, annotationChapter) => {
     .trim()
     .replace(/[\n ]+/g, ' ')
     .replace(/\{([0-9]+)\/([^}]+)\}/g, (match, chapter, text) => {
-      const linkId = `${id}-${chapterLinks.length}`;
+      const linkId = `${id}-${chapterLinks.length + 1}`;
       chapterLinks.push({
         text,
         destChapter: chapter,
@@ -87,7 +87,7 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
         subjects: [],
       };
 
-      const id = `hpmor-${chapter}-${i}`;
+      const id = `hpmor-${chapter}-${i + 1}`;
       const tags = orderTags(x.tags);
       const text = processText(x.text);
       const replacement = generateReplacement(text, id);

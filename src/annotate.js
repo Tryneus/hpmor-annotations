@@ -106,32 +106,32 @@
   }
 
   function installDashes(innerDocument, annotations) {
-    const oldDashes = innerDocument.getElementById('hpmor-annotations-dashes');
+    const oldDashes = innerDocument.getElementById('hpmor-annotations-ranges');
     
     if (oldDashes) {
       oldDashes.parentNode.removeChild(oldDashes);
     }
 
-    const dashes = innerDocument.createElement('div');
-    dashes.id = 'hpmor-annotations-dashes';
-    innerDocument.body.insertBefore(dashes, innerDocument.body.childNodes[0]);
+    const ranges = innerDocument.createElement('div');
+    ranges.id = 'hpmor-annotations-ranges';
+    innerDocument.body.insertBefore(ranges, innerDocument.body.childNodes[0]);
 
     Object.values(annotations).forEach((annotation) => {
       const color = colors[annotation.tags[0]];
-      const dash = document.createElement('div');
-      dash.id = `${annotation.id}-dash`;
-      dash.className = 'hpmor-annotations-dash-container';
-      dash.innerHTML = `
-        <div class="hpmor-annotations-dash-box">
-          <div class="hpmor-annotations-dash" style="background: ${color}"></div>
+      const range = document.createElement('div');
+      range.id = `${annotation.id}-range`;
+      range.className = 'hpmor-annotations-range-container';
+      range.innerHTML = `
+        <div class="hpmor-annotations-range-box">
+          <div class="hpmor-annotations-range" style="background: ${color}"></div>
         </div>
       `;
 
-      // Allow clicking the dash to toggle notes
-      const dashBox = dash.getElementsByClassName('hpmor-annotations-dash-box')[0];
-      dashBox.onclick = (ev) => toggleNote(annotation.id, ev);
+      // Allow clicking the range to toggle notes
+      const rangeBox = range.getElementsByClassName('hpmor-annotations-range-box')[0];
+      rangeBox.onclick = (ev) => toggleNote(annotation.id, ev);
 
-      dashes.appendChild(dash);
+      ranges.appendChild(range);
     });
   }
 
@@ -272,30 +272,27 @@
     flex: 0 0 auto;
   }
 
-  .hpmor-annotations-dash-container {
+  .hpmor-annotations-range-container {
     position: absolute;
-    display: flex;
     height: 100%;
     align-items: center;
     justify-content: flex-end;
     pointer-events: none;
   }
 
-  .hpmor-annotations-dash-box {
-    height: 10px;
-    width: 10px;
+  .hpmor-annotations-range-box {
+    height: 100%;
     margin-left: 5px;
+    padding-left: 2px;
+    padding-right: 2px;
     cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     pointer-events: auto;
   }
 
-  .hpmor-annotations-dash {
-    width: 8px;
-    height: 2px;
+  .hpmor-annotations-range {
+    height: 100%;
+    width: 4px;
+    border-top: solid 1px white;
   }
 
   .hpmor-annotations-link {
@@ -383,7 +380,7 @@
 
     notes.forEach((note) => {
       const id = note.id.match(/^(hpmor-[0-9]+-[0-9]+)-note$/)[1];
-      const dash = frame.contentDocument.getElementById(`${id}-dash`);
+      const range = frame.contentDocument.getElementById(`${id}-range`);
       const spans = Array.from(frame.contentDocument.getElementsByTagName('span'))
         .filter((span) =>
           span.attributes.annotation &&
@@ -403,9 +400,9 @@
       note.style.top = `${dimensions.top + frame.contentWindow.pageYOffset}px`;
       note.style.height = `${dimensions.bottom - dimensions.top}px`;
 
-      dash.style.left = `${content.getBoundingClientRect().right + frame.contentWindow.pageXOffset}px`;
-      dash.style.top = note.style.top;
-      dash.style.height = note.style.height;
+      range.style.left = `${content.getBoundingClientRect().right + frame.contentWindow.pageXOffset}px`;
+      range.style.top = note.style.top;
+      range.style.height = note.style.height;
     });
   }
 
