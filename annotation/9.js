@@ -1,9 +1,9 @@
 module.exports = [
   {
-    tags: ['spoiler'],
+    tags: ['spoiler', 'TODO'],
     text: `
 Title Redacted
-    `,
+    `, // TODO: don't currently have a way to match the title, add a special tag type
     note: `
 This is part of a multi-chapter arc, and the title is hidden to avoid
 spoiling a crucial plot-point.  In particular, the title is Self
@@ -39,17 +39,17 @@ relieved that Draco is sorted into Slytherin.
   {
     tags: ['spoiler'],
     text: `
-Harry glanced over briefly at his new House-mate, more to get a quick
-look at the face than anything else. He was still trying to get
-himself under control from his encounter with the ghosts. The sad, the
-really sad, the really truly sad thing was that he did seem to be
-getting himself under control again. It seemed ill-fitting. Like he
-should have taken at least a day. Maybe a whole lifetime. Maybe just
-never.
+Harry glanced over briefly at his new House-mate, more to get a
+quick look at the face than anything else. He was still trying to
+get himself under control from his encounter with the ghosts. The
+sad, the really sad, the really truly sad thing was that he
+<em>did</em> seem to be getting himself under control again. It
+seemed ill-fitting. Like he should have taken at least a day. Maybe
+a whole lifetime. Maybe just never.
     `,
     note: `
 Harry's first reaction upon seeing the ghosts was to believe that
-nobody had ever really died (39/`I thought there was an afterlife`).
+nobody had ever really died {39/I thought there was an afterlife}.
 He was understandably upset to learn that this was not the case.
     `,
   },
@@ -76,9 +76,9 @@ weird magic genes.  // TODO: find chapter link
     text: `
 And talk about your foregone conclusions. Harry didn't see why
 Hermione had been so tense about it. In what weird alternative
-universe would that girl not be Sorted into Ravenclaw? If Hermione
-Granger didn't go to Ravenclaw then there was no good reason for
-Ravenclaw House to exist.
+universe would that girl <em>not</em> be Sorted into Ravenclaw? If
+Hermione Granger didn't go to Ravenclaw then there was no good
+reason for Ravenclaw House to exist.
     `,
     note: `
 Hermione obviously has the traits of a Ravenclaw, but in the original
@@ -106,10 +106,10 @@ mentioned again.
   {
     tags: ['foreshadowing', 'spoiler'],
     text: `
-"Save us from some more Dark Lords!" called one of the Weasley twins,
-and then the other Weasley twin cried, "Especially if they're
-Professors!" to general laughter from all the tables except
-Slytherin.
+<em>"Save us from some more Dark Lords!"</em> called one of the
+Weasley twins, and then the other Weasley twin cried,
+<em>"Especially if they're Professors!"</em> to general laughter
+from all the tables except Slytherin.
     `,
     note: `
 One of the professors is a Dark Lord (Quirrell is Voldemort), although
@@ -136,10 +136,10 @@ up this act).
   },
 
   {
-    tags: ['reference'],
+    tags: ['reference', 'departure'],
     text: `
-Its song had implied so: Oh, I'm the Sorting Hat and I'm okay, I sleep
-all year and I work one day...
+Its song had implied so: <em>Oh, I'm the Sorting Hat and I'm okay, I
+sleep all year and I work one day...</em>
     `,
     note: `
 This is not the actual sorting hat song, but instead it is a reference
@@ -151,10 +151,10 @@ https://www.youtube.com/watch?v=QgaRd4d8hOY
   {
     tags: ['spoiler', 'foreshadowing'],
     text: `
-In the back of his mind, he wondered if the Sorting Hat was genuinely
-conscious in the sense of being aware of its own awareness, and if so,
-whether it was satisfied with only getting to talk to eleven-year-olds
-once per year.
+(In the back of his mind, he wondered if the Sorting Hat was
+genuinely <em>conscious</em> in the sense of being aware of its own
+awareness, and if so, whether it was satisfied with only getting to
+talk to eleven-year-olds once per year.
     `,
     note: `
 Ironically, the hat *becomes* conscious when Harry puts it on

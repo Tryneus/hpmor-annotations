@@ -100,7 +100,7 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
       const tags = orderTags(x.tags);
       const text = processText(x.text);
       const replacement = generateReplacement(text, id);
-      const {note, chapterLinks} = processNote(x.note, id, chapter);
+      const {note, chapterLinks} = x.note ? processNote(x.note, id, chapter) : {note: null, chapterLinks: []};
 
       chapterLinks.forEach((x) => links.push(x));
 

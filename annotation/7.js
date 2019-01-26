@@ -27,7 +27,7 @@ to Draco.
   {
     tags: ['speculation'],
     text: `
-It's like she's afraid she'll never see me again, the thought popped
+<em>It's like she's afraid she'll never see me again,</em> the thought popped
 into Harry's head. He knew the thought was true but he didn't know why
 Mum was so afraid.
     `,
@@ -85,20 +85,20 @@ engines.  TODO: links.
   },
 
   {
-    tags: ['original'],
+    tags: ['original', 'foreshadowing'],
     text: `
 "That's just wrong. That violates every possible rule of game
-design. Look, the rest of this game souds like it might make sense,
-sort of, for a sport I mean, but you're basically saying that catching
-te Snitch overwhelms almost any ordinary point spread. The two Seekers
-are up there flying around lookng for the Snitch and usually not
-interacting with anyone else, spotting the Snitch first is going tobe
-mostly luck -"
+design. Look, the rest of this game sounds like it might make
+sense, sort of, for a sport I mean, but you're basically saying
+that catching the Snitch overwhelms almost any ordinary point
+spread. The two Seekers are up there flying around looking for the
+Snitch and usually not interacting with anyone else, spotting the
+Snitch first is going to be mostly luck -"
     `,
     note: `
 In the original series, Quidditch played a central role several times,
-especially because Harry was nturally good at it.  This comment by
-Harry is not only a shot at the terribly-designed game, but alsoa hint
+especially because Harry was naturally good at it.  This comment by
+Harry is not only a shot at the terribly-designed game, but also a hint
 that Quidditch will not be so important in this series.
     `,
   },
@@ -106,9 +106,9 @@ that Quidditch will not be so important in this series.
   {
     tags: ['foreshadowing', 'spoiler'],
     text: `
-"They won't change the game just 'cause you say so!"
+"They won't change the game just 'cause <em>you</em> say so!"
 
-"I am the Boy-Who-Lived, you know. People will listen to me. And maybe
+"I <em>am</em> the Boy-Who-Lived, you know. People will listen to me. And maybe
 if I can persuade them to change the game at Hogwarts, the innovation
 will spread.
     `,
@@ -123,8 +123,8 @@ accomplishes with a clever plot {116/His last plot}.
   {
     tags: ['reference'],
     text: `
-"Then again, it wouldn't take much time to write up the Ninety-Five
-Theses of the Snitchless Reformaton and nail it to a church door -"
+"Then again, it wouldn't <em>take</em> much time to write up the Ninety-Five
+Theses of the Snitchless Reformation and nail it to a church door -"
     `,
     note: `
 This is a reference to Martin Luther and his Ninety-Five Theses, which
@@ -138,7 +138,7 @@ https://en.wikipedia.org/wiki/The_Ninety-Five_Theses
     tags: ['departure'],
     text: `
 decorated in silver and emeralds and bearing what Harry guessed to be
-the Malfoy family crest, a beauiful fanged serpent over crossed ivory
+the Malfoy family crest, a beautiful fanged serpent over crossed ivory
 wands.
     `,
     note: `
@@ -151,22 +151,24 @@ http://harrypotter.wikia.com/wiki/alfoy_family#Malfoy_family_crest
   {
     tags: ['background'],
     text: `
-"I'd say it's a fine name," said Draco, "but it belongs to the Noble
-and Most Ancient House of Black.I'll call you Mr. Silver."
+"I'd say it's a <em>fine</em> name," said Draco, "but it belongs
+to the Noble and Most Ancient House of Black. I'll call you Mr.
+Silver."
 
-"You get away from... from Mr. Gold," Ron said coldly, and took a
-forward step. "He doesn't need to talk to the likes of you!"
+"<em>You</em> get away from... from Mr. Gold," Ron said coldly,
+and took a forward step. "He doesn't need to talk to the likes of
+you!"
     `,
     note: `
 Silver and Gold are the colors of Slytherin and Gryffindor,
-respectively, which Drago and Ron will be joining, respectively.  The
+respectively, which Draco and Ron will be joining, respectively.  The
 others are trying to align Harry with their future House, although he
 may not realize it.
     `,
   },
 
   {
-    tags: ['departure', 'spoiler']
+    tags: ['departure', 'spoiler'],
     text: `
 "Where's the famous Weasley family rat?"
     `,
@@ -183,7 +185,7 @@ died. "A rat."}.
     text: `
 "Um... his mother helped me figure out how to get to this platform
 from the King's Cross Station, so it was kind of hard to tell him to
-get lost. And it's not that I hate this Ron guy," Harry said, "I just,
+get lost. And it's not that I <em>hate</em> this Ron guy," Harry said, "I just,
 just..." Harry searched for words.
 
 "Don't see any reason for him to exist?" offered Draco.
@@ -224,11 +226,11 @@ not seen in the original series.
   {
     tags: ['spoiler'],
     text: `
-Maybe I should just chug the whole thing as fast as possible... and
-hope my stomach doesn't explode from all the carbon dioxide, or that I
-don't burp while drinking it...
+<em>Maybe I should just chug the whole thing as fast as
+possible... and hope my stomach doesn't explode from all the carbon
+dioxide, or that I don't burp while drinking it...</em>
 
-No, he could afford to be a little patient.
+No, he could afford to be a <em>little</em> patient.
     `,
     note: `
 This is probably the **Comed-Tea** influencing Harry's thought
@@ -258,9 +260,9 @@ The way Lucius was looking at you, I thought he was going to c-crucify
 you."
     `,
     note: `
-It's not clear why Harry stumbles on the word `crucify` here.  It may
+It's not clear why Harry stumbles on the word "crucify" here.  It may
 be that his **mysterious dark side**'s patterns started completing the
-word to `crucio`, and he had to correct himself.
+word to "crucio", and he had to correct himself.
     `,
   },
 
@@ -280,10 +282,10 @@ Harry's **mysterious dark side**.
   {
     tags: ['speculation', 'spoiler'],
     text: `
-BOY-WHO-LIVED GETS
-DRACO MALFOY PREGNANT
+<em>BOY-WHO-LIVED GETS<br>
+DRACO MALFOY PREGNANT</em>
     `,
-    tags: `
+    note: `
 Another of the lines that **ship Harry and Draco**.
 
 The first of **Luna's prophecies**, and also the most irritating.  All
@@ -362,8 +364,9 @@ that are re-used later.
     tags: ['spoiler'],
     text: `
 A cold chill was coming over Harry, a chill that came with
-instructions to keep his voice and face normal. Note to self:
-Overthrow government of magical Britain at earliest convenience.
+instructions to keep his voice and face normal. <em>Note to self:
+Overthrow government of magical Britain at earliest
+convenience.</em>
     `,
     note: `
 **mysterious dark side**
@@ -386,7 +389,7 @@ Francis Bacon: https://en.wikipedia.org/wiki/Francis_Bacon
   {
     tags: ['reference'],
     text: `
-"I was thinking someday I'm going to marry that woman."
+"I was thinking <em>someday I'm going to marry that woman.</em>"
     `,
     note: `
 For some reason shipping Harry and Luna is relatively common in
@@ -397,12 +400,13 @@ fanfiction, and this may be a reference to that.
   {
     tags: ['spoiler', 'foreshadowing'],
     text: `
-I wonder how difficult it would be to just make a list of all the top
-blood purists and kill them.
+<em>I wonder how difficult it would be to just make a list of
+all the top blood purists and kill them.</em>
 
-They'd tried exactly that during the French Revolution, more or less -
-make a list of all the enemies of Progress and remove everything above
-the neck - and it hadn't worked out well from what Harry recalled.
+They'd tried exactly that during the French Revolution, more or
+less - make a list of all the enemies of Progress and remove
+everything above the neck - and it hadn't worked out well from what
+Harry recalled.
     `,
     note: `
 Harry does, in fact, behead all of the top blood purists during his
@@ -414,9 +418,10 @@ he didn't see the falling masks, the blood,}.
   {
     tags: ['spoiler'],
     text: `
-Very carefully, now... the bait is set, now the hook... "If you can
-learn to think of yourself as a human instead of a wizard then you can
-train and refine your powers as a human."
+Very carefully, now... the bait is set, now the hook... "If you
+can learn to think of yourself as a <em>human</em> instead of a
+<em>wizard</em> then you can train and refine your powers as a
+human."
     `,
     note: `
 Draco thinking of himself as a human would be one of many steps in

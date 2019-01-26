@@ -103,13 +103,14 @@ const checkUnique = (text, html, expect) => {
   }
 
   const indices = searches.filter((x) => x > 0);
-  assert(indices.length > 0, 'Could not find matching text.');
+  assert(indices.length > 0, `Could not find matching text.\n${text}`);
   assert.notStrictEqual(indices.length, expect, 'Text matches the wrong number of places in the chapter.');
 };
 
 describe('annotations', () => {
-  annotationFiles.forEach((filepath, i) => {
-    describe(`Chapter ${parseChapterNumber(filepath)}`, () => {
+  annotationFiles.forEach((filepath) => {
+    const chapterNumber = parseChapterNumber(filepath);
+    describe(`Chapter ${chapterNumber}`, () => {
       const {annotations, anchors} = require(filepath);
 
       it('anchors match schema', () => {
@@ -153,21 +154,22 @@ describe('annotations', () => {
       Object.values(annotations).map((a) => {
         describe(`Annotation ${a.id}`, () => {
           it('text uniquely matches lines', () => {
-            checkUnique(a.text, chapter(i + 1));
+            checkUnique(a.text, chapter(chapterNumber));
           });
 
-          const brackets = a.note.match(/\{/g) || [];
+          const brackets = (a.note && a.note.match(/\{/g)) || [];
           const linkRegex = RegExp('\\{([0-9]+)/([^}]+)\\}', 'g');
           const matches = brackets.reduce((acc) => {
             acc.push(linkRegex.exec(a.note) || []);
             return acc;
           }, []);
 
-          matches.forEach((match) => {
-            it(`Link ${i}: ${match[1] ? 'Chapter ' + match[1] : 'unknown chapter'}`, () => {
+          // TODO: we can test this via 'anchors'
+          matches.forEach((match, i) => {
+            it(`Link ${i + 1}: ${match[1] ? 'Chapter ' + match[1] : 'unknown chapter'}`, () => {
               assert(match.length === 3, 'Unexpected link format.');
-              const chapterNumber = parseInt(match[1]);
-              checkUnique(match[2], chapter(chapterNumber));
+              const targetChapterNumber = parseInt(match[1]);
+              checkUnique(match[2], chapter(targetChapterNumber));
             });
           });
 

@@ -53,11 +53,11 @@ TODO: link to this, also remove speculation/spoiler
   {
     tags: ['reference'],
     text: `
-"Technically, all I needed to do was look for you, but it seems likely
-that I'm meant to talk to you or invite you to join my party or get a
-key magical item from you or find out that Hogwarts was built over the
-ruins of an ancient temple or something. PC or NPC, that is the
-question?"
+"Technically, all I needed to do was <em>look</em> for
+you, but it seems likely that I'm meant to talk to you or invite
+you to join my party or get a key magical item from you or find out
+that Hogwarts was built over the ruins of an ancient temple or
+something. PC or NPC, that is the question?"
     `,
     note: `
 D&D reference.
@@ -74,7 +74,7 @@ may or may not be interesting enough to be a full-fledged character.
 Don't worry, I don't bite anyone who doesn't bite me first.
     `,
     note: `
-Harry promised this to Professor McGonagall (2/`bite me first`).
+Harry promised this to Professor McGonagall {2/bite me first}.
 (Also, he bit that teacher in grade school.)
     `,
   },
@@ -95,9 +95,10 @@ Express.
   {
     tags: ['spoiler', 'original'],
     text: `
-The Rise and Fall of the Dark Arts claims that you survived because of
-your mother's love and that your scar contains all of the Dark Lord's
-magical power and that the centaurs fear you
+<em>The Rise and Fall of the Dark Arts</em> claims
+that you survived because of your mother's love and that your scar
+contains all of the Dark Lord's magical power and that the centaurs
+fear you
     `,
     note: `
 In the original, Harry was saved by his mother's love.
@@ -123,7 +124,7 @@ has put into the pouch.
 Harry buys her one of these pouches for her Birthday, partially
 because she's his friend, but also perhaps partially because of the
 human tendency for Reciprocation discussed in the previous chapter
-(22/`pouch for her birthday`).
+{22/pouch for her birthday}.
     `,
   },
 
@@ -190,7 +191,7 @@ D&D reference.
   {
     tags: ['spoiler'],
     text: `
-In fact she was feeling sort of thirsty by now.
+In fact she <em>was</em> feeling sort of thirsty by now.
     `,
     note: `
 This is the **Comed-Tea** affecting her thinking.
@@ -200,10 +201,10 @@ This is the **Comed-Tea** affecting her thinking.
   {
     tags: ['reference', 'spoiler'],
     text: `
-"Well, maybe this will impress you," the boy said. He leaned forward
-and looked at her intensely. "I've already done a bit of experimenting
-and I found out that I don't need the wand, I can make anything I want
-happen just by snapping my fingers."
+"Well, maybe <em>this</em> will impress you," the boy said. He
+leaned forward and looked at her intensely. "I've already done a
+bit of experimenting and I found out that I don't need the wand, I
+can make anything I want happen just by snapping my fingers."
     `,
     note: `
 Harry is intentionally setting himself up to be an embodiment of this
@@ -238,9 +239,9 @@ https://en.wikipedia.org/wiki/Confirmation_bias
   {
     tags: ['background'],
     text: `
-Suddenly Neville gasped and took a step back. "I remember that voice!
-You're one of the Lords of Chaos! You're the one who gave me
-chocolate! "
+Suddenly Neville gasped and took a step back. "I remember that
+voice! You're one of the Lords of Chaos! <em>You're the one who
+gave me chocolate!</em> "
     `,
     note: `
 This happens between chapters 7 and 8, after Harry joins the Lords of Chaos (Fred and George).
@@ -264,8 +265,9 @@ inspired by people stepping up to help him).
   {
     tags: ['spoiler', 'foreshadowing'],
     text: `
-Harry Potter hissed at that, a frightening sort of sound that could
-have come from a live snake and made both her and Neville flinch.
+Harry Potter <em>hissed</em> at that, a frightening sort of
+sound that could have come from a live snake and made both her and
+Neville flinch.
     `,
     note: `
 Harry speaks Parseltongue, blah blah **mysterious dark side** blah
