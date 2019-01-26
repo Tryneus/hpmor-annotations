@@ -73,6 +73,68 @@
     return frame;
   }
 
+  function replaceJQueryClickEvents(jquery, element, fn) {
+    jquery.data(element, 'events').click.forEach((data) => {
+      jquery(element).unbind('click', data.handler);
+    });
+
+    jquery(element).bind('click', fn);
+  }
+
+  function installResizer(frameWindow, frameDocument) {
+    const jquery = frameWindow.$;
+    const smaller = frameDocument.getElementById('smaller').firstChild;
+    const original = frameDocument.getElementById('original').firstChild;
+    const bigger = frameDocument.getElementById('bigger').firstChild;
+
+    // TODO: these all ignore cookies, can end up in a weird state with the
+    // stuff that loads from cookies
+
+    // Remove any state from the #storycontent element
+    frameDocument.getElementById('storycontent').style = null;
+
+    replaceJQueryClickEvents(jquery, smaller, () => {
+      jquery('#storycontent').css('font-size', '-=1');
+      jquery('.hpmor-annotations-note-tags').css('font-size', '-=1');
+      jquery('.hpmor-annotations-note-text').css('font-size', '-=1');
+      positionNotes();
+    });
+
+    replaceJQueryClickEvents(jquery, original, () => {
+      jquery('#storycontent').css('font-size', '16px');
+      jquery('.hpmor-annotations-note-tags').css('font-size', '15px');
+      jquery('.hpmor-annotations-note-text').css('font-size', '12px');
+      positionNotes();
+    });
+
+    replaceJQueryClickEvents(jquery, bigger, () => {
+      jquery('#storycontent').css('font-size', '+=1');
+      jquery('.hpmor-annotations-note-tags').css('font-size', '+=1');
+      jquery('.hpmor-annotations-note-text').css('font-size', '+=1');
+      positionNotes();
+    });
+
+    const fullwidth = frameDocument.getElementById('fullwidth').firstChild;
+    const readwidth = frameDocument.getElementById('readwidth').firstChild;
+
+    replaceJQueryClickEvents(jquery, fullwidth, () => {
+      jquery('#hpmor-annotations-wrapped-content').css('max-width', '98%');
+      jquery('#hpmor-annotations-left-panel').css('display', 'none');
+      jquery('#hpmor-annotations-right-panel').css('display', 'none');
+      positionNotes();
+    });
+
+    replaceJQueryClickEvents(jquery, readwidth, () => {
+      jquery('#hpmor-annotations-wrapped-content').css('max-width', '42em');
+      jquery('#hpmor-annotations-left-panel').css('display', 'block');
+      jquery('#hpmor-annotations-right-panel').css('display', 'block');
+      positionNotes();
+    });
+
+    // inverter should work like normal
+    // TODO: it doesn't invert the span underlines
+  }
+
   function installNotes(innerDocument, annotations) {
     const oldNotes = innerDocument.getElementById('hpmor-annotations-notes');
 
@@ -80,9 +142,10 @@
       oldNotes.parentNode.removeChild(oldNotes);
     }
 
+    const invertable = innerDocument.getElementById('invertable');
     const notes = innerDocument.createElement('div');
     notes.id = 'hpmor-annotations-notes';
-    innerDocument.body.insertBefore(notes, innerDocument.body.childNodes[0]);
+    invertable.insertBefore(notes, invertable.childNodes[0]);
 
     // For each annotation, add a div which is hidden until the annotation is clicked
     Object.values(annotations).forEach((annotation) => {
@@ -105,16 +168,17 @@
     });
   }
 
-  function installDashes(innerDocument, annotations) {
-    const oldDashes = innerDocument.getElementById('hpmor-annotations-ranges');
+  function installRanges(innerDocument, annotations) {
+    const oldRanges = innerDocument.getElementById('hpmor-annotations-ranges');
     
-    if (oldDashes) {
-      oldDashes.parentNode.removeChild(oldDashes);
+    if (oldRanges) {
+      oldRanges.parentNode.removeChild(oldRanges);
     }
 
+    const invertable = innerDocument.getElementById('invertable');
     const ranges = innerDocument.createElement('div');
     ranges.id = 'hpmor-annotations-ranges';
-    innerDocument.body.insertBefore(ranges, innerDocument.body.childNodes[0]);
+    invertable.insertBefore(ranges, invertable.childNodes[0]);
 
     Object.values(annotations).forEach((annotation) => {
       const color = colors[annotation.tags[0]];
@@ -123,6 +187,7 @@
       range.className = 'hpmor-annotations-range-container';
       range.innerHTML = `
         <div class="hpmor-annotations-range-box">
+          <div class="hpmor-annotations-range-divider"></div>
           <div class="hpmor-annotations-range" style="background: ${color}"></div>
         </div>
       `;
@@ -179,7 +244,7 @@
       console.error('hpmor-annotations: Could not find iframe.');
     } else {
       const href = frame.contentWindow.location.href;
-      const matches = href.match(/\/([0-9]+)(\.html)?$/);
+      const matches = href.match(/\/([0-9]+)(\.html)?(\#.*)?$/);
       const chapter = matches && parseInt(matches[1]);
       const content = frame.contentDocument.getElementById('storycontent');
 
@@ -191,9 +256,10 @@
         fetchAnnotations(frame, chapter, ({annotations, anchors}) => {
           installCss(frame.contentDocument);
           const innerContent = wrapContent(frame.contentDocument, content);
+          installResizer(frame.contentWindow, frame.contentDocument);
           installSpans(innerContent, annotations);
           installNotes(frame.contentDocument, annotations);
-          installDashes(frame.contentDocument, annotations);
+          installRanges(frame.contentDocument, annotations);
           positionNotes();
         });
       }
@@ -213,6 +279,7 @@
   #storycontent {
     display: flex;
     flex-direction: row;
+    justify-content: center;
     margin-left: unset;
     margin-right: unset;
     max-width: none;
@@ -223,11 +290,11 @@
     max-width: 42em;
   }
 
-  .hpmor-annotations-left-panel {
+  #hpmor-annotations-left-panel {
     flex: 1 1 300px;
   }
 
-  .hpmor-annotations-right-panel {
+  #hpmor-annotations-right-panel {
     flex: 1 3 300px;
   }
 
@@ -282,6 +349,8 @@
 
   .hpmor-annotations-range-box {
     height: 100%;
+    display: flex;
+    flex-direction: column;
     margin-left: 5px;
     padding-left: 2px;
     padding-right: 2px;
@@ -289,10 +358,14 @@
     pointer-events: auto;
   }
 
+  .hpmor-annotations-range-divider {
+    flex: 0 0 1px;
+    background: white;
+  }
+
   .hpmor-annotations-range {
-    height: 100%;
-    width: 4px;
-    border-top: solid 1px white;
+    flex: 1 0 auto;
+    width: 3px;
   }
 
   .hpmor-annotations-link {
@@ -317,11 +390,11 @@
     // Check if we've already wrapped content and return the inner div
     if (!frameDocument.getElementById('hpmor-annotations-wrapped-content')) {
       content.innerHTML = `
-        <div class="hpmor-annotations-left-panel"></div>
+        <div id="hpmor-annotations-left-panel"></div>
         <div id="hpmor-annotations-wrapped-content">
           ${content.innerHTML}
         </div>
-        <div class="hpmor-annotations-right-panel"></div>`;
+        <div id="hpmor-annotations-right-panel"></div>`;
     }
 
     return frameDocument.getElementById('hpmor-annotations-wrapped-content');
