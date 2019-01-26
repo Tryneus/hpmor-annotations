@@ -14,7 +14,7 @@
     'reference': '#77f',
     'departure': '#f90',
     'original': '#af0',
-    'speculation': '#e0f',
+    'speculation': '#fbf',
     'background': '#30f',
     'spoiler': '#f00',
   };
@@ -312,6 +312,7 @@
     padding-left: 5px;
     display: flex;
     flex-direction: column;
+    word-wrap: break-word;
   }
 
   .hpmor-annotations-note-tags {
@@ -327,7 +328,6 @@
     border-width: 1px;
     font: 12px sans-serif;
     padding: 7px;
-    word-wrap: break-word;
   }
 
   .hpmor-annotations-note-bracket {

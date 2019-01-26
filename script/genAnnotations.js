@@ -40,7 +40,7 @@ const processNote = (originalNote, id, annotationChapter) => {
     .replace(/\[([^\]]+)\]\((http[^)]+)\)/g, (match, text, link) => {
       return `<a href="${link.replace(/"/g, '%22')}">${escapeHtml(text)}</a>`;
     });
-  
+
   return {note, chapterLinks};
 };
 
@@ -84,8 +84,10 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
     // Perform some normalization here because why not
     const originalAnnotations = require(sourceFile);
 
-    // Filter out annotations that are incomplete
-    const filteredAnnotations = originalAnnotations.filter((x) => !x.tags.includes('TODO'));
+    // Filter out annotations that are incomplete or deprecated
+    const filteredAnnotations = originalAnnotations.filter((x) =>
+      !x.tags.includes('TODO') && !x.tags.includes('tombstone')
+    );
 
     const annotations = filteredAnnotations.map((x, i) => {
       // Fields that are not required to be explicitly defined in the source
