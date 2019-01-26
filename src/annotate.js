@@ -241,7 +241,7 @@
     const frame = installFrame();
 
     if (!frame) {
-      console.error('hpmor-annotations: Could not find iframe.');
+      console.error('hpmor-annotations: Could not find iframe');
     } else {
       const href = frame.contentWindow.location.href;
       const matches = href.match(/\/([0-9]+)(\.html)?(\#.*)?$/);
@@ -249,9 +249,9 @@
       const content = frame.contentDocument.getElementById('storycontent');
 
       if (!chapter) {
-        console.error('hpmor-annotations: Could not determine chapter.', href);
+        console.error('hpmor-annotations: Could not determine chapter', href);
       } else if (!content) {
-        console.error('hpmor-annotations: Could not find story content.');
+        console.error('hpmor-annotations: Could not find story content');
       } else {
         fetchAnnotations(frame, chapter, ({annotations, anchors}) => {
           installCss(frame.contentDocument);
@@ -468,14 +468,21 @@
         };
       }, {});
 
-      // Position the note so that it sits next to the annotated text
-      note.style.width = `${content.getBoundingClientRect().left + frame.contentWindow.pageXOffset}px`;
-      note.style.top = `${dimensions.top + frame.contentWindow.pageYOffset}px`;
-      note.style.height = `${dimensions.bottom - dimensions.top}px`;
+      if (dimensions.top && dimensions.bottom) {
+        // Position the note so that it sits next to the annotated text
+        note.style.width = `${content.getBoundingClientRect().left + frame.contentWindow.pageXOffset}px`;
+        note.style.top = `${dimensions.top + frame.contentWindow.pageYOffset}px`;
+        note.style.height = `${dimensions.bottom - dimensions.top}px`;
 
-      range.style.left = `${content.getBoundingClientRect().right + frame.contentWindow.pageXOffset}px`;
-      range.style.top = note.style.top;
-      range.style.height = note.style.height;
+        range.style.left = `${content.getBoundingClientRect().right + frame.contentWindow.pageXOffset}px`;
+        range.style.top = note.style.top;
+        range.style.height = note.style.height;
+      } else {
+        // The spans could not be located, disable the associated range and note
+        console.error('hpmor-annotations: Could not find span for annotation', id);
+        note.style.display = 'none';
+        range.style.display = 'none';
+      }
     });
   }
 
