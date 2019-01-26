@@ -2,8 +2,8 @@ module.exports = [
   {
     tags: ['foreshadowing', 'spoiler'],
     text: `
-"It would've required a supernatural intervention for him to have your
-morality given his environment."
+"It would've required a <em>supernatural intervention</em> for him to
+have <em>your</em> morality given <em>his</em> environment."
     `,
     note: `
 Flash-forward to when Harry is trying to explain to Hermione why Draco
@@ -14,8 +14,8 @@ doesn't share her morality {87/supernatural intervention}.
   {
     tags: ['foreshadowing', 'spoiler'],
     text: `
-Only I'd heard rumours that you didn't really survive the Killing
-Curse and that's why no one ever heard from you again
+Only I'd heard rumours that you didn't <em>really</em> survive the
+Killing Curse and that's why no one ever heard from you again
     `,
     note: `
 In fact, Harry didn't "really survive the Killing Curse" because it

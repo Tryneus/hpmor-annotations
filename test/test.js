@@ -29,7 +29,7 @@ const validTags = [
   'spoiler',
 ];
 
-const schema = {
+const annotationsSchema = {
   type: 'object',
   required: true,
   propertyNames: {pattern: '^hpmor-[0-9]+-[0-9]+$'},
@@ -44,6 +44,32 @@ const schema = {
       text: {type: 'string'},
       replacement: {type: 'string'},
       note: {type: 'string'},
+      disambiguation: {
+        type: 'object',
+        required: ['expect', 'useIndex'],
+        additionalProperties: false,
+        properties: {
+          expect: {type: 'integer', minimum: 1},
+          useIndex: {type: 'integer', minimum: 0},
+        },
+      },
+    },
+  },
+};
+
+const anchorsSchema = {
+  type: 'object',
+  required: true,
+  propertyNames: {pattern: '^hpmor-[0-9]+-[0-9]+-[0-9]+$'},
+  additionalProperties: {
+    type: 'object',
+    required: ['id', 'annotationId', 'annotationChapter', 'text', 'disambiguation'],
+    additionalProperties: false,
+    properties: {
+      id: {type: 'string'},
+      annotationId: {type: 'string'},
+      annotationChapter: {type: 'string'},
+      text: {type: 'string'},
       disambiguation: {
         type: 'object',
         required: ['expect', 'useIndex'],
@@ -86,9 +112,30 @@ describe('annotations', () => {
     describe(`Chapter ${parseChapterNumber(filepath)}`, () => {
       const {annotations, anchors} = require(filepath);
 
+      it('anchors match schema', () => {
+        const validator = new jsonschema.Validator();
+        const result = validator.validate(anchors, anchorsSchema);
+        assert(
+          result.errors.length == 0,
+          `Schema validation failed:\n${result.errors.map((x) => x.stack).join('\n')}`,
+        );
+
+        _.forEach(_.toPairs(anchors), ([id, a]) => {
+          assert.strictEqual(id, a.id, 'Anchor ids are inconsistent.');
+          assert(
+            a.disambiguation.useIndex < a.disambiguation.expect,
+            `Anchor ${id} disambiguation index is larger than expected matches.`,
+          );
+          assert(
+            id.startsWith(a.annotationId),
+            `Anchor ${id} should be a postfixed string of the annotation ${a.annotationId}`,
+          );
+        });
+      });
+
       it('annotations match schema', () => {
         const validator = new jsonschema.Validator();
-        const result = validator.validate(annotations, schema);
+        const result = validator.validate(annotations, annotationsSchema);
         assert(
           result.errors.length == 0,
           `Schema validation failed:\n${result.errors.map((x) => x.stack).join('\n')}`,

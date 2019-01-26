@@ -1,4 +1,4 @@
-javascript:(function () {
+javascript:(function () { // eslint-disable-line no-unused-labels
   // Only do the thing if we're viewing an official HPMoR chapter
   const isLocal =
     window.location.hostname === '' &&

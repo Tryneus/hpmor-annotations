@@ -22,14 +22,18 @@ const processNote = (originalNote, id, annotationChapter) => {
   const note = originalNote
     .trim()
     .replace(/[\n ]+/g, ' ')
-    .replace(/\{([0-9]+)\/([^}]+)\}/g, (match, chapter, text) => {
+    .replace(/\{([0-9]+)(?::([0-9]+):([0-9]+))?\/([^}]+)\}/g, (match, chapter, expect, useIndex, text) => {
       const linkId = `${id}-${chapterLinks.length + 1}`;
       chapterLinks.push({
-        text,
-        destChapter: chapter,
+        id: linkId,
+        annotationId: id,
         annotationChapter,
-        linkId,
-        id,
+        destChapter: chapter,
+        text,
+        disambiguation: {
+          expect: expect ? parseInt(expect) : 1,
+          useIndex: useIndex ? parseInt(useIndex) : 0,
+        },
       });
       return `<a href="${chapter}#${linkId}" class="hpmor-annotations-link">Ch. ${chapter}</a>`;
     })
@@ -80,7 +84,10 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
     // Perform some normalization here because why not
     const originalAnnotations = require(sourceFile);
 
-    const annotations = originalAnnotations.map((x, i) => {
+    // Filter out annotations that are incomplete
+    const filteredAnnotations = originalAnnotations.filter((x) => !x.tags.includes('TODO'));
+
+    const annotations = filteredAnnotations.map((x, i) => {
       // Fields that are not required to be explicitly defined in the source
       const defaults = {
         disambiguation: {expect: 1, useIndex: 0},
@@ -104,8 +111,8 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
   // add anchors to each chapter linked to
   links.forEach((info) => {
     const destChapter = allChapters[info.destChapter];
-    const {id, linkId, text, annotationChapter} = info;
-    const data = {id, linkId, text, annotationChapter};
+    const {id, annotationId, text, annotationChapter, disambiguation} = info;
+    const data = {id, annotationId, text, annotationChapter, disambiguation};
 
     if (!destChapter) {
       console.error(`No chapter annotations file for link from annotation ${id} to chapter ${info.destChapter}`);
@@ -120,7 +127,7 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
 
     const data = JSON.stringify({
       annotations: _.keyBy(annotations, 'id'),
-      anchors,
+      anchors: _.keyBy(anchors, 'id'),
     });
 
     const code = `

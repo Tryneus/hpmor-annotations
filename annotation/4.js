@@ -12,7 +12,7 @@ This is casting Rowling as some sort of Lovecraftian horror.
   {
     tags: ['foreshadowing', 'spoiler'],
     text: `
-"World domination is such an ugly phrase. I prefer to call it world optimisation."
+"<em>World domination is such an ugly phrase. I prefer to call it world optimisation.</em>"
     `,
     note: `
 Flash-forward to chapter 6 {6/I prefer to call it world

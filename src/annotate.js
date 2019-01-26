@@ -244,7 +244,7 @@
       console.error('hpmor-annotations: Could not find iframe');
     } else {
       const href = frame.contentWindow.location.href;
-      const matches = href.match(/\/([0-9]+)(\.html)?(\#.*)?$/);
+      const matches = href.match(/\/([0-9]+)(\.html)?(#.*)?$/);
       const chapter = matches && parseInt(matches[1]);
       const content = frame.contentDocument.getElementById('storycontent');
 

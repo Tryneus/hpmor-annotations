@@ -112,11 +112,11 @@ windowsill} as part of his **prophecy-threading** project.
     text: `
 Harry, I've seen many abused children in my time at Hogwarts, it would
 break your heart to know how many. And, when you're happy, you don't
-behave like one of those children, not at all. You smile at strangers,
-you hug people, I put my hand on your shoulder and you didn't
-flinch. But sometimes, only sometimes, you say or do something that
-seems very much like... someone who spent his first eleven years
-locked in a cellar.
+behave like one of those children, not at <em>all</em>. You smile at
+strangers, you hug people, I put my hand on your shoulder and you
+didn't flinch. But sometimes, only sometimes, you say or do something
+that seems <em>very</em> much like... someone who spent his first
+eleven years locked in a cellar.
     `,
     note: `
 This is the remnant of Tom Riddle in Harry's **mysterious dark
@@ -139,7 +139,8 @@ personality shaped by those memories.
   {
     tags: ['foreshadowing', 'spoiler'],
     text: `
-Sometimes you just don't seem eleven years old or even all that human.
+Sometimes you just don't seem eleven years old or even all that
+<em>human</em>.
     `,
     note: `
 Part of him is much older than 11, and it's a common trope that
@@ -151,10 +152,10 @@ human.
   {
     tags: ['foreshadowing', 'spoiler'],
     text: `
-"It is very curious indeed that you should be destined for this wand
-when its brother why, its brother gave you that scar."
+<em>"It is very curious indeed that you should be destined for this
+wand when its brother why, its brother gave you that scar."</em>
 
-That could not possibly be coincidence.
+That could not <em>possibly</em> be coincidence.
     `,
     note: `
 Remnant of Voldemort, blah blah blah.
@@ -175,10 +176,10 @@ This is Harry leaving a sign to himself in case he is obliviated.
   {
     tags: ['foreshadowing', 'spoiler'],
     text: `
-As sometimes happened when Harry got sufficiently angry, his blood
-went cold, instead of hot, and a terrible dark clarity descended over
-his mind, mapping out possible tactics and assessing their
-consequences with iron realism.
+As sometimes happened when Harry got <em>sufficiently</em> angry, his
+blood went cold, instead of hot, and a terrible dark clarity
+descended over his mind, mapping out possible tactics and assessing
+their consequences with iron realism.
     `,
     note: `
 **mysterious dark side**
@@ -199,8 +200,8 @@ Possibly a reference to the Luggage from The Color of Magic.
   {
     tags: ['foreshadowing', 'spoiler'],
     text: `
-And that must include courtesy and obedience from you to all
-professors.
+And that <em>must</em> include courtesy and obedience from you to
+<em>all</em> professors.
     `,
     note: `
 Ironic foreshadowing!  Harry doesn't have much courtesy or obedience
@@ -214,8 +215,8 @@ for Snape.
 This woman might well be the sanest adult Harry had ever met, despite
 her lack of scientific background. Harry was even considering offering
 her the number-two position in whatever group he formed to fight the
-Dark Lord, though he wasn't silly enough to say that out loud. Now
-what would be a good name for that...? The Death Eater Eaters?
+Dark Lord, though he wasn't silly enough to say that out loud. <em>Now
+what would be a good name for that...? The Death Eater Eaters?</em>
     `,
     note: `
 A reference to the Order of the Phoenix from the original books.
@@ -265,9 +266,9 @@ There is some evidence that Dumbledore is spying invisibly on Harry:
   },
 
   {
-    tags: ['spoiler'],
+    tags: ['TODO'],
     text: `
-the best way to break out of Azkaban would be not to go there in the first place
+The best way to get out would be to not go there in the first place.
     `,
     note: `
 TODO
