@@ -170,6 +170,9 @@ describe('annotations', () => {
               checkUnique(match[2], chapter(chapterNumber));
             });
           });
+
+          // TODO: test that all reference/foreshadowing/background notes contain links
+          // TODO: test that we don't have raw links
         });
       });
     });
