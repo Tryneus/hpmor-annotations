@@ -166,7 +166,7 @@ very small object.
   },
 
   {
-    tags: ['spoiler', 'foreshadowing']
+    tags: ['spoiler', 'foreshadowing'],
     text: `
 Unless, of course, you engage in some sort of mischief and lose House
 points before then. Addressing a professor disrespectfully, for

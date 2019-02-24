@@ -342,7 +342,7 @@ Yet another hint that Harry is running the game.
   },
 
   {
-    tags: ['spoiler', 'foreshadowing', 'TODO']
+    tags: ['spoiler', 'foreshadowing', 'TODO'],
     text: `
 the Head of House Hufflepuff would be the last person anyone would
 suspect, which ought to put her near the top of Harry's list.

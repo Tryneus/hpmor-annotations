@@ -67,7 +67,7 @@ Harry didn't particularly feel like approaching Quirrell anyway.
   },
 
   {
-    tags: ['original', 'background']
+    tags: ['original', 'background'],
     text: `
 oh my god you have minions
     `,

@@ -48,7 +48,7 @@ The implication is that the Sorting Hat is analagous to a computer
 system, and that Harry has hacked it, gaining root-level access (total
 control of the system).
     `,
-  }
+  },
 
   {
     tags: ['foreshadowing', 'spoiler'],

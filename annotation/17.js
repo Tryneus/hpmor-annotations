@@ -329,8 +329,8 @@ This is mentioned one more time after Dumbledore dies and Minerva
 takes over as Headmistress.  The exact use is never revealed.  This
 also foreshadows that Minerva will become Headmistress.
 
-(119/`Minerva's hand passed over one of those objects, the one with
-golden wibblers, her eyes closing briefly.`)
+{119/Minerva's hand passed over one of those objects, the one with
+golden wibblers, her eyes closing briefly.}
     `,
   },
 

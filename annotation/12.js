@@ -283,7 +283,7 @@ Baba Yaga
     note: `
 In HPMOR, Nicolas Flamel didn't create the philosopher's stone, but
 instead obtained it from Baba Yaga, either by murdering her or
-marrying her (108/`Baba Yaga`).
+marrying her {108/Baba Yaga}.
 
 https://en.wikipedia.org/wiki/Baba_Yaga
     `,

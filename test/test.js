@@ -29,7 +29,7 @@ const validTags = [
   'spoiler',
 ];
 
-const annotationsSchema = {
+const annotationSchema = {
   type: 'object',
   required: true,
   propertyNames: {pattern: '^hpmor-[0-9]+-[0-9]+$'},
@@ -136,7 +136,7 @@ describe('annotations', () => {
 
       it('annotations match schema', () => {
         const validator = new jsonschema.Validator();
-        const result = validator.validate(annotations, annotationsSchema);
+        const result = validator.validate(annotations, annotationSchema);
         assert(
           result.errors.length == 0,
           `Schema validation failed:\n${result.errors.map((x) => x.stack).join('\n')}`,

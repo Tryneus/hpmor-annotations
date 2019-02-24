@@ -250,7 +250,7 @@ https://en.wikipedia.org/wiki/Anthropic_principle
 You're having another 'you turned into a cat' moment
     `,
     note: `
-(2/`Professor McGonagall turned into a cat.`)
+{2/Professor McGonagall turned into a cat.}
     `,
   },
 
