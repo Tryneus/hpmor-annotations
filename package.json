@@ -9,7 +9,7 @@
   "scripts": {
     "build": "node script/genCode.js && node script/genAnnotations.js && node script/genBookmarkletMarkdown.js",
     "cache": "node script/downloadChapters.js",
-    "test": "./node_modules/mocha/bin/mocha",
+    "test": "./node_modules/mocha/bin/mocha test/preBuild.js && npm run build && ./node_modules/mocha/bin/mocha test/postBuild.js",
     "lint": "node ./node_modules/eslint/bin/eslint.js src script annotation test",
     "clean": "rm -rf dist/* chapters"
   },

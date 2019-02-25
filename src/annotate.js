@@ -253,7 +253,7 @@
       } else if (!content) {
         console.error('hpmor-annotations: Could not find story content');
       } else {
-        fetchAnnotations(frame, chapter, ({annotations, anchors}) => {
+        fetchAnnotations(frame, chapter, ({annotations}) => {
           installCss(frame.contentDocument);
           const innerContent = wrapContent(frame.contentDocument, content);
           installResizer(frame.contentWindow, frame.contentDocument);

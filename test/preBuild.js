@@ -1,32 +1,21 @@
 'use strict';
 
 const assert = require('assert');
-const fs = require('fs');
 const path = require('path');
 
 const _ = require('lodash');
 const eslint = require('eslint');
-const jsdom = require('jsdom').JSDOM;
 const jsonschema = require('jsonschema');
 
-const chapterDir = path.join(__dirname, '../chapter/');
-const annotationDir = path.join(__dirname, '../dist/annotation/');
-
-const {
-  rawAnnotations,
-  processedAnnotations,
-  chapter,
-  checkUnique,
-} = require('./common.js');
-
-const {rawAnnotation: rawAnnotationSchema} = require('./schema.js');
+const {rawAnnotations} = require('./common.js');
+const schema = require('./schema.js');
 
 describe('raw annotations', () => {
-  rawAnnotations.forEach(({id, data}) => {
-    describe(id, () => {
+  rawAnnotations().forEach(({id, data}) => {
+    describe(`chapter ${id}`, () => {
       it('matches schema', () => {
         const validator = new jsonschema.Validator();
-        const result = validator.validate(data, rawAnnotationSchema);
+        const result = validator.validate(data, schema.rawAnnotations);
         assert(
           result.errors.length == 0,
           `Schema validation failed:\n${result.errors.map((x) => x.stack).join('\n')}`,

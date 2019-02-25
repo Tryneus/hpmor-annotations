@@ -1,3 +1,5 @@
+'use strict';
+
 // TODO: put valid tags into actual code somewhere
 const validTags = [
   'foreshadowing',
@@ -21,8 +23,8 @@ const disambiguation = {
 };
 
 // Annotations and subject anchors declared in the same structure
-const rawAnnotation = {
-  type: 'object',
+const rawAnnotations = {
+  type: 'array',
   required: true,
   propertyNames: {pattern: '^hpmor-[0-9]+-[0-9]+$'},
   additionalProperties: {
@@ -58,7 +60,7 @@ const rawAnnotation = {
   },
 };
 
-const annotation = {
+const annotations = {
   type: 'object',
   required: true,
   propertyNames: {pattern: '^hpmor-[0-9]+-[0-9]+$'},
@@ -78,7 +80,7 @@ const annotation = {
   },
 };
 
-const anchor = {
+const anchors = {
   type: 'object',
   required: true,
   propertyNames: {pattern: '^hpmor-[0-9]+-[0-9]+-[0-9]+$'},
@@ -97,7 +99,7 @@ const anchor = {
 };
 
 module.exports = {
-  rawAnnotation,
-  annotation,
-  anchor,
+  rawAnnotations,
+  annotations,
+  anchors,
 };

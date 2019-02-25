@@ -14,7 +14,7 @@ const parseChapterNumber = (path) => path.match(/\/([0-9]+)\.[A-z]+$/)[1];
 
 const loadAnnotations = (filepaths) =>
   filepaths.map((filepath) => ({
-    id: `hpmor-${parseChapterNumber(filepath)}`,
+    id: parseChapterNumber(filepath),
     data: require(filepath),
   }));
 
@@ -26,8 +26,8 @@ const getAnnotationFiles = (directory) =>
 const rawAnnotationFiles = () => getAnnotationFiles(rawAnnotationDir);
 const processedAnnotationFiles = () => getAnnotationFiles(processedAnnotationDir);
 
-const rawAnnotations = () => loadAnnotations(rawAnnotationFiles);
-const processedAnnotations = () => loadAnnotations(processedAnnotationFiles);
+const rawAnnotations = () => loadAnnotations(rawAnnotationFiles());
+const processedAnnotations = () => loadAnnotations(processedAnnotationFiles());
 
 // This is kind of slow, so cache the results at the cost of memory
 const chapterCache = [];
