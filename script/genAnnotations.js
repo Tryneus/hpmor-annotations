@@ -82,11 +82,17 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
     const chapter = filename.match(/^([0-9]+)\.js$/)[1];
 
     // Perform some normalization here because why not
-    const originalAnnotations = require(sourceFile);
+    const rawAnnotations = require(sourceFile);
 
-    // Filter out annotations that are incomplete or deprecated
-    const filteredAnnotations = originalAnnotations.filter((x) =>
-      !x.tags.includes('TODO') && !x.tags.includes('tombstone')
+    // Filter out annotations that are incomplete
+    rawAnnotations.forEach((a) => {
+      a.notes = a.notes && a.notes.filter((x) => !x.tags.includes('TODO'));
+    });
+
+    // Filter out tombstones and annotations with no remaining notes or subjects
+    const filteredAnnotations = rawAnnotations.filter((a) =>
+      !(a.notes && a.notes.length === 0) &&
+      !(a.subjects && a.subjects.includes('tombstone'))
     );
 
     const annotations = filteredAnnotations.map((x, i) => {

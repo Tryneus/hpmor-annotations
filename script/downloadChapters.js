@@ -12,7 +12,9 @@ async function downloadChapters() {
   );
 
   try {
-    await scrape({urls, outputDir, requestConcurrency: 1});
+    console.log(urls);
+    console.log(outputDir);
+    await scrape({urls, directory: outputDir, requestConcurrency: 1});
   } catch (e) {
     console.log('Failed to download chapters:', e.message);
     return;
