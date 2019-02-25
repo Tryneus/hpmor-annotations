@@ -203,7 +203,7 @@ Eaters, and he must appear evil to keep up the facade.
 There was the muffled sound of someone snapping his fingers, and then
 nothing.
     `,
-    subject: ['snapping'],
+    subjects: ['snapping'],
   },
 
   {
@@ -298,10 +298,10 @@ encoding his statement to Dumbledore failed.
 As the gargoyle stepped back into place, Fawkes left her shoulder, and
 swooped to hover in front of Harry.
     `,
+    subjects: ['phoenix'],
     notes: [
       {
         tags: ['spoiler'],
-        subject: ['phoenix'],
         note: `
 As is explained later, phoenixes respond to heroism.  Fawkes is sizing
 up Harry after his actions which may have saved so many students from
