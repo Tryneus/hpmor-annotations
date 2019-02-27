@@ -11,15 +11,35 @@ const annotationDestDir = path.join(__dirname, '../dist/annotation');
 
 fs.mkdirSync(annotationDestDir, {recursive: true});
 
+// The first tag determines the color used for the annotation, so we should
+// have a consistent ordering
+const tagsInOrder = [
+  // These two are a subset of spoilers, so they should take precedence
+  'foreshadowing',
+  'consequence',
+
+  'spoiler',
+
+  // No particular order in mind here, TODO: revisit this later in case it matters
+  'departure',
+  'original',
+  'background',
+  'reference',
+  'speculation',
+];
+
+const orderTags = (tags) => _.sortBy(tags, (x) => tagsInOrder.indexOf(x));
+
 const processText = (text) =>
   text
     .trim()
     .replace(/\n\n/g, '</p> <p>')
     .replace(/[\n ]+/g, ' ');
 
-const processNote = (originalNote, id, annotationChapter) => {
+const processNote = (rawNote, id, annotationChapter) => {
   const chapterLinks = [];
-  const note = originalNote
+  const tags = orderTags(rawNote.tags);
+  const note = rawNote.note
     .trim()
     .replace(/[\n ]+/g, ' ')
     .replace(/\{([0-9]+)(?::([0-9]+):([0-9]+))?\/([^}]+)\}/g, (match, chapter, expect, useIndex, text) => {
@@ -41,7 +61,7 @@ const processNote = (originalNote, id, annotationChapter) => {
       return `<a href="${link.replace(/"/g, '%22')}">${escapeHtml(text)}</a>`;
     });
 
-  return {note, chapterLinks};
+  return {tags, note, chapterLinks};
 };
 
 const generateReplacement = (text, id) => {
@@ -51,25 +71,6 @@ const generateReplacement = (text, id) => {
   const end = '</span>';
   return firstStart + text.replace(/<\/p> <p>/g, end + '</p> <p>' + start) + end;
 };
-
-// The first tag determines the color used for the annotation, so we should
-// have a consistent ordering
-const tagsInOrder = [
-  // These two are a subset of spoilers, so they should take precedence
-  'foreshadowing',
-  'consequence',
-
-  'spoiler',
-
-  // No particular order in mind here, TODO: revisit this later in case it matters
-  'departure',
-  'original',
-  'background',
-  'reference',
-  'speculation',
-];
-
-const orderTags = (annotations) => _.sortBy(annotations, (x) => tagsInOrder.indexOf(x));
 
 // Load the annotations from the easy-to-edit JS file and output a JSON file for
 // consumption
@@ -103,14 +104,17 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
       };
 
       const id = `hpmor-${chapter}-${i + 1}`;
-      const tags = orderTags(x.tags);
       const text = processText(x.text);
       const replacement = generateReplacement(text, id);
-      const {note, chapterLinks} = x.note ? processNote(x.note, id, chapter) : {note: null, chapterLinks: []};
+      const processedNotes = (x.notes || []).map((note) => processNote(note, id, chapter));
+      const notes = processedNotes.map((x) => ({
+        tags: x.tags,
+        note: x.note,
+      }));
 
-      chapterLinks.forEach((x) => links.push(x));
+      processedNotes.forEach((x) => links.push(...x.chapterLinks));
 
-      return {...defaults, ...x, id, tags, text, replacement, note};
+      return {...defaults, ...x, id, text, replacement, notes};
     });
 
     return {chapter, annotations, anchors: []};

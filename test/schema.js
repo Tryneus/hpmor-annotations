@@ -38,11 +38,11 @@ const rawAnnotations = {
         minItems: 1,
         items: {
           type: 'object',
-          required: ['text', 'tags'],
+          required: ['note', 'tags'],
           additionalProperties: false,
           properties: {
             tags: {type: 'array', items: {type: 'string', enum: validTags}, minItems: 1},
-            text: {type: 'string'},
+            note: {type: 'string'},
           },
         },
       },
@@ -66,15 +66,26 @@ const annotations = {
   propertyNames: {pattern: '^hpmor-[0-9]+-[0-9]+$'},
   additionalProperties: {
     type: 'object',
-    required: ['id', 'tags', 'text', 'replacement', 'note', 'disambiguation', 'subjects'],
+    required: ['id', 'text', 'replacement', 'notes', 'disambiguation', 'subjects'],
     additionalProperties: false,
     properties: {
       id: {type: 'string'},
-      tags: {type: 'array', items: {type: 'string', enum: validTags}, minItems: 1},
       subjects: {type: 'array', items: {type: 'string'}},
       text: {type: 'string'},
       replacement: {type: 'string'},
-      note: {type: 'string'},
+      notes: {
+        type: 'array',
+        minItems: 1,
+        items: {
+          type: 'object',
+          required: ['note', 'tags'],
+          additionalProperties: false,
+          properties: {
+            tags: {type: 'array', items: {type: 'string', enum: validTags}, minItems: 1},
+            note: {type: 'string'},
+          },
+        },
+      },
       disambiguation,
     },
   },
