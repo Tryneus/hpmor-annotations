@@ -73,7 +73,7 @@ again.
       {
         tags: ['consequence'],
         note: `
-{7/Harry's eyes dropped downwards}
+{13/Harry's eyes dropped downwards}
         `,
       },
     ],

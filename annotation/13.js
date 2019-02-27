@@ -95,8 +95,8 @@ anyone else here who was this crazy.
 This is probably the first hint that Harry is behind the game, since
 he's the only other character who has been explicitly called out as
 acting a little insane and spreading chaos wherever he goes.
-{5/"What part of 'get fitted for robes' sounded to you like please
-cast a Confundus Charm on the entire universe!"}
+{5/"What part of 'get fitted for robes' sounded to you like <em>please
+cast a Confundus Charm on the entire universe!</em> "}
 
 Harry probably doesn't consider this hypothesis, because his actually
 usually look less insane from the inside, and this is the first time
@@ -167,8 +167,8 @@ the sense of being aware of its own awareness.
         tags: ['consequence'],
         note: `
 Thinking this about the sorting hat caused it to become conscious
-{10/he wondered if the Sorting Hat was genuinely conscious in the
-sense of being aware of its own awareness}.
+{10/he wondered if the Sorting Hat was genuinely <em>conscious</em> in
+the sense of being aware of its own awareness}.
         `,
       },
     ],
@@ -402,8 +402,8 @@ Though it had produced an effect that might be tactically useful.
         note: `
 This sort of thinking is representative of Harry's **mysterious dark
 side**.  Later on Quirrell makes a very similar statement {60/In a
-real fight, a curse which cannot be blocked and must be dodged is an
-indispensable tactic.}.
+real fight, a curse which cannot be blocked and <em>must</em> be
+dodged is an indispensable tactic.}.
         `,
       },
     ],

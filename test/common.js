@@ -36,11 +36,16 @@ const chapter = (i) => {
     const filepath = path.join(chapterDir, `${i}.html`);
     const html = fs.readFileSync(path.join(chapterDir, `${parseChapterNumber(filepath)}.html`), 'utf8');
     const dom = new jsdom(html);
-    chapterCache[i] = dom.window.document.getElementById('storycontent').innerHTML.replace(/[\n ]+/g, ' ');
+    chapterCache[i] = {
+      title: dom.window.document.getElementById('chapter-title').innerHTML,
+      text: dom.window.document.getElementById('storycontent').innerHTML.replace(/[\n ]+/g, ' '),
+    };
   }
   return chapterCache[i];
 };
 
+// TODO: this needs to be kept in sync with the actual find-and-replace code -
+// come up with something more reliable.
 const checkUnique = (text, html, expect) => {
   const searches = [];
   while (searches[searches.length - 1] !== -1) {

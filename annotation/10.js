@@ -292,10 +292,10 @@ would.
     `,
     notes: [
       {
-        tags: ['spoiler'],
+        tags: ['spoiler', 'TODO'],
         note: `
 This is an interesting statemnt, because Harry ponders this question
-at some length later in the series {85/batman} and eventually comes
+at some length later in the series {85/TODO} and eventually comes
 to the conclusion that he will at least try to achieve all of his
 goals without killing anyone, so long as nobody dies because of his
 reluctance.

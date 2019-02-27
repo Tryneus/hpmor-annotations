@@ -54,10 +54,20 @@ describe('annotations', () => {
         });
       });
 
+      Object.values(anchors).map((a) => {
+        describe(`Anchor ${a.id}`, () => {
+          it('uniquely matches', () => {
+            const region = a.title ? chapter(id).title : chapter(id).text;
+            checkUnique(a.text, region);
+          });
+        });
+      });
+
       Object.values(annotations).map((a) => {
         describe(`Annotation ${a.id}`, () => {
           it('text uniquely matches lines', () => {
-            checkUnique(a.text, chapter(id));
+            const region = a.title ? chapter(id).title : chapter(id).text;
+            checkUnique(a.text, region);
           });
 
           const brackets = (a.note && a.note.match(/\{/g)) || [];
@@ -67,12 +77,11 @@ describe('annotations', () => {
             return acc;
           }, []);
 
-          // TODO: we can test this via 'anchors'
           matches.forEach((match, i) => {
             it(`Link ${i + 1}: ${match[1] ? 'Chapter ' + match[1] : 'unknown chapter'}`, () => {
               assert(match.length === 3, 'Unexpected link format.');
-              const targetChapterNumber = parseInt(match[1]);
-              checkUnique(match[2], chapter(targetChapterNumber));
+              // const targetChapterNumber = parseInt(match[1]);
+              // TODO: test that there exists an anchor for each link id
             });
           });
 

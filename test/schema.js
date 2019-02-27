@@ -75,12 +75,13 @@ const annotations = {
   propertyNames: {pattern: '^hpmor-[0-9]+-[0-9]+$'},
   additionalProperties: {
     type: 'object',
-    required: ['id', 'text', 'replacement', 'notes', 'disambiguation', 'subjects'],
+    required: ['id', 'text', 'title', 'replacement', 'notes', 'disambiguation', 'subjects'],
     additionalProperties: false,
     properties: {
       id: {type: 'string'},
       subjects: {type: 'array', items: {type: 'string'}},
       text: {type: 'string'},
+      title: {type: 'boolean'},
       replacement: {type: 'string'},
       notes: {
         type: 'array',

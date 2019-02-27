@@ -63,8 +63,9 @@ a whole lifetime. Maybe just never.
         tags: ['spoiler'],
         note: `
 Harry's first reaction upon seeing the ghosts was to believe that
-nobody had ever really died {39/I thought there was an afterlife}.
-He was understandably upset to learn that this was not the case.
+nobody had ever really died {39/I thought there <em>was</em> an
+afterlife}.  He was understandably upset to learn that this was not
+the case.
         `,
       },
     ],

@@ -95,8 +95,8 @@ the prophecy.
       {
         tags: ['consequence'],
         note: `
-{6/You can, if you like, tell me the truth, the whole truth, and in
-return I will keep your secrets.}
+{6/You can, if you like, tell me the truth, the <em>whole</em>
+truth, and in return I will keep your secrets.}
         `,
       },
     ],

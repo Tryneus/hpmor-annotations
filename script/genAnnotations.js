@@ -106,7 +106,8 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
       };
 
       const id = `hpmor-${chapter}-${i + 1}`;
-      const text = processText(x.text);
+      const title = Boolean(x.title);
+      const text = processText(x.text || x.title);
       const replacement = generateReplacement(text, id);
       const processedNotes = (x.notes || []).map((note) => processNote(note, id, chapter));
       const notes = processedNotes.map((x) => ({
@@ -116,7 +117,7 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
 
       processedNotes.forEach((x) => links.push(...x.chapterLinks));
 
-      return {...defaults, ...x, id, text, replacement, notes};
+      return {...defaults, ...x, id, text, title, replacement, notes};
     });
 
     return {chapter, annotations, anchors: []};

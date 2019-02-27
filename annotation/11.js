@@ -94,7 +94,7 @@ boy who lived {20/Hat's choice for the Boy-Who-Lived}.
       {
         tags: ['consequence'],
         note: `
-A callback to Luna Lovegood's prophecy {7/BOY-WHO-LIVED GETS DRACO
+A callback to Luna Lovegood's prophecy {7/BOY-WHO-LIVED GETS<br> DRACO
 MALFOY PREGNANT}.
         `,
       },

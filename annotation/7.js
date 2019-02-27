@@ -222,7 +222,7 @@ may not realize it.
 In the original series, the Weasley family rat is a transformed Peter
 Pettigrew.  In HPMOR it was a normal rat that Bill Weasley thought was
 Peter Pettigrew because he had a schizophrenic break {29/She would've
-died. "A rat."}.
+<em>died</em>. "A rat."}.
         `,
       },
     ],
