@@ -32,7 +32,7 @@ theme of the chapter.
 
   {
     text: `
-akin to a major univeristy classroom
+akin to a major university classroom
     `,
     notes: [
       {
@@ -92,7 +92,7 @@ Harry didn't particularly feel like approaching Quirrell anyway.
 
   {
     text: `
-oh my god you have minions
+oh my god you have <em>minions</em>
     `,
     notes: [
       {
@@ -278,7 +278,7 @@ reminding him that some things cannot be compromised.
   {
     text: `
 Demonstrate his supposed immunity to the Killing Curse? Surely
-Professor Quirrell was too smart for that...
+Professor Quirrell was too smart for <em>that</em>...
     `,
     notes: [
       {
@@ -330,8 +330,8 @@ TODO: link to previous chapter
 
   {
     text: `
-WRONG
-DON'T
+WRONG<br>
+DON'T<br>
 BAD IDEA
     `,
     notes: [

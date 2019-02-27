@@ -92,9 +92,11 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
 
     // Filter out tombstones and annotations with no remaining notes or subjects
     const filteredAnnotations = rawAnnotations.filter((a) =>
-      !(a.notes && a.notes.length === 0) &&
+      (a.notes && a.notes.length !== 0) &&
       !(a.subjects && a.subjects.includes('tombstone'))
     );
+
+    console.log(`Chapter ${chapter}: ${rawAnnotations.length} raw annotations, ${filteredAnnotations.length} filtered annotations`);
 
     const annotations = filteredAnnotations.map((x, i) => {
       // Fields that are not required to be explicitly defined in the source

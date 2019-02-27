@@ -1,6 +1,6 @@
 module.exports = [
   {
-    text: `
+    title: `
 Conscientiousness
     `,
     notes: [
@@ -219,11 +219,11 @@ very small object.
 
   {
     text: `
-Unless, of course, you engage in some sort of mischief and lose House
-points before then. Addressing a professor disrespectfully, for
-example." Professor McGonagall put a finger on her cheek and looked
-reflective. "I expect you'll hit negative numbers before the end of
-Friday.
+Unless, of course, you engage in some sort of mischief and
+<em>lose</em> House points before then. Addressing a professor
+disrespectfully, for example." Professor McGonagall put a finger on
+her cheek and looked reflective. "I expect you'll hit negative
+numbers before the end of Friday."
     `,
     notes: [
       {

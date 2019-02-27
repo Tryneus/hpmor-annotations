@@ -45,10 +45,10 @@ https://en.wikipedia.org/wiki/P_versus_NP_problem
 
   {
     text: `
-There couldn't possibly be anything he could master on the first try
-which would baffle Hermione, and if there was and it turned out to be
-broomstick riding instead of anything intellectual, Harry would just
-die.
+There couldn't possibly be anything <em>he</em> could master on the
+first try which would baffle Hermione, and if there <em>was</em>
+and it turned out to be <em>broomstick riding</em> instead of
+anything intellectual, Harry would just die.
     `,
     notes: [
       {
@@ -62,8 +62,8 @@ This is, in fact, the case in the original series.
 
   {
     text: `
-"GREGORY GOYLE!" screamed Harry. "I challenge you to a contest for
-possession of Neville's Remembrall!"
+"<em>GREGORY GOYLE!"</em> screamed Harry<em>. "I challenge you
+to a contest for possession of Neville's Remembrall!"</em>
     `,
     notes: [
       {
@@ -223,7 +223,8 @@ Hallows, so it is tough for him to let one go.
   {
     text: `
 And so I cannot help but wonder if by some strange chance you have
-found not just an invisibility cloak, but the Cloak of Invisibility
+found not just <em>an</em> invisibility cloak, but <em>the</em>
+Cloak of Invisibility
     `,
     notes: [
       {
@@ -301,9 +302,7 @@ deserting the Death Eaters prior to the final battle.
   {
     text: `
 Speaking of which, Harry, I have a certain something to give you,
-something which belonged to your father.  Speaking of which, Harry, I
-have a certain something to give you, something which belonged to your
-father.
+something which belonged to your father.
     `,
     notes: [
       {
@@ -319,7 +318,7 @@ Harry already has the cloak.
   {
     text: `
 Dumbledore nodded. "But just because I can't think of a reason doesn't
-mean there is no reason."
+mean there <em>is</em> no reason."
     `,
     notes: [
       {
@@ -382,10 +381,10 @@ A D&D potion which increases charisma.
 
   {
     text: `
-Scrawled in the margin was a handwritten annotation saying, I wonder
-what would happen if you used Thestral blood here instead of
-blueberries? and immediately beneath was a reply in different
-handwriting, You'd get sick for weeks and maybe die.
+Scrawled in the margin was a handwritten annotation saying, <em>I
+wonder what would happen if you used Thestral blood here instead of
+blueberries?</em> and immediately beneath was a reply in different
+handwriting, <em>You'd get sick for weeks and maybe die.</em>
     `,
     notes: [
       {
@@ -420,8 +419,8 @@ that it's being withheld from children is probably sexual in nature.
 
   {
     text: `
-And this one with the golden wibblers is my own invention and Minerva
-is never, ever going to figure out what it's doing.
+And <em>this</em> one with the golden wibblers is my own invention
+and Minerva is never, ever going to figure out what it's doing.
     `,
     notes: [
       {
@@ -524,12 +523,13 @@ Dumbledore is later locked outside of time.
 
   {
     text: `
-"I understand," said Dumbledore. "One last thing then, Harry. You are
-not to attempt the forbidden door on the third-floor corridor. There's
-no possible way you could get through all the traps, and I wouldn't
-want to hear that you'd been hurt trying. Why, I doubt that you could
-so much as open the first door, since it's locked and you don't know
-the spell Alohomora -"
+"I understand," said Dumbledore. "One last thing then, Harry.
+You are <em>not</em> to attempt the forbidden door on the
+third-floor corridor. There's no possible way you could get through
+all the traps, and I wouldn't want to hear that you'd been hurt
+trying. Why, I doubt that you could so much as open the first door,
+since it's locked and you don't know the spell <em>Alohomora
+-</em>"
     `,
     notes: [
       {

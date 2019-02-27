@@ -165,11 +165,11 @@ Dumbledore previously incinerated a chicken, which was not Fawkes.
 
   {
     text: `
-"Oh, indeed, in very deed, this is my punishment if ever there was
-one! Of course you're in here blackmailing me to save your fellow
-students, not to save yourself! I can't imagine why I would have
-thought otherwise!" Dumbledore was now laughing even harder. He
-pounded his fist on the desk three times.
+"Oh, indeed, in very deed, this is my punishment if ever there
+was one! Of <em>course</em> you're in here blackmailing me to save
+your fellow students, not to save yourself! I can't imagine why I
+would have thought otherwise!" Dumbledore was now laughing even
+harder. He pounded his fist on the desk three times.
     `,
     notes: [
       {
@@ -208,12 +208,12 @@ nothing.
 
   {
     text: `
-Harry, Minerva thought despairingly, you promised you wouldn't bite
-any teachers!
+<em>Harry,</em> Minerva thought despairingly, <em>you promised
+you wouldn't bite any teachers!</em>
 
-And in her mind she could see very clearly the reply, Harry's angry
-face and his outraged response: I said I wouldn't bite anyone who
-didn't bite me first!
+And in her mind she could see very clearly the reply, Harry's
+angry face and his outraged response: <em>I said I wouldn't bite
+anyone who didn't bite me first!</em>
     `,
     notes: [
       {
@@ -227,8 +227,9 @@ didn't bite me first!
 
   {
     text: `
-Harry glanced briefly at him, smiling grimly. "Oh, so we are a
-Slytherin, then," Harry said. "I was starting to wonder."
+Harry glanced briefly at him, smiling grimly. "Oh, so we
+<em>are</em> a Slytherin, then," Harry said. "I was starting to
+wonder."
     `,
     notes: [
       {
@@ -258,9 +259,9 @@ compared.
 
   {
     text: `
-"I am beginning to doubt your suitability as my Gandalf, Mr.
-Dumbledore. Boromir was at least a plausible mistake. What is this
-Nazgul doing in my Fellowship?"
+"I am beginning to doubt your suitability as my Gandalf, <em>Mr.
+Dumbledore</em>. Boromir was at least a plausible mistake. What is
+this <em>Nazgul</em> doing in my Fellowship?"
     `,
     notes: [
       {
