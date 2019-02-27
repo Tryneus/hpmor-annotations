@@ -12,13 +12,13 @@ fs.readFile(sourceFile, 'utf8', (err, source) => {
   } else {
     // The minifier we're using seems to fuck up the bookmarklet code a bit, so wrap it
     const wrapped = source
-      .replace(/^javascript:!function/, 'javascript:(function')
+      .replace(/^!function/, '(function')
       .replace(/\}\(\)$/, '})()');
 
     // To embed the bookmarklet in the github pages markdown, we need to URI-encode it
     const escaped = encodeURIComponent(wrapped);
 
-    fs.writeFile(outputFile, escaped, (err) => {
+    fs.writeFile(outputFile, 'javascript:' + escaped, (err) => {
       if (err) {
         console.log('Error writing output:', err);
       } else {
