@@ -24,11 +24,11 @@ fs.readdir(annotationDir, (err, filelist) => {
 
   fs.readdir(topicSourceDir, (err, filelist) => {
     if (err) { throw err; }
-    const files = filelist.filter((x) => Boolean(x.match(/^[0-9]+\.js$/)));
+    const files = filelist.filter((x) => Boolean(x.match(/.*\.js$/)));
 
     const topics = files.reduce((acc, filename) => {
       const sourceFile = path.join(topicSourceDir, filename);
-      const topic = filename.match(/^([0-9]+)\.js$/)[1];
+      const topic = filename.match(/^(.*)\.js$/)[1];
       acc[topic] = require(sourceFile);
       return acc;
     }, {});
@@ -37,10 +37,11 @@ fs.readdir(annotationDir, (err, filelist) => {
       const outputFile = path.join(topicDestDir, `${topic}.md`);
 
       const markdown = `
-# ${topic}
+# ${info.title}
+
+${info.description}
 
 ${annotations.length}
-${info.length}
       `;
 
       fs.writeFileSync(outputFile, markdown.trim());
