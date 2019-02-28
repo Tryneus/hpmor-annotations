@@ -31,7 +31,7 @@ const rawAnnotations = {
     type: 'object',
     additionalProperties: false,
     properties: {
-      subjects: {type: 'array', items: {type: 'string'}, minItems: 1},
+      topics: {type: 'array', items: {type: 'string'}, minItems: 1},
       text: {type: 'string'},
       title: {type: 'string'},
       notes: {
@@ -59,10 +59,10 @@ const rawAnnotations = {
         ],
       },
       {
-        // At least one of 'notes' and 'subjects' must be specified
+        // At least one of 'notes' and 'topics' must be specified
         anyOf: [
           {required: ['notes']},
-          {required: ['subjects']},
+          {required: ['topics']},
         ],
       },
     ],
@@ -75,11 +75,11 @@ const annotations = {
   propertyNames: {pattern: '^hpmor-[0-9]+-[0-9]+$'},
   additionalProperties: {
     type: 'object',
-    required: ['id', 'text', 'title', 'replacement', 'notes', 'disambiguation', 'subjects'],
+    required: ['id', 'text', 'title', 'replacement', 'notes', 'disambiguation', 'topics'],
     additionalProperties: false,
     properties: {
       id: {type: 'string'},
-      subjects: {type: 'array', items: {type: 'string'}},
+      topics: {type: 'array', items: {type: 'string'}},
       text: {type: 'string'},
       title: {type: 'boolean'},
       replacement: {type: 'string'},

@@ -90,10 +90,10 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
       a.notes = a.notes && a.notes.filter((x) => !x.tags.includes('TODO'));
     });
 
-    // Filter out tombstones and annotations with no remaining notes or subjects
+    // Filter out tombstones and annotations with no remaining notes or topics
     const filteredAnnotations = rawAnnotations.filter((a) =>
       (a.notes && a.notes.length !== 0) &&
-      !(a.subjects && a.subjects.includes('tombstone'))
+      !(a.topics && a.topics.includes('tombstone'))
     );
 
     console.log(`Chapter ${chapter}: ${rawAnnotations.length} raw annotations, ${filteredAnnotations.length} filtered annotations`);
@@ -102,7 +102,7 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
       // Fields that are not required to be explicitly defined in the source
       const defaults = {
         disambiguation: {expect: 1, useIndex: 0},
-        subjects: [],
+        topics: [],
       };
 
       const id = `hpmor-${chapter}-${i + 1}`;

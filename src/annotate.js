@@ -3,6 +3,9 @@
   // Used to track the currently displayed note
   let activeNote;
 
+  // Used to control whether spoilers are visible
+  let showSpoilers = true;
+
   // Used for development environment shortcuts
   const isLocal =
     window.location.hostname === '' &&
@@ -10,14 +13,23 @@
 
   const colors = {
     'foreshadowing': '#aaa',
-    'consequence': '#f6f',
+    'consequence': '#fbf',
     'reference': '#77f',
     'departure': '#f90',
-    'original': '#af0',
+    'original': '#9e5',
     'speculation': '#fbf',
     'background': '#30f',
     'spoiler': '#f00',
+    'default': '#0000', // Only used if all notes have been filtered
   };
+
+  const allTags = Object.keys(colors);
+
+  function getPrimaryTag(annotation) {
+    // Ignore notes with spoilers if showSpoilers is false
+    const notes = annotation.notes.filter((x) => showSpoilers || !x.tags.includes('spoiler'));
+    return (notes[0] && notes[0].tags[0]) || 'default';
+  }
 
   function handleFrameLoad() {
     const frame = document.getElementById('hpmor-annotations-frame');
@@ -39,6 +51,11 @@
 
     activeNote = null;
     annotate();
+  }
+
+  function saveLocation() {
+    const frame = document.getElementById('hpmor-annotations-frame');
+    window.location.replace(frame.contentWindow.location.href);
   }
 
   function installFrame() {
@@ -69,6 +86,10 @@
 
     // Reposition the active note if the window is resized
     window.addEventListener('resize', positionNotes);
+
+    // Update the URL of the current page because refreshing doesn't
+    // use our replaced history state
+    window.addEventListener('beforeunload', saveLocation);
 
     return frame;
   }
@@ -149,17 +170,24 @@
 
     // For each annotation, add a div which is hidden until the annotation is clicked
     Object.values(annotations).forEach((annotation) => {
-      const color = colors[annotation.tags[0]];
+      const color = colors[getPrimaryTag(annotation)];
       const note = document.createElement('div');
       note.id = `${annotation.id}-note`;
       note.className = 'hpmor-annotations-note';
       note.onclick = dismissNote;
 
+      // Filter out spoilers if requested
+      const visibleNotes = annotation.notes.filter((x) => showSpoilers || !x.tags.includes('spoiler'));
+      const noteTags = Array.from(new Set(visibleNotes.reduce((acc, x) => acc.concat(x.tags), []))).join(' / ');
+      const noteText = visibleNotes.map((x) => `
+        <p>${x.note}</p>
+      `).join('\n');
+
       // TODO: include an icon linking to the source code for the annotation
       note.innerHTML = `
         <div class="hpmor-annotations-note-content">
-          <div class="hpmor-annotations-note-tags" style="background: ${color}">${annotation.tags.join(' / ')}</div>
-          <div class="hpmor-annotations-note-text" style="border-color: ${color}">${annotation.note}</div>
+          <div class="hpmor-annotations-note-tags" style="background: ${color}">${noteTags}</div>
+          <div class="hpmor-annotations-note-text" style="border-color: ${color}">${noteText}</div>
         </div>
         <div class="hpmor-annotations-note-bracket" style="border-color: ${color}"></div>
       `;
@@ -181,7 +209,7 @@
     invertable.insertBefore(ranges, invertable.childNodes[0]);
 
     Object.values(annotations).forEach((annotation) => {
-      const color = colors[annotation.tags[0]];
+      const color = colors[getPrimaryTag(annotation)];
       const range = document.createElement('div');
       range.id = `${annotation.id}-range`;
       range.className = 'hpmor-annotations-range-container';
@@ -229,7 +257,7 @@
         return null;
       }
 
-      const color = colors[annotation.tags[0]];
+      const color = colors[getPrimaryTag(annotation)];
       span.style['text-decoration-color'] = color;
 
       span.onclick = (ev) => toggleNote(id, ev);
@@ -327,7 +355,7 @@
     background: #f0f0f0;
     border-width: 1px;
     font: 12px sans-serif;
-    padding: 7px;
+    padding: 0px 7px;
   }
 
   .hpmor-annotations-note-bracket {
@@ -508,6 +536,7 @@
         const frame = document.getElementById('hpmor-annotations-frame');
         frame.removeEventListener('load', handleFrameLoad);
         window.removeEventListener('resize', positionNotes);
+        window.removeEventListener('beforeunload', saveLocation);
 
         const newScript = document.createElement('script');
         newScript.src = oldScript.src.replace('dist', 'src');
