@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "gen": "node script/genCode.js && node script/genAnnotations.js && node script/genBookmarkletMarkdown.js",
+    "gen": "node script/genCode.js && node script/genAnnotations.js && node script/genBookmarkletMarkdown.js && node script/genTopics.js",
     "cache": "node script/downloadChapters.js",
     "prebuild": "./node_modules/mocha/bin/mocha test/prebuild.js",
     "postbuild": "./node_modules/mocha/bin/mocha test/postbuild.js",

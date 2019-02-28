@@ -1,6 +1,8 @@
 'use strict';
 
 const assert = require('assert');
+const path = require('path');
+const fs = require('fs');
 
 const _ = require('lodash');
 const jsonschema = require('jsonschema');
@@ -88,6 +90,30 @@ describe('annotations', () => {
           // TODO: test that all reference/foreshadowing/background notes contain links
           // TODO: test that we don't have raw links
         });
+      });
+    });
+  });
+});
+
+describe('topics', () => {
+  // Find all topics mentioned in annotations
+  const topics =
+    _.uniq(
+      _.flatMap(
+        _.flatMap(
+          processedAnnotations(),
+          (x) => Object.values(x.data.annotations),
+        ),
+        (x) => x.topics,
+      ),
+    );
+
+  topics.forEach((topic) => {
+    describe(topic, () => {
+      const topicDir = path.join(__dirname, '../dist/topic');
+
+      it('has a topic page', () => {
+        assert(fs.existsSync(path.join(topicDir, `${topic}.md`)));
       });
     });
   });
