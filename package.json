@@ -7,9 +7,11 @@
     "test": "test"
   },
   "scripts": {
-    "build": "node script/genCode.js && node script/genAnnotations.js && node script/genBookmarkletMarkdown.js",
+    "gen": "node script/genCode.js && node script/genAnnotations.js && node script/genBookmarkletMarkdown.js",
     "cache": "node script/downloadChapters.js",
-    "test": "./node_modules/mocha/bin/mocha test/preBuild.js && npm run build && ./node_modules/mocha/bin/mocha test/postBuild.js",
+    "prebuild": "./node_modules/mocha/bin/mocha test/prebuild.js",
+    "postbuild": "./node_modules/mocha/bin/mocha test/postbuild.js",
+    "all": "npm run prebuild && npm run gen && npm run postbuild",
     "lint": "node ./node_modules/eslint/bin/eslint.js src script annotation test",
     "clean": "rm -rf dist/* chapters"
   },

@@ -36,8 +36,8 @@ by a band that highschool kids liked a lot at the time it was written.
 
   {
     text: `
-Its song had implied so: Oh, I'm the Sorting Hat and I'm okay, I sleep
-all year and I work one day...
+Its song had implied so: <em>Oh, I'm the Sorting Hat and I'm okay, I
+sleep all year and I work one day...</em>
     `,
     notes: [
       {
@@ -105,15 +105,18 @@ This is a reference to Legilimency, which plays a large role in HPMOR.
   },
 
   {
+    // TODO: this splits an <em> tag - fix the replacement generation to
+    // handle this (generate extra tags to maintain style while still
+    // wrapping the selected text in a span)
     text: `
-I can tell you that there is definitely nothing like a ghost - mind,
-intelligence, memory, personality, or feelings - in your
+I</em> can <em>tell you that there is definitely nothing like a ghost
+- mind, intelligence, memory, personality, or feelings - in your
 scar. Otherwise it would be participating in this conversation, being
 under my brim.
     `,
     notes: [
       {
-        tags: ['spoiler'],
+        tags: ['spoiler', 'TODO'],
         note: `
 The intelligence/personality/etc. of the dark lord *is* participating
 in this conversation, since it's just rolled into Harry.  See the
@@ -125,9 +128,9 @@ topic page on his **mysterious dark side**.
 
   {
     text: `
-I am not Dark Lord material!
+<em>I am not Dark Lord material!</em>
 
-"Yes, you are. You really, really are."
+<em>"Yes, you are. You really,</em> really <em>are."</em>
     `,
     notes: [
       {
@@ -271,9 +274,9 @@ your eye even as it sharpens your vision."
 
   {
     text: `
-"I cannot give you exact statistics. I cannot know them so I cannot
-count them. I just know that your chances don't feel good. They feel
-very not-good."
+<em>"I cannot give you exact statistics. I cannot know them so I
+cannot count them. I just know that your chances don't feel good.
+They feel</em> very <em>not-good."</em>
     `,
     notes: [
       {

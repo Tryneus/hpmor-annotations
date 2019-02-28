@@ -48,7 +48,7 @@ characters from the original series.
 
   {
     text: `
-What options are available at my user level?
+<em>What options</em> are <em>available at my user level?</em>
 
 After that it didn't take long -
 
@@ -68,10 +68,11 @@ control of the system).
 
   {
     text: `
-Seeing the look of horror on Harry Potter's face, Fred Weasley thought
-faster than he ever had in his life. In a single motion he whipped out
-his wand, whispered "Silencio!" and then "Changemyvoiceio!" and
-finally "Ventriliquo! "
+Seeing the look of horror on Harry Potter's face, Fred Weasley
+thought faster than he ever had in his life. In a single motion he
+whipped out his wand, whispered <em>"Silencio!"</em> and then
+"<em>Changemyvoiceio!"</em> and finally
+"<em>Ventriliquo!</em> "
     `,
     notes: [
       {

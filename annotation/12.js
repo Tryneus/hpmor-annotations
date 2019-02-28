@@ -26,7 +26,7 @@ indeed the rest of the series, are clearly enormous.
 
   {
     text: `
-"Wonder what's wrong with him."
+<em>"Wonder what's wrong with</em> him<em>."</em>
     `,
     notes: [
       {
@@ -47,8 +47,9 @@ title-quote-worthy characters.
 
   {
     text: `
-"Fine, I promised the Sorting Hat not to talk about most of it and the
-rest is private just like yours was so stop asking."
+"Fine, I promised the Sorting Hat not to talk about
+<em>most</em> of it and the rest is <em>private</em> just like
+<em>yours was</em> so <em>stop asking.</em>"
     `,
     notes: [
       {
@@ -64,8 +65,8 @@ introduction to life in Ravenclaw house.
 
   {
     text: `
-"Ssalutations from Sslytherin to Sslytherin: if you would sseek my
-ssecretss, sspeak to my ssnake."
+"<em>Ssalutations from Sslytherin to Sslytherin: if you would sseek
+my ssecretss, sspeak to my ssnake."</em>
     `,
     notes: [
       {
@@ -109,8 +110,8 @@ the moment.
   {
     text: `
 No other name was called out after that, and Harry realised that
-"Zabini, Blaise" did sound close to the end of the alphabet. Great, so
-now he'd only applauded Zabini... Oh well.
+"Zabini, Blaise" did sound close to the end of the alphabet. Great,
+so now he'd <em>only</em> applauded Zabini... Oh well.
     `,
     notes: [
       {
@@ -143,10 +144,11 @@ already visualising the minions' uniforms.
   {
     text: `
 For the Comed-Tea to work, it would have to make Dumbledore say
-something so ridiculous during his speech that even in Harry's state
-of mental preparedness, he would still choke. Like, all the Hogwarts
-students had to not wear any clothes for the whole school year, or
-everyone was going to be transformed into cats.
+something <em>so</em> ridiculous during his speech that even in
+Harry's state of mental preparedness, he would <em>still</em>
+choke. Like, all the Hogwarts students had to not wear any clothes
+for the whole school year, or everyone was going to be transformed
+into cats.
     `,
     notes: [
       {
@@ -161,10 +163,11 @@ about to be surprised by Dumbledore's speech.
 
   {
     text: `
-...that meant that as soon as he learned a spell to temporarily alter
-his own sense of humor, he could make anything happen, by making it so
-that he would only find that one thing surprising enough to do a
-spit-take, and then drinking a can of Comed-Tea.
+...<em>that</em> meant that as soon as he learned a spell to
+temporarily alter his own sense of humor, he could make
+<em>anything</em> happen, by making it so that he would
+<em>only</em> find that <em>one thing</em> surprising enough to do
+a spit-take, and then drinking a can of Comed-Tea.
     `,
     notes: [
       {
@@ -247,15 +250,15 @@ logic the Hat mentioned) on him.
 
   {
     text: `
-Why, yes. That sounded like a remarkably good idea once Harry had
-actually thought of it.
+Why, yes. That sounded like a <em>remarkably</em> good idea once
+Harry had actually <em>thought</em> of it.
 
-So very obvious in retrospect, and yet somehow, Option 3c and Option
-3d just hadn't occurred to him.
+So very obvious in retrospect, and yet somehow, Option 3c and
+Option 3d just hadn't occurred to him.
     `,
     notes: [
       {
-        tags: ['original'],
+        tags: ['original', 'departure'],
         note: `
 In the original series, Harry and his friends consistently attempt to
 have adventures without informing adults, even when it would have been
@@ -293,9 +296,10 @@ with the actual defenses of the stone being somewhat more subtle.
   {
     text: `
 "I hope all students will extend Professor Quirrell that utmost
-courtesy and tolerance which is due his extraordinary service to you
-and this school, and that you will not pester us with any niggling
-complaints about him, unless you want to try doing his job."
+courtesy and <em>tolerance</em> which is due his extraordinary service
+to you and this school, and that you <em>will not pester us</em> with
+any <em>niggling complaints</em> about him, unless <em>you</em> want
+to try doing his job."
     `,
     notes: [
       {

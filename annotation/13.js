@@ -1,6 +1,6 @@
 module.exports = [
   {
-    text: `
+    title: `
 Asking the Wrong Questions
     `,
     notes: [
@@ -108,7 +108,7 @@ he's encountering himself from the outside.
 
   {
     text: `
-Draco's curse came back to him. Son of a mudblood -
+Draco's curse came back to him. <em>Son of a mudblood -</em>
     `,
     notes: [
       {
@@ -346,8 +346,8 @@ https://en.wikipedia.org/wiki/Drayage
 
   {
     text: `
-Let me warn you... messing with my life tends to make your life... a
-little hairy. Get it?"
+Let me warn you... messing with <em>my</em> life tends to make
+<em>your</em> life... <em>a little hairy.</em> Get it?
     `,
     notes: [
       {
@@ -394,7 +394,8 @@ course of the story.
 
   {
     text: `
-Though it had produced an effect that might be tactically useful.
+Though it <em>had</em> produced an effect that might be tactically
+useful.
     `,
     notes: [
       {

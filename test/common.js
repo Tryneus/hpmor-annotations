@@ -37,7 +37,7 @@ const chapter = (i) => {
     const html = fs.readFileSync(path.join(chapterDir, `${parseChapterNumber(filepath)}.html`), 'utf8');
     const dom = new jsdom(html);
     chapterCache[i] = {
-      title: dom.window.document.getElementById('chapter-title').innerHTML,
+      title: dom.window.document.getElementById('chapter-title').innerHTML.replace(/[\n ]+/g, ' '),
       text: dom.window.document.getElementById('storycontent').innerHTML.replace(/[\n ]+/g, ' '),
     };
   }

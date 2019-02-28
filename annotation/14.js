@@ -1,6 +1,6 @@
 module.exports = [
   {
-    text: `
+    title: `
 The Unknown and the Unknowable
     `,
     notes: [
@@ -287,9 +287,10 @@ https://en.wikipedia.org/wiki/Johannes_Gutenberg
 
   {
     text: `
-"Perhaps," Harry said when he could speak again, "you ought to provide
-your time machines with some sort of protective shell, rather than
-leaving the glass exposed, so as to prevent that from happening."
+"Perhaps," Harry said when he could speak again, "you ought to
+provide your time machines with some sort of <em>protective
+shell</em>, rather than <em>leaving the glass exposed</em>, so as
+to <em>prevent that from happening</em>."
     `,
     notes: [
       {
@@ -518,7 +519,7 @@ See **deathly hallows** topic page.
 
   {
     text: `
-hidden, not merely invisible
+<span style="text-decoration:underline;">hidden</span>, not merely invisible
     `,
     notes: [
       {
@@ -550,9 +551,9 @@ earlier in his timeline.
 
   {
     text: `
-Oh wad some power the giftie gie us
-To see oursel's as others see us!
-It wad frae monie a blunder free us,
+Oh wad some power the giftie gie us<br>
+To see oursel's as others see us!<br>
+It wad frae monie a blunder free us,<br>
 And foolish notion -
     `,
     notes: [

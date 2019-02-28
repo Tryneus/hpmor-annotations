@@ -195,7 +195,7 @@ your suggestion for preventing breakage in her Spimster wickets
       {
         tags: ['consequence'],
         note: `
-{14/some sort of protective shell}
+{14/some sort of <em>protective shell</em>}
         `,
       },
     ],
