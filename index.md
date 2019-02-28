@@ -4,7 +4,7 @@ Then visit any of the chapters on the [official HPMOR site](http://www.hpmor.com
 
 Don't go sharing this yet, it needs a little more polish and a lot of annotations.  Currently only chapters 1 through 18 have annotations.
 
-<details>
+<details markdown="1">
   <summary>Annotations by Topic (Spoilers)</summary>
 
   * [Phoenix](dist/phoenix)
