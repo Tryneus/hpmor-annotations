@@ -23,8 +23,6 @@
     'default': '#0000', // Only used if all notes have been filtered
   };
 
-  const allTags = Object.keys(colors);
-
   function getPrimaryTag(annotation) {
     // Ignore notes with spoilers if showSpoilers is false
     const notes = annotation.notes.filter((x) => showSpoilers || !x.tags.includes('spoiler'));
