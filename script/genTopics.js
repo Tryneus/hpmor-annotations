@@ -50,7 +50,7 @@ ${annotations.length}
     });
 
     const listMarkdown = Object.entries(topics).map(([topic, info]) =>
-      `* [${info.title}](${path.join('dist', 'topic', topic)}.md)`
+      `* [${info.title}](${path.join('dist', 'topic', topic)})`
     ).join('\n');
 
 
