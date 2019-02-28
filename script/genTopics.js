@@ -6,6 +6,7 @@ const path = require('path');
 const annotationDir = path.join(__dirname, '../dist/annotation');
 const topicSourceDir = path.join(__dirname, '../topic');
 const topicDestDir = path.join(__dirname, '../dist/topic');
+const listMarkdownFile = path.join(__dirname, '../dist/topics.md');
 
 fs.mkdirSync(topicDestDir, {recursive: true});
 
@@ -47,5 +48,13 @@ ${annotations.length}
       fs.writeFileSync(outputFile, markdown.trim());
       console.log('Generated topic markdown:', outputFile);
     });
+
+    const listMarkdown = Object.entries(topics).map(([topic, info]) =>
+      `* [${info.title}](dist/${topic}.md)`
+    ).join('\n');
+
+
+    fs.writeFileSync(listMarkdownFile, listMarkdown);
+    console.log(`Generated topic list (${Object.entries(topics).length}):`, listMarkdownFile);
   });
 });
