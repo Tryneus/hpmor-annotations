@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const scrape = require('website-scraper');
 
-const outputDir = path.join(__dirname, '../chapter');
+const outputDir = path.join(__dirname, '..', 'chapter');
 
 async function downloadChapters() {
   const urls = Array.from(Array(122).keys()).map((i) =>

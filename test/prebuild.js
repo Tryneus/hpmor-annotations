@@ -28,9 +28,9 @@ describe('raw annotations', () => {
 describe('eslint', () => {
   before(function () {
     const dirs = [
-      path.join(__dirname, '../src'),
-      path.join(__dirname, '../script'),
-      path.join(__dirname, '../test'),
+      path.join(__dirname, '..', 'src'),
+      path.join(__dirname, '..', 'script'),
+      path.join(__dirname, '..', 'test'),
     ];
 
     const engine = new eslint.CLIEngine();

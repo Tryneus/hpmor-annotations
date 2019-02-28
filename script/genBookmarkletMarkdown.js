@@ -3,8 +3,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const sourceFile = path.join(__dirname, '../dist/bookmarklet.js');
-const outputFile = path.join(__dirname, '../dist/bookmarklet.md');
+const sourceFile = path.join(__dirname, '..', 'dist', 'bookmarklet.js');
+const outputFile = path.join(__dirname, '..', 'dist', 'bookmarklet.md');
 
 fs.readFile(sourceFile, 'utf8', (err, source) => {
   if (err) {

@@ -110,7 +110,7 @@ describe('topics', () => {
 
   topics.forEach((topic) => {
     describe(topic, () => {
-      const topicDir = path.join(__dirname, '../dist/topic');
+      const topicDir = path.join(__dirname, '..', 'dist', 'topic');
 
       it('has a topic page', () => {
         assert(fs.existsSync(path.join(topicDir, `${topic}.md`)));

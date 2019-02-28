@@ -3,10 +3,10 @@
 const fs = require('fs');
 const path = require('path');
 
-const annotationDir = path.join(__dirname, '../dist/annotation');
-const topicSourceDir = path.join(__dirname, '../topic');
-const topicDestDir = path.join(__dirname, '../dist/topic');
-const listMarkdownFile = path.join(__dirname, '../dist/topics.md');
+const annotationDir = path.join(__dirname, '..', 'dist', 'annotation');
+const topicSourceDir = path.join(__dirname, '..', 'topic');
+const topicDestDir = path.join(__dirname, '..', 'dist', 'topic');
+const listMarkdownFile = path.join(__dirname, '..', 'dist', 'topics.md');
 
 fs.mkdirSync(topicDestDir, {recursive: true});
 
@@ -50,7 +50,7 @@ ${annotations.length}
     });
 
     const listMarkdown = Object.entries(topics).map(([topic, info]) =>
-      `* [${info.title}](dist/${topic}.md)`
+      `* [${info.title}](dist/${path.join('dist', 'topic', topic)}.md)`
     ).join('\n');
 
 

@@ -4,8 +4,8 @@ const fs = require('fs');
 const path = require('path');
 const butternut = require('butternut');
 
-const sourceDir = path.join(__dirname, '../src/');
-const outputDir = path.join(__dirname, '../dist/');
+const sourceDir = path.join(__dirname, '..', 'src');
+const outputDir = path.join(__dirname, '..', 'dist');
 
 fs.readdir(sourceDir, (err, filelist) => {
   const files = filelist.filter((x) => Boolean(x.match(/\.js$/)));

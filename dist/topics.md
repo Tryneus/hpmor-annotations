@@ -1,1 +1,1 @@
-* [Phoenix](dist/phoenix.md)
+* [Phoenix](dist/dist/topic/phoenix.md)
