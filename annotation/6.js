@@ -132,12 +132,13 @@ Hulk reference.
     text: `
 "I had a pet rock once. It died."
     `,
+    topics: ['prophecy-threading'],
     notes: [
       {
         tags: ['spoiler'],
         note: `
 Dumbledore smashed the rock {119/I smashed a rock that was on your
-windowsill} as part of his **prophecy-threading** project.
+windowsill} as part of his prophecy-threading project.
         `,
       },
     ],
@@ -310,6 +311,7 @@ As his hand touched the back door's handle, he heard a last whisper from behind 
 There was no answer, and when Harry turned around, Professor
 McGonagall was gone.
     `,
+    topics: ['prophecy-threading'],
     notes: [
       {
         tags: ['spoiler'],
@@ -323,8 +325,8 @@ ability to make his whispers carry magically {74/a whisper, carrying
 through the door as though no door were present}.
 
 Another hypothesis is that Dumbledore is there, invisible, and
-whispered this to Harry as part of his **prophecy-threading**
-project.  This seems more likely, since arguably a Harry who never met
+whispered this to Harry as part of his prophecy-threading project.
+This seems more likely, since arguably a Harry who never met
 Hermione would be much more likely to have accidentally destroyed the
 world, and Quirrell has no obvious reason to introduce the two.
 

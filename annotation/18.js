@@ -332,6 +332,7 @@ two hours longer. TODO: link where Dumbledore admits this.
     text: `
 The Ministry has delivered the protective shell for your Time-Turner.
     `,
+    topics: ['time-turner.shell'],
     notes: [
       {
         tags: ['consequence'],

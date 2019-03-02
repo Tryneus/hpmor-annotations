@@ -272,11 +272,12 @@ described in detail.
     text: `
 "Comed-Tea," said the stallholder.
     `,
+    topics: ['comed-tea'],
     notes: [
       {
         tags: ['background'],
         note: `
-**Comed-Tea** is presumably pronounced like 'comedy', this product is
+Comed-Tea is presumably pronounced like 'comedy', this product is
 not seen in the original series.
         `,
       },
@@ -291,14 +292,15 @@ dioxide, or that I don't burp while drinking it...</em>
 
 No, he could afford to be a <em>little</em> patient.
     `,
+    topics: ['comed-tea'],
     notes: [
       {
         tags: ['spoiler'],
         note: `
-This is probably the **Comed-Tea** influencing Harry's thought
-patterns.  Since it is later revealed that Comed-Tea works by giving
-its user a desire to drink at the right time, it must also be able to
-prevent its user from exhausting it too soon.
+This is probably the Comed-Tea influencing Harry's thought patterns.
+Since it is later revealed that Comed-Tea works by giving its user a
+desire to drink at the right time, it must also be able to prevent
+its user from exhausting it too soon.
         `,
       },
     ],
@@ -360,11 +362,12 @@ Harry's **mysterious dark side**.
 <em>BOY-WHO-LIVED GETS<br>
 DRACO MALFOY PREGNANT</em>
     `,
+    topics: ['shipping.harry-draco'],
     notes: [
       {
         tags: ['speculation', 'spoiler'],
         note: `
-Another of the lines that **ship Harry and Draco**.
+Another of the lines that ship Harry and Draco.
 
 The first of **Luna's prophecies**, and also the most irritating.  All
 of the other prophecies turn out to be true in an extremely literal,

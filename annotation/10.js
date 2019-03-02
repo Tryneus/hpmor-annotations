@@ -55,6 +55,7 @@ https://www.youtube.com/watch?v=QgaRd4d8hOY
     text: `
 can you tell me anything about how to rediscover the lost magics that created you?
     `,
+    topics: ['interdict-of-merlin'],
     notes: [
       {
         tags: ['consequence', 'spoiler'],
@@ -65,7 +66,7 @@ looking for a way to stem the tide.  This is not far from how
 Voldemort rediscovered lost magic from the basilisk guarding the
 Chamber of Secrets {49/He-Who-Must-Not-Be-Named began his climb to
 power}, but it is unlikely the Sorting Hat could pass much knowledge
-to Harry due to the **Interdict of Merlin**.
+to Harry due to the Interdict of Merlin.
         `,
       },
     ],

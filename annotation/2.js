@@ -71,14 +71,15 @@ the next day I go to sleep two hours later than <em>that.</em> 10PM,
 up early, it makes no difference and I'm a wreck that whole day.
 That's why I haven't been going to a normal school up until now."
     `,
+    topics: ['prophecy-threading'],
     notes: [
       {
-        tags: ['consequence'],
+        tags: ['consequence', 'spoiler'],
         note: `
 Dumbledore caused this condition by secretly giving Harry the potion
 meant for students using Time-Turners ({119/I snuck invisibly into
 your bedroom in Oxford and administered the potion that is given to
-students with Time-Turners}) as part of his **prophecy-threading**
+students with Time-Turners}) as part of his prophecy-threading
 project.
         `,
       },
@@ -104,6 +105,7 @@ A reference to Harry's **mysterious dark side**.
     text: `
 "No, I'm sure this won't be a problem - I'll find a solution in time.
     `,
+    topics: ['time-turner'],
     notes: [
       {
         tags: ['foreshadowing'],

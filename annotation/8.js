@@ -135,7 +135,7 @@ In the original, Harry was saved by his mother's love.
 
 in HPMOR, his mother's love had nothing to do with it.  His scar
 doesn't contain all of the Dark Lord's magical power, although the
-scar is tied in some way to the **sense of doom** he feels around
+scar is tied in some way to the sense of doom he feels around
 Quirrell, and thus probably to his **mysterious dark side**.  Centaurs
 (or at least some centaurs) do in fact fear him.
         `,
@@ -252,11 +252,12 @@ D&D reference.
     text: `
 In fact she <em>was</em> feeling sort of thirsty by now.
     `,
+    topics: ['comed-tea'],
     notes: [
       {
         tags: ['spoiler'],
         note: `
-This is the **Comed-Tea** affecting her thinking.
+This is the Comed-Tea affecting her thinking.
         `,
       },
     ],
@@ -269,13 +270,19 @@ leaned forward and looked at her intensely. "I've already done a
 bit of experimenting and I found out that I don't need the wand, I
 can make anything I want happen just by snapping my fingers."
     `,
+    topics: ['snapping'],
     notes: [
       {
-        tags: ['reference', 'spoiler'],
+        tags: ['reference'],
         note: `
-Harry is intentionally setting himself up to be an embodiment of this
-trope: http://tvtropes.org/pmwiki/pmwiki.php/Main/BadassFingersnap .
-Harry will **snap his fingers** many times over the course of this series.
+Harry is intentionally setting himself up to be an embodiment of the
+(Badass Fingersnap trope)[http://tvtropes.org/pmwiki/pmwiki.php/Main/BadassFingersnap].
+        `,
+      },
+      {
+        tags: ['foreshadowing', 'spoiler'],
+        note: `
+Harry will snap his fingers many times over the course of this series.
         `,
       },
     ],

@@ -104,16 +104,21 @@ describe('topics', () => {
           processedAnnotations(),
           (x) => Object.values(x.data.annotations),
         ),
-        (x) => x.topics,
+        // Only use the first component of the topic, the rest is for subsections
+        (x) => x.topics.map((y) => y.split('.')[0]),
       ),
     );
 
+  // TODO: test that all topics/subsections have at least one mention
   topics.forEach((topic) => {
     describe(topic, () => {
       const topicDir = path.join(__dirname, '..', 'dist', 'topic');
 
       it('has a topic page', () => {
-        assert(fs.existsSync(path.join(topicDir, `${topic}.md`)));
+        assert(
+          fs.existsSync(path.join(topicDir, `${topic}.md`)),
+          `Expected topic file dist/topic/${topic}.md does not exist.`,
+        );
       });
     });
   });

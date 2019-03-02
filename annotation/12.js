@@ -93,11 +93,12 @@ And that if he could find some reliable way of swearing Draco to
 secrecy so he could ask him about it, that would be an excellent time
 to have some Comed-Tea handy.
     `,
+    topics: ['comed-tea'],
     notes: [
       {
         tags: ['spoiler'],
         note: `
-This may be the **Comed-Tea** influencing his mind, which is a hint
+This may be the Comed-Tea influencing his mind, which is a hint
 that Draco's reaction to this event would include an event that would
 make Harry spit out his drink even if he was trying not to, which may
 be a subtle hint that this is a bigger deal than Harry is thinking at
@@ -150,11 +151,12 @@ choke. Like, all the Hogwarts students had to not wear any clothes
 for the whole school year, or everyone was going to be transformed
 into cats.
     `,
+    topics: ['comed-tea'],
     notes: [
       {
         tags: ['spoiler'],
         note: `
-This is probably the **Comed-Tea** influencing his mind, since he is
+This is probably the Comed-Tea influencing his mind, since he is
 about to be surprised by Dumbledore's speech.
         `,
       },
@@ -169,14 +171,15 @@ temporarily alter his own sense of humor, he could make
 <em>only</em> find that <em>one thing</em> surprising enough to do
 a spit-take, and then drinking a can of Comed-Tea.
     `,
+    topics: ['comed-tea'],
     notes: [
       {
         tags: ['spoiler'],
         note: `
 Interestingly, Harry is arguably making *the exact same mistake* that
-Hermione made when *she* was investigating the **Comed-Tea**
+Hermione made when *she* was investigating the Comed-Tea
 {8/positive bias} -- He's only running tests that confirm his
-Hypothesis that the **Comed-Tea** is omnipotent and altering reality
+Hypothesis that the Comed-Tea is omnipotent and altering reality
 to make him laugh.  In his defense, it's difficult to come up with a
 negative test for that hypothesis.
         `,
@@ -219,11 +222,12 @@ https://en.wikipedia.org/wiki/%C3%89mile_Cou%C3%A9#La_m.C3.A9thode_Cou.C3.A9_.28
     text: `
 Harry couldn't help but feel the urge to drink another Comed-Tea.
     `,
+    topics: ['comed-tea'],
     notes: [
       {
         tags: ['spoiler'],
         note: `
-This is, once again, the **Comed-Tea** affecting Harry's mind.
+This is, once again, the Comed-Tea affecting Harry's mind.
         `,
       },
     ],

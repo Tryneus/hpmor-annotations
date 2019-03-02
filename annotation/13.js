@@ -57,7 +57,7 @@ trying to tell himself something...?
         tags: ['foreshadowing', 'spoiler'],
         note: `
 He hasn't forgotten, because he wrote the note after using a
-**Time-Turner**.
+Time-Turner.
 
 Harry gets a Time-Turner this morning, and decides to go back and
 prank himself.  The entire game is perpetrated by him.
@@ -76,7 +76,7 @@ lifetime. This is an irreplaceable opportunity.
         tags: ['foreshadowing', 'spoiler'],
         note: `
 You can only play the game once in a lifetime, within 6 hours of
-learning about **Time-Turner**s.
+learning about Time-Turners.
         `,
       },
     ],
@@ -300,12 +300,11 @@ passed through other portraits.)
 Then Harry lifted his other hand, said "Abracadabra," and snapped his
 fingers.
     `,
+    topics: ['snapping'],
     notes: [
       {
         tags: ['original'],
         note: `
-**snap his fingers**
-
 It was likely no mistake in the original series that the incantation
 for the Killing Curse "Avada Kedavra" sounds similar to "Abracadabra".
 Here, that relation is unwittingly abused by Harry.
@@ -365,11 +364,12 @@ Because his name is Harry.
 to share it with Hermione Granger in first-year Ravenclaw, she has an
 anecdote you might find amusing."
     `,
+    topics: ['comed-tea'],
     notes: [
       {
         tags: ['consequence'],
         note: `
-The anecdote is the experiment with the **Comed-Tea** on the train.
+The anecdote is the experiment with the Comed-Tea on the train.
 {8/I can make anything I want happen just by snapping my fingers}
         `,
       },
@@ -381,15 +381,7 @@ The anecdote is the experiment with the **Comed-Tea** on the train.
 Harry smiled smugly. "I can make anything I want happen just by
 snapping my fingers."
     `,
-    notes: [
-      {
-        tags: ['spoiler'],
-        note: `
-Harry will threaten to **snap his fingers** *many* times over the
-course of the story.
-        `,
-      },
-    ],
+    topics: ['snapping'],
   },
 
   {
@@ -489,7 +481,7 @@ elements of the world that he doesn't understand, and he's still
 concerned with whether or not it's fair and whether or not he can win.
 
 Also, there is a certain correspondence between this and the test with
-the **Comed-Tea** that Harry put Hermione through on the train.  In
+the Comed-Tea that Harry put Hermione through on the train.  In
 both cases there's a mysterious phenomenon to investigate, and in both
 cases the investigator asks entirely the wrong questions.
         `,

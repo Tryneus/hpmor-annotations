@@ -61,12 +61,13 @@ It was at this point that Harry realised he was faced with a priceless
 and possibly irreplaceable opportunity to offer Professor McGonagall a
 Comed-Tea and he couldn't believe he was seriously thinking that
     `,
+    topics: ['comed-tea'],
     notes: [
       {
         tags: ['spoiler'],
         note: `
-The **Comed-Tea** is affecting his brain because he is about to
-surprise McGonagall.
+The Comed-Tea is affecting his brain because he is about to surprise
+McGonagall.
         `,
       },
     ],
@@ -476,12 +477,13 @@ most stories.
 If Dumbledore saw a chance to possess one of the Deathly Hallows, he
 would never let it escape his grasp until the day he died.
     `,
+    topics: ['prophecy-threading'],
     notes: [
       {
         tags: ['spoiler', 'original'],
         note: `
 The cloak was left by Dumbledore, just like in the original, probably
-as part of his **prophecy-threading** project {79/"Albus," Minerva
+as part of his prophecy-threading project {79/"Albus," Minerva
 said, surprised at how steady her own voice was, "did you leave those
 notes under Mr. Potter's pillow?"}.
 
@@ -507,14 +509,7 @@ order to make Harry trust him more by proving a strawman wrong.
     text: `
 Cloak of Invisibility of Ignotus Peverell
     `,
-    notes: [
-      {
-        tags: ['original', 'background'],
-        note: `
-See **deathly hallows** topic page.
-        `,
-      },
-    ],
+    topics: ['hallows.cloak'],
   },
 
   {

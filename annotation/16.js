@@ -80,14 +80,7 @@ before he began being home-schooled.
     text: `
 Harry didn't particularly feel like approaching Quirrell anyway.
     `,
-    notes: [
-      {
-        tags: ['spoiler'],
-        note: `
-**sense of doom**
-        `,
-      },
-    ],
+    topics: ['doom'],
   },
 
   {
@@ -128,14 +121,7 @@ Goyle knows martial arts.
     text: `
 "You couldn't get any further away from the teacher if you tried."
     `,
-    notes: [
-      {
-        tags: ['spoiler'],
-        note: `
-**sense of doom**
-        `,
-      },
-    ],
+    topics: ['doom'],
   },
 
   {
@@ -334,13 +320,6 @@ WRONG<br>
 DON'T<br>
 BAD IDEA
     `,
-    notes: [
-      {
-        tags: ['spoiler'],
-        note: `
-**sense of doom**
-        `,
-      },
-    ],
+    topics: ['doom'],
   },
 ];

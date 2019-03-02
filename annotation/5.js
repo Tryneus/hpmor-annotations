@@ -51,13 +51,13 @@ This is a line from the prophecy.
 destroyed the Dark Lord because I have some kind of permanent,
 enduring destroy-the-Dark-Lord trait.
     `,
+    topics: ['doom'],
     notes: [
       {
         tags: ['foreshadowing', 'spoiler'],
         note: `
 Harry does, in fact, have a permanent, enduring destroy-the-Dark-Lord
-trait: the resonance between his and Voldemort's magic (see **sense of
-doom**).
+trait: the resonance between his and Voldemort's magic.
         `,
       },
     ],
@@ -68,11 +68,12 @@ doom**).
 That last part might have sounded a little odd, like he was flirting
 with Draco or something.
     `,
+    topics: ['shipping.harry-draco'],
     notes: [
       {
         tags: ['speculation'],
         note: `
-This is the first of many lines that **ship Harry and Draco** for some
+This is the first of many lines that ship Harry and Draco for some
 reason.
         `,
       },

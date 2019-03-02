@@ -194,12 +194,13 @@ Possibly the Maltese Falcon (https://en.wikipedia.org/wiki/The_Maltese_Falcon_(n
 one of the three Deathly Hallows and reputed to hide the wearer from
 the gaze of Death himself.
     `,
+    topics: ['hallows.cloak'],
     notes: [
       {
         tags: ['foreshadowing', 'spoiler', 'departure'],
         note: `
 The true meaning of this is that the cloak allows you to hide from
-dementors.
+dementors.  In the original, the cloak did not work against Dementors.
         `,
       },
     ],
@@ -209,6 +210,7 @@ dementors.
     text: `
 For a moment Dumbledore's face grew wistful...
     `,
+    topics: ['hallows'],
     notes: [
       {
         tags: ['original', 'spoiler'],
@@ -226,12 +228,13 @@ And so I cannot help but wonder if by some strange chance you have
 found not just <em>an</em> invisibility cloak, but <em>the</em>
 Cloak of Invisibility
     `,
+    topics: ['prophecy-threading'],
     notes: [
       {
         tags: ['spoiler'],
         note: `
 Note that the cloak was left by Dumbledore, just like in the original,
-probably as part of his **prophecy-threading** project {79/"Albus,"
+probably as part of his prophecy-threading project {79/"Albus,"
 Minerva said, surprised at how steady her own voice was, "did you
 leave those notes under Mr. Potter's pillow?"}.  That's the real way
 he knows Harry has it, not the story-logic he gives as part of his
@@ -320,12 +323,13 @@ Harry already has the cloak.
 Dumbledore nodded. "But just because I can't think of a reason doesn't
 mean there <em>is</em> no reason."
     `,
+    topics: ['prophecy-threading'],
     notes: [
       {
         tags: ['foreshadowing', 'spoiler'],
         note: `
 It's likely Dumbledore is telling Harry to carry the rock around as
-part of his **prophecy-threading** project.  Harry later uses the rock
+part of his prophecy-threading project.  Harry later uses the rock
 to kill the troll that killed Hermione.  {89/The troll's head blew
 off its spine as the rock expanded back into its old form}
         `,
@@ -338,11 +342,12 @@ off its spine as the rock expanded back into its old form}
 "I'm feeling thirsty," Harry said, "and that is not at all a good
 sign."
     `,
+    topics: ['comed-tea'],
     notes: [
       {
         tags: ['TODO'],
         note: `
-This is the **comed-tea** warning Harry that something which would
+This is the Comed-Tea warning Harry that something which would
 make him choke is about to happen.
         `,
       },
@@ -386,13 +391,14 @@ wonder what would happen if you used Thestral blood here instead of
 blueberries?</em> and immediately beneath was a reply in different
 handwriting, <em>You'd get sick for weeks and maybe die.</em>
     `,
+    topics: ['prophecy-threading'],
     notes: [
       {
         tags: ['spoiler', 'foreshadowing'],
         note: `
 Dumbledore was writing instructions on how to turn the potion of
 eagle's splendor into a potion which makes someone permanently more
-beatiful, as part of his **prophecy-threading** project.  Lily gave
+beatiful, as part of his prophecy-threading project.  Lily gave
 the improved potion to Petunia {1/I drank this potion and I was sick
 for weeks}, which led to her marrying Michael Verres instead of
 Vernon Dursley, which is why Harry is so well-educated.

@@ -40,12 +40,13 @@ forehead. "And that I shouldn't ought to shake his hand." Like meeting
 someone who had been a friend, once, before something went drastically
 wrong... that wasn't really it at all, but Harry couldn't find words.
     `,
+    topics: ['doom'],
     notes: [
       {
         tags: ['foreshadowing'],
         note: `
 More hints about Harry's **mysterious dark side**, and the first minor
-occurance of the **sense of doom** surrounding Professor Quirrell.
+occurance of the sense of doom surrounding Professor Quirrell.
         `,
       },
     ],

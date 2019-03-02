@@ -42,7 +42,7 @@ https://en.wikipedia.org/wiki/Kushiel%27s_Dart
         tags: ['foreshadowing', 'spoiler'],
         note: `
 A flash-forward to later in the chapter.  Pretty obviously a reference
-to the **Time-Turner** Harry has acquired.
+to the Time-Turner Harry has acquired.
         `,
       },
     ],

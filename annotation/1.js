@@ -70,6 +70,7 @@ to me," her voice broke, "and after that I couldn't hate my sister any
 more, especially when I learned what her magic brought her in the end
 -"
     `,
+    topics: ['prophecy-threading'],
     notes: [
       {
         tags: ['foreshadowing'],
@@ -79,7 +80,7 @@ for weeks and maybe die}, {119/I wrote a strange hint in your
 mother's Potions textbook, having no idea why I must; and this proved
 to show Lily how to help her sister, and ensured you would gain
 Petunia Evans's heartfelt love.}) as part of his
-**prophecy-threading** project.
+prophecy-threading project.
         `,
       },
     ],
@@ -90,13 +91,14 @@ Petunia Evans's heartfelt love.}) as part of his
 Harry had been sent to the best primary schools - and when that didn't
 work out
     `,
+    topics: ['prophecy-threading'],
     notes: [
       {
         tags: ['foreshadowing'],
         note: `
 This didn't work out because of Harry's **mysterious dark side**, and
 also because of the potion Dumbledore secretly gave to Harry that
-messes with his sleep schedule as part of his **prophecy-threading**
+messes with his sleep schedule as part of his prophecy-threading
 project ({119/I snuck invisibly into your bedroom in Oxford and
 administered the potion that is given to students with Time-Turners}).
         `,
