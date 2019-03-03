@@ -1,29 +1,39 @@
 'use strict';
 
-const fs = require('fs');
+const _ = require('lodash');
+const util = require('util');
 const path = require('path');
+
+const fs =
+  _.mapValues(
+    _.pick(
+      require('fs'),
+      ['readFile', 'writeFile'],
+    ),
+    util.promisify,
+  );
 
 const sourceFile = path.join(__dirname, '..', 'dist', 'bookmarklet.js');
 const outputFile = path.join(__dirname, '..', 'dist', 'bookmarklet.md');
 
-fs.readFile(sourceFile, 'utf8', (err, source) => {
-  if (err) {
-    console.log(`Error reading source file (${sourceFile}):`, err);
-  } else {
-    // The minifier we're using seems to fuck up the bookmarklet code a bit, so wrap it
-    const wrapped = source
-      .replace(/^!function/, '(function')
-      .replace(/\}\(\)$/, '})()');
+Promise.resolve().then(() => {
+  return fs.readFile(sourceFile, 'utf8').catch((err) => {
+    throw new Error(`Error reading source file (${sourceFile}): ${err}`);
+  });
+}).then((source) => {
+  // The minifier we're using seems to fuck up the bookmarklet code a bit, so wrap it
+  const wrapped = source
+    .replace(/^!function/, '(function')
+    .replace(/\}\(\)$/, '})()');
 
-    // To embed the bookmarklet in the github pages markdown, we need to URI-encode it
-    const escaped = encodeURIComponent(wrapped);
+  // To embed the bookmarklet in the github pages markdown, we need to URI-encode it
+  const escaped = encodeURIComponent(wrapped);
 
-    fs.writeFile(outputFile, 'javascript:' + escaped, (err) => {
-      if (err) {
-        console.log('Error writing output:', err);
-      } else {
-        console.log('Generated escaped markdown for bookmarklet:', outputFile);
-      }
-    });
-  }
+  return fs.writeFile(outputFile, 'javascript:' + escaped).catch((err) => {
+    throw new Error(`Error writing output file (${outputFile}): ${err}`);
+  });
+}).then(() => {
+  console.log('Generated escaped markdown for bookmarklet:', outputFile);
+}).catch((err) => {
+  console.log(err);
 });

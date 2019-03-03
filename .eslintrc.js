@@ -8,7 +8,9 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2018,
   },
+  plugins: ['prefer-arrow'],
   rules: {
+    'prefer-arrow/prefer-arrow-functions': ['error'],
     'no-template-curly-in-string': ['error'],
     'block-scoped-var': ['error'],
     'array-callback-return': ['error'],

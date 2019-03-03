@@ -1,66 +1,76 @@
 'use strict';
 
-const fs = require('fs');
+const _ = require('lodash');
+const util = require('util');
 const path = require('path');
+
+const fs =
+  _.mapValues(
+    _.pick(
+      require('fs'),
+      ['mkdir', 'readdir', 'writeFile'],
+    ),
+    util.promisify,
+  );
 
 const annotationDir = path.join(__dirname, '..', 'dist', 'annotation');
 const topicSourceDir = path.join(__dirname, '..', 'topic');
 const topicDestDir = path.join(__dirname, '..', 'dist', 'topic');
 const listMarkdownFile = path.join(__dirname, '..', 'dist', 'topics.md');
 
-fs.mkdirSync(topicDestDir, {recursive: true});
-
-// Load the annotations from the easy-to-edit JS file and output a JSON file for
-// consumption
-fs.readdir(annotationDir, (err, annotationFilelist) => {
-  if (err) {
-    throw err;
-  }
-
-  const annotationFiles =
-    annotationFilelist.filter((x) => Boolean(x.match(/^[0-9]+\.js$/)));
-
-  const annotations = annotationFiles.reduce((acc, filename) => {
-    const sourceFile = path.join(annotationDir, filename);
-    const chapter = filename.match(/^([0-9]+)\.js$/)[1];
-    acc[chapter] = require(sourceFile);
-    return acc;
-  }, {});
-
-  fs.readdir(topicSourceDir, (err, topicFilelist) => {
-    if (err) {
-      throw err;
-    }
-
-    const topicFiles = topicFilelist.filter((x) => Boolean(x.match(/.*\.js$/)));
-
-    const topics = topicFiles.reduce((acc, filename) => {
-      const sourceFile = path.join(topicSourceDir, filename);
-      const topic = filename.match(/^(.*)\.js$/)[1];
-      acc[topic] = require(sourceFile);
+const loadJsFiles = (dir) => {
+  return fs.readdir(dir).catch((err) => {
+    throw new Error(`Error listing directory (${dir}): ${err}`);
+  }).then((fileList) => {
+    const files = fileList.filter((x) => Boolean(x.match(/\.js$/)));
+    return files.reduce((acc, filename) => {
+      const sourceFile = path.join(dir, filename);
+      const key = filename.match(/^(.*)\.js$/)[1];
+      acc[key] = require(sourceFile);
       return acc;
     }, {});
+  });
+};
 
-    Object.entries(topics).forEach(([topic, info]) => {
-      const outputFile = path.join(topicDestDir, `${topic}.md`);
+Promise.resolve().then(() => {
+  return fs.mkdir(topicDestDir, {recursive: true}).catch((err) => {
+    throw new Error(`Error when creating topic directory (${topicDestDir}): ${err}`);
+  });
+}).then(() => {
+  return Promise.all([
+    loadJsFiles(annotationDir),
+    loadJsFiles(topicSourceDir),
+  ]);
+}).then(([annotations, topics]) => {
+  const topicPromises = Object.entries(topics).map(([topic, info]) => {
+    const outputFile = path.join(topicDestDir, `${topic}.md`);
 
-      const markdown = `
+    const markdown = `
 # ${info.title}
 
 ${info.description}
 
 ${annotations.length}
-      `;
+    `;
 
-      fs.writeFileSync(outputFile, markdown.trim());
+    return fs.writeFile(outputFile, markdown.trim()).catch((err) => {
+      throw new Error(`Error when writing topic (${outputFile}): ${err}`);
+    }).then(() => {
       console.log('Generated topic markdown:', outputFile);
     });
+  });
 
-    const listMarkdown = Object.entries(topics).map(([topic, info]) =>
-      `* [${info.title}](${path.join('dist', 'topic', topic)})`
-    ).join('\n');
+  const listMarkdown = Object.entries(topics).map(([topic, info]) =>
+    `* [${info.title}](${path.join('dist', 'topic', topic)})`
+  ).join('\n');
 
-    fs.writeFileSync(listMarkdownFile, listMarkdown);
+  const listPromise = fs.writeFile(listMarkdownFile, listMarkdown).catch((err) => {
+    throw new Error(`Error when writing topic list (${listMarkdownFile}): ${err}`);
+  }).then(() => {
     console.log(`Generated topic list (${Object.entries(topics).length}):`, listMarkdownFile);
   });
+
+  return Promise.all(_.concat(topicPromises, [listPromise]));
+}).catch((err) => {
+  console.log(err);
 });

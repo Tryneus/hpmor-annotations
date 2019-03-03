@@ -1,41 +1,50 @@
 'use strict';
 
-const fs = require('fs');
+const _ = require('lodash');
 const path = require('path');
+const util = require('util');
 const butternut = require('butternut');
+
+const fs =
+  _.mapValues(
+    _.pick(
+      require('fs'),
+      ['readFile', 'writeFile', 'readdir']
+    ),
+    util.promisify
+  );
 
 const sourceDir = path.join(__dirname, '..', 'src');
 const outputDir = path.join(__dirname, '..', 'dist');
 
-fs.readdir(sourceDir, (err, filelist) => {
+Promise.resolve().then(() => {
+  return fs.readdir(sourceDir).catch((err) => {
+    throw new Error(`Error reading src directory (${sourceDir}): ${err}`);
+  });
+}).then((filelist) => {
   const files = filelist.filter((x) => Boolean(x.match(/\.js$/)));
-  files.forEach((filename) => {
+  return Promise.all(files.map((filename) => {
     const sourceFile = path.join(sourceDir, filename);
     const outputFile = path.join(outputDir, filename);
     const outputMapFile = path.join(outputDir, `${filename}.map`);
 
-    fs.readFile(sourceFile, 'utf8', (err, source) => {
-      if (err) {
-        console.log(`Error reading source file (${sourceFile}):`, err);
-      } else {
-        const {code, map} = butternut.squash(source, {});
+    return fs.readFile(sourceFile, 'utf8').catch((err) => {
+      throw new Error(`Error reading source file (${sourceFile}): ${err}`);
+    }).then((source) => {
+      const {code, map} = butternut.squash(source, {});
 
-        fs.writeFile(outputFile, code, (err) => {
-          if (err) {
-            console.log('Error writing output:', err);
-          } else {
-            console.log('Generated minified source:', outputFile);
-          }
-        });
-
-        fs.writeFile(outputMapFile, map, (err) => {
-          if (err) {
-            console.log('Error writing map output:', err);
-          } else {
-            console.log('Generated minified source map file:', outputMapFile);
-          }
-        });
-      }
+      return Promise.all([
+        fs.writeFile(outputFile, code).catch((err) => {
+          throw new Error(`Error writing output (${outputFile}): ${err}`);
+        }),
+        fs.writeFile(outputMapFile, map).catch((err) => {
+          throw new Error(`Error writing map output (${outputMapFile}): ${err}`);
+        }),
+      ]).then(() => {
+        console.log('Generated minified source:', outputFile);
+      });
     });
-  });
+  }));
+}).catch((err) => {
+  console.log(err);
 });

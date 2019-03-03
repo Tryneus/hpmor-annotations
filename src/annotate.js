@@ -281,6 +281,7 @@
       } else {
         fetchAnnotations(frame, chapter, ({annotations}) => {
           installCss(frame.contentDocument);
+          installFont(frame.contentDocument);
           const innerContent = wrapContent(frame.contentDocument, content);
           installResizer(frame.contentWindow, frame.contentDocument);
           installSpans(innerContent, annotations);
@@ -289,6 +290,17 @@
           positionNotes();
         });
       }
+    }
+  }
+
+  function installFont(frameDocument) {
+    if (!frameDocument.getElementById('fontawesome')) {
+      const script = frameDocument.createElement('script');
+      script.id = 'fontawesome';
+      script.src = 'https://use.fontawesome.com/releases/v5.7.2/js/all.js';
+      script.crossorigin = 'anonymous';
+
+      frameDocument.head.appendChild(script);
     }
   }
 
