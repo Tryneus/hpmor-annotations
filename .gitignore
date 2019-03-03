@@ -1,2 +1,4 @@
 /chapter
 /node_modules
+
+*.swp
