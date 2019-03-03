@@ -1,15 +1,22 @@
 'use strict';
 
-const fs = require('fs');
+const _ = require('lodash');
+const util = require('util');
 const path = require('path');
 
-const _ = require('lodash');
+const fs =
+  _.mapValues(
+    _.pick(
+      require('fs'),
+      ['mkdir', 'readdir', 'writeFile']
+    ),
+    util.promisify
+  );
+
 const escapeHtml = require('escape-html');
 
 const annotationSourceDir = path.join(__dirname, '..', 'annotation');
 const annotationDestDir = path.join(__dirname, '..', 'dist', 'annotation');
-
-fs.mkdirSync(annotationDestDir, {recursive: true});
 
 // The first tag determines the color used for the annotation, so we should
 // have a consistent ordering
@@ -91,14 +98,20 @@ const generateReplacement = (text, id) => {
   return firstStart + text.replace(/<\/p> <p>/g, end + '</p> <p>' + start) + end;
 };
 
-// Load the annotations from the easy-to-edit JS file and output a JSON file for
-// consumption
-fs.readdir(annotationSourceDir, (err, filelist) => {
-  const files = filelist.filter((x) => Boolean(x.match(/^[0-9]+\.js$/)));
+Promise.resolve().then(() => {
+  return fs.mkdir(annotationDestDir, {recursive: true}).catch((err) => {
+    throw new Error(`Error when creating directory (${annotationDestDir}): ${err}`);
+  });
+}).then(() => {
+  return fs.readdir(annotationSourceDir).catch((err) => {
+    throw new Error(`Error when listing directory (${annotationSourceDir}): ${err}`);
+  });
+}).then((filenames) => {
+  const files = filenames.filter((x) => Boolean(x.match(/^[0-9]+\.js$/)));
   const links = [];
 
-  const allChapters = _.keyBy(files.map((filename) => {
-    const {chapter, annotations, anchors} = partitionAnnotations(filename);
+  const allChapters = _.keyBy(files.map((file) => {
+    const {chapter, annotations, anchors} = partitionAnnotations(file);
 
     return {
       chapter,
@@ -140,7 +153,7 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
     }
   });
 
-  Object.values(allChapters).forEach((info) => {
+  return Promise.all(Object.values(allChapters).map((info) => {
     const outputFile = path.join(annotationDestDir, `${info.chapter}.js`);
     const {annotations, anchors} = info;
 
@@ -160,7 +173,12 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
 })();
     `;
 
-    fs.writeFileSync(outputFile, code.trim());
-    console.log('Generated annotations js:', outputFile);
-  });
+    return fs.writeFile(outputFile, code.trim()).catch((err) => {
+      throw new Error(`Failed to write annotation file (${outputFile}): ${err}`);
+    }).then(() => {
+      console.log('Generated annotations js:', outputFile);
+    });
+  }));
+}).catch((err) => {
+  console.log(err);
 });
