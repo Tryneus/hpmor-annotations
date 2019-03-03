@@ -116,8 +116,11 @@ Promise.resolve().then(() => {
     return {
       chapter,
       anchors: anchors.map((a) => {
-        const {id, text, disambiguation} = a;
-        return {id, text, disambiguation};
+        return {
+          id: a.id,
+          text: processText(a.text),
+          disambiguation: a.disambiguation,
+        };
       }),
       annotations: annotations.map((a) => {
         // Fields that are not required to be explicitly defined in the source

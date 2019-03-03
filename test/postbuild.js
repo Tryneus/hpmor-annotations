@@ -16,8 +16,8 @@ const {
 const schema = require('./schema.js');
 
 describe('annotations', () => {
-  processedAnnotations().forEach(({chapterId, data: {annotations, anchors}}) => {
-    describe(`chapter ${chapterId}`, () => {
+  processedAnnotations().forEach(({id, data: {annotations, anchors}}) => {
+    describe(`chapter ${id}`, () => {
       it('anchors match schema', () => {
         const validator = new jsonschema.Validator();
         const result = validator.validate(anchors, schema.anchors);
@@ -26,16 +26,16 @@ describe('annotations', () => {
           `Schema validation failed:\n${result.errors.map((x) => x.stack).join('\n')}`,
         );
 
-        _.forEach(_.toPairs(anchors), ([id, a]) => {
-          assert.strictEqual(id, a.id, 'Anchor ids are inconsistent.');
+        _.forEach(_.toPairs(anchors), ([anchorId, a]) => {
+          assert.strictEqual(anchorId, a.id, 'Anchor ids are inconsistent.');
           assert(
             a.disambiguation.useIndex < a.disambiguation.expect,
-            `Anchor ${id} disambiguation index is larger than expected matches.`,
+            `Anchor ${a.id} disambiguation index is larger than expected matches.`,
           );
           if (a.annotationId) {
             assert(
-              id.startsWith(a.annotationId),
-              `Anchor ${id} should be a postfixed string of the annotation ${a.annotationId}`,
+              a.id.startsWith(a.annotationId),
+              `Anchor ${a.id} should be a postfixed string of the annotation ${a.annotationId}`,
             );
           }
         });
@@ -49,11 +49,11 @@ describe('annotations', () => {
           `Schema validation failed:\n${result.errors.map((x) => x.stack).join('\n')}`,
         );
 
-        _.forEach(_.toPairs(annotations), ([id, a]) => {
-          assert.strictEqual(id, a.id, 'Annotation ids are inconsistent.');
+        _.forEach(_.toPairs(annotations), ([annotationId, a]) => {
+          assert.strictEqual(annotationId, a.id, 'Annotation ids are inconsistent.');
           assert(
             a.disambiguation.useIndex < a.disambiguation.expect,
-            `Annotation ${id} disambiguation index is larger than expected matches.`,
+            `Annotation ${a.id} disambiguation index is larger than expected matches.`,
           );
         });
       });
@@ -61,7 +61,7 @@ describe('annotations', () => {
       Object.values(anchors).forEach((a) => {
         describe(`Anchor ${a.id}`, () => {
           it('uniquely matches', () => {
-            const region = a.title ? chapter(chapterId).title : chapter(chapterId).text;
+            const region = a.title ? chapter(id).title : chapter(id).text;
             checkUnique(a.text, region);
           });
         });
@@ -70,7 +70,7 @@ describe('annotations', () => {
       Object.values(annotations).forEach((a) => {
         describe(`Annotation ${a.id}`, () => {
           it('text uniquely matches lines', () => {
-            const region = a.title ? chapter(chapterId).title : chapter(chapterId).text;
+            const region = a.title ? chapter(id).title : chapter(id).text;
             checkUnique(a.text, region);
           });
 
