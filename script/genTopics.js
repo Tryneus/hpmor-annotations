@@ -18,11 +18,11 @@ const topicSourceDir = path.join(__dirname, '..', 'topic');
 const topicDestDir = path.join(__dirname, '..', 'dist', 'topic');
 const listMarkdownFile = path.join(__dirname, '..', 'dist', 'topics.md');
 
-const loadJsFiles = (dir) => {
+const loadJsFiles = (dir, pattern) => {
   return fs.readdir(dir).catch((err) => {
     throw new Error(`Error listing directory (${dir}): ${err}`);
   }).then((fileList) => {
-    const files = fileList.filter((x) => Boolean(x.match(/\.js$/)));
+    const files = fileList.filter((x) => Boolean(x.match(pattern)));
     return files.reduce((acc, filename) => {
       const sourceFile = path.join(dir, filename);
       const key = filename.match(/^(.*)\.js$/)[1];
@@ -38,8 +38,8 @@ Promise.resolve().then(() => {
   });
 }).then(() => {
   return Promise.all([
-    loadJsFiles(annotationDir),
-    loadJsFiles(topicSourceDir),
+    loadJsFiles(annotationDir, /^[0-9]+\.js$/),
+    loadJsFiles(topicSourceDir, /^[^.].*\.js$/),
   ]);
 }).then(([annotations, topics]) => {
   const topicPromises = Object.entries(topics).map(([topic, info]) => {

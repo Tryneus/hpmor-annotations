@@ -1,10 +1,10 @@
-(function() {
+(() => {
   // This whole thing could probably be simplified by using more globals, but w/e
   // Used to track the currently displayed note
   let activeNote;
 
   // Used to control whether spoilers are visible
-  let showSpoilers = true;
+  const showSpoilers = true;
 
   // Used for development environment shortcuts
   const isLocal =
@@ -23,84 +23,67 @@
     'default': '#0000', // Only used if all notes have been filtered
   };
 
-  function getPrimaryTag(annotation) {
+  const getPrimaryTag = (annotation) => {
     // Ignore notes with spoilers if showSpoilers is false
     const notes = annotation.notes.filter((x) => showSpoilers || !x.tags.includes('spoiler'));
     return (notes[0] && notes[0].tags[0]) || 'default';
-  }
+  };
 
-  function handleFrameLoad() {
-    const frame = document.getElementById('hpmor-annotations-frame');
-    const innerDocument = frame.contentDocument;
-
-    // Rewrite links to open in this frame
-    Array.from(innerDocument.getElementsByTagName('a')).forEach((x) => {
-      if (x.target === '_top') {
-        x.target = '_self';
-      }
-    });
-
-    // The chapter select drop-down navigates from the top as well
-    innerDocument.getElementById('nav-form-top').target = '_self';
-
-    // Update the window title/url and get the chapter number for annotations
-    window.history.replaceState({}, '', frame.contentWindow.location.href);
-    document.title = innerDocument.title;
-
-    activeNote = null;
-    annotate();
-  }
-
-  function saveLocation() {
+  const saveLocation = () => {
     const frame = document.getElementById('hpmor-annotations-frame');
     window.location.replace(frame.contentWindow.location.href);
-  }
+  };
 
-  function installFrame() {
-    // Reload the page in an iframe, change links so that they only navigate the
-    // iframe instead of the top-level window, then apply the annotations to the
-    // iframe story contents any time a new page is loaded.
-    // TODO: do we need to / can we do some cleanup if the user navigates away from hpmor?
-    if (!document.getElementById('hpmor-annotations-frame')) {
-      while (document.body.children.length > 0) {
-        document.body.removeChild(document.body.children[0]);
-      }
-
-      const newFrame = document.createElement('iframe');
-      newFrame.id = 'hpmor-annotations-frame';
-
-      // TODO: is it possible to move the existing body into the iframe without reloading?
-      // maybe set innerHTML?
-      newFrame.src = window.location.href;
-      document.body.appendChild(newFrame);
-    }
-
+  const positionNotes = () => {
+    // TODO: use an overlay layout if not enough x space
     const frame = document.getElementById('hpmor-annotations-frame');
-    frame.style.width = '100vw';
-    frame.style.height = '100vh';
-    frame.style.border = 'none';
+    const content = frame.contentDocument.getElementById('hpmor-annotations-wrapped-content');
+    const notes = Array.from(frame.contentDocument.getElementsByClassName('hpmor-annotations-note'));
 
-    frame.addEventListener('load', handleFrameLoad);
+    notes.forEach((note) => {
+      const id = note.id.match(/^(hpmor-[0-9]+-[0-9]+)-note$/)[1];
+      const range = frame.contentDocument.getElementById(`${id}-range`);
+      const spans = Array.from(frame.contentDocument.getElementsByTagName('span'))
+        .filter((span) =>
+          span.attributes.annotation &&
+            span.attributes.annotation.value === id);
 
-    // Reposition the active note if the window is resized
-    window.addEventListener('resize', positionNotes);
+      // Find the top/bottom offsets of the annotation
+      const dimensions = spans.reduce((acc, span) => {
+        const r = span.getBoundingClientRect();
+        return {
+          top: (acc && (acc.top < r.top ? acc.top : r.top)) || r.top,
+          bottom: (acc && (acc.bottom > r.bottom ? acc.bottom : r.bottom)) || r.bottom,
+        };
+      }, {});
 
-    // Update the URL of the current page because refreshing doesn't
-    // use our replaced history state
-    window.addEventListener('beforeunload', saveLocation);
+      if (dimensions.top && dimensions.bottom) {
+        // Position the note so that it sits next to the annotated text
+        note.style.width = `${content.getBoundingClientRect().left + frame.contentWindow.pageXOffset}px`;
+        note.style.top = `${dimensions.top + frame.contentWindow.pageYOffset}px`;
+        note.style.height = `${dimensions.bottom - dimensions.top}px`;
 
-    return frame;
-  }
+        range.style.left = `${content.getBoundingClientRect().right + frame.contentWindow.pageXOffset}px`;
+        range.style.top = note.style.top;
+        range.style.height = note.style.height;
+      } else {
+        // The spans could not be located, disable the associated range and note
+        console.error('hpmor-annotations: Could not find span for annotation', id);
+        note.style.display = 'none';
+        range.style.display = 'none';
+      }
+    });
+  };
 
-  function replaceJQueryClickEvents(jquery, element, fn) {
+  const replaceJQueryClickEvents = (jquery, element, fn) => {
     jquery.data(element, 'events').click.forEach((data) => {
       jquery(element).unbind('click', data.handler);
     });
 
     jquery(element).bind('click', fn);
-  }
+  };
 
-  function installResizer(frameWindow, frameDocument) {
+  const installResizer = (frameWindow, frameDocument) => {
     const jquery = frameWindow.$;
     const smaller = frameDocument.getElementById('smaller').firstChild;
     const original = frameDocument.getElementById('original').firstChild;
@@ -152,9 +135,19 @@
 
     // inverter should work like normal
     // TODO: it doesn't invert the span underlines
-  }
+  };
 
-  function installNotes(innerDocument, annotations) {
+  const dismissNote = () => {
+    // This happens if someone clicks on the div of a hidden note
+    if (!activeNote) {
+      return;
+    }
+
+    activeNote.style.display = null;
+    activeNote = null;
+  };
+
+  const installNotes = (innerDocument, annotations) => {
     const oldNotes = innerDocument.getElementById('hpmor-annotations-notes');
 
     if (oldNotes) {
@@ -192,9 +185,32 @@
 
       notes.appendChild(note);
     });
-  }
+  };
 
-  function installRanges(innerDocument, annotations) {
+  const getNoteDiv = (id) => {
+    return document.getElementById('hpmor-annotations-frame').contentDocument.getElementById(`${id}-note`);
+  };
+
+  const toggleNote = (id, ev) => {
+    const note = getNoteDiv(id);
+
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    if (activeNote) {
+      if (activeNote !== note) {
+        dismissNote();
+      } else {
+        dismissNote();
+        return;
+      }
+    }
+
+    note.style.display = 'flex';
+    activeNote = note;
+  };
+
+  const installRanges = (innerDocument, annotations) => {
     const oldRanges = innerDocument.getElementById('hpmor-annotations-ranges');
 
     if (oldRanges) {
@@ -224,13 +240,13 @@
 
       ranges.appendChild(range);
     });
-  }
+  };
 
-  function getTextSpans(content) {
+  const getTextSpans = (content) => {
     return Array.from(content.getElementsByClassName('hpmor-annotations-span'));
-  }
+  };
 
-  function installSpans(content, annotations) {
+  const installSpans = (content, annotations) => {
     getTextSpans(content).forEach((span) => {
       span.outerHTML = span.innerHTML;
     });
@@ -261,39 +277,9 @@
       span.onclick = (ev) => toggleNote(id, ev);
       // TODO: onhover handler to show tooltip with tags
     });
-  }
+  };
 
-  function annotate() {
-    const frame = installFrame();
-
-    if (!frame) {
-      console.error('hpmor-annotations: Could not find iframe');
-    } else {
-      const href = frame.contentWindow.location.href;
-      const matches = href.match(/\/([0-9]+)(\.html)?(#.*)?$/);
-      const chapter = matches && parseInt(matches[1]);
-      const content = frame.contentDocument.getElementById('storycontent');
-
-      if (!chapter) {
-        console.error('hpmor-annotations: Could not determine chapter', href);
-      } else if (!content) {
-        console.error('hpmor-annotations: Could not find story content');
-      } else {
-        fetchAnnotations(frame, chapter, ({annotations}) => {
-          installCss(frame.contentDocument);
-          installFont(frame.contentDocument);
-          const innerContent = wrapContent(frame.contentDocument, content);
-          installResizer(frame.contentWindow, frame.contentDocument);
-          installSpans(innerContent, annotations);
-          installNotes(frame.contentDocument, annotations);
-          installRanges(frame.contentDocument, annotations);
-          positionNotes();
-        });
-      }
-    }
-  }
-
-  function installFont(frameDocument) {
+  const installFont = (frameDocument) => {
     if (!frameDocument.getElementById('fontawesome')) {
       const script = frameDocument.createElement('script');
       script.id = 'fontawesome';
@@ -302,9 +288,9 @@
 
       frameDocument.head.appendChild(script);
     }
-  }
+  };
 
-  function installCss(frameDocument) {
+  const installCss = (frameDocument) => {
     if (!frameDocument.getElementById('hpmor-annotations-css')) {
       const styleElement = frameDocument.createElement('style');
       styleElement.id = 'hpmor-annotations-css';
@@ -420,11 +406,11 @@
     cursor: pointer;
   }
     `;
-  }
+  };
 
   // Weight the left and right margins differently so we get a little more space
   // to put the annotations in.
-  function wrapContent(frameDocument, content) {
+  const wrapContent = (frameDocument, content) => {
     // Check if we've already wrapped content and return the inner div
     if (!frameDocument.getElementById('hpmor-annotations-wrapped-content')) {
       content.innerHTML = `
@@ -436,9 +422,9 @@
     }
 
     return frameDocument.getElementById('hpmor-annotations-wrapped-content');
-  }
+  };
 
-  function fetchAnnotations(frame, chapter, callback) {
+  const fetchAnnotations = (frame, chapter, callback) => {
     const oldScript = frame.contentDocument.getElementById('hpmor-annotations-data');
     if (oldScript) {
       oldScript.parentNode.removeChild(oldScript);
@@ -458,81 +444,96 @@
     };
 
     frame.contentDocument.head.appendChild(newScript);
-  }
+  };
 
-  function getNoteDiv(id) {
-    return document.getElementById('hpmor-annotations-frame').contentDocument.getElementById(`${id}-note`);
-  }
-
-  function toggleNote(id, ev) {
-    const note = getNoteDiv(id);
-
-    ev.preventDefault();
-    ev.stopPropagation();
-
-    if (activeNote) {
-      if (activeNote !== note) {
-        dismissNote();
-      } else {
-        dismissNote();
-        return;
+  const installFrame = () => {
+    // Reload the page in an iframe, change links so that they only navigate the
+    // iframe instead of the top-level window, then apply the annotations to the
+    // iframe story contents any time a new page is loaded.
+    // TODO: do we need to / can we do some cleanup if the user navigates away from hpmor?
+    if (!document.getElementById('hpmor-annotations-frame')) {
+      while (document.body.children.length > 0) {
+        document.body.removeChild(document.body.children[0]);
       }
+
+      const newFrame = document.createElement('iframe');
+      newFrame.id = 'hpmor-annotations-frame';
+
+      // TODO: is it possible to move the existing body into the iframe without reloading?
+      // maybe set innerHTML?
+      newFrame.src = window.location.href;
+      document.body.appendChild(newFrame);
     }
 
-    note.style.display = 'flex';
-    activeNote = note;
-  }
-
-  function positionNotes() {
-    // TODO: use an overlay layout if not enough x space
     const frame = document.getElementById('hpmor-annotations-frame');
-    const content = frame.contentDocument.getElementById('hpmor-annotations-wrapped-content');
-    const notes = Array.from(frame.contentDocument.getElementsByClassName('hpmor-annotations-note'));
+    frame.style.width = '100vw';
+    frame.style.height = '100vh';
+    frame.style.border = 'none';
 
-    notes.forEach((note) => {
-      const id = note.id.match(/^(hpmor-[0-9]+-[0-9]+)-note$/)[1];
-      const range = frame.contentDocument.getElementById(`${id}-range`);
-      const spans = Array.from(frame.contentDocument.getElementsByTagName('span'))
-        .filter((span) =>
-          span.attributes.annotation &&
-            span.attributes.annotation.value === id);
+    // eslint-disable-next-line no-use-before-define
+    frame.addEventListener('load', handleFrameLoad);
 
-      // Find the top/bottom offsets of the annotation
-      const dimensions = spans.reduce((acc, span) => {
-        const r = span.getBoundingClientRect();
-        return {
-          top: (acc && (acc.top < r.top ? acc.top : r.top)) || r.top,
-          bottom: (acc && (acc.bottom > r.bottom ? acc.bottom : r.bottom)) || r.bottom,
-        };
-      }, {});
+    // Reposition the active note if the window is resized
+    window.addEventListener('resize', positionNotes);
 
-      if (dimensions.top && dimensions.bottom) {
-        // Position the note so that it sits next to the annotated text
-        note.style.width = `${content.getBoundingClientRect().left + frame.contentWindow.pageXOffset}px`;
-        note.style.top = `${dimensions.top + frame.contentWindow.pageYOffset}px`;
-        note.style.height = `${dimensions.bottom - dimensions.top}px`;
+    // Update the URL of the current page because refreshing doesn't
+    // use our replaced history state
+    window.addEventListener('beforeunload', saveLocation);
 
-        range.style.left = `${content.getBoundingClientRect().right + frame.contentWindow.pageXOffset}px`;
-        range.style.top = note.style.top;
-        range.style.height = note.style.height;
+    return frame;
+  };
+
+  const annotate = () => {
+    const frame = installFrame();
+
+    if (!frame) {
+      console.error('hpmor-annotations: Could not find iframe');
+    } else {
+      const href = frame.contentWindow.location.href;
+      const matches = href.match(/\/([0-9]+)(\.html)?(#.*)?$/);
+      const chapter = matches && parseInt(matches[1]);
+      const content = frame.contentDocument.getElementById('storycontent');
+
+      if (!chapter) {
+        console.error('hpmor-annotations: Could not determine chapter', href);
+      } else if (!content) {
+        console.error('hpmor-annotations: Could not find story content');
       } else {
-        // The spans could not be located, disable the associated range and note
-        console.error('hpmor-annotations: Could not find span for annotation', id);
-        note.style.display = 'none';
-        range.style.display = 'none';
+        fetchAnnotations(frame, chapter, ({annotations}) => {
+          installCss(frame.contentDocument);
+          installFont(frame.contentDocument);
+          const innerContent = wrapContent(frame.contentDocument, content);
+          installResizer(frame.contentWindow, frame.contentDocument);
+          installSpans(innerContent, annotations);
+          installNotes(frame.contentDocument, annotations);
+          installRanges(frame.contentDocument, annotations);
+          positionNotes();
+        });
+      }
+    }
+  };
+
+  const handleFrameLoad = () => {
+    const frame = document.getElementById('hpmor-annotations-frame');
+    const innerDocument = frame.contentDocument;
+
+    // Rewrite links to open in this frame
+    Array.from(innerDocument.getElementsByTagName('a')).forEach((x) => {
+      if (x.target === '_top') {
+        x.target = '_self';
       }
     });
-  }
 
-  function dismissNote() {
-    // This happens if someone clicks on the div of a hidden note
-    if (!activeNote) {
-      return;
-    }
+    // The chapter select drop-down navigates from the top as well
+    innerDocument.getElementById('nav-form-top').target = '_self';
 
-    activeNote.style.display = null;
+    // Update the window title/url and get the chapter number for annotations
+    window.history.replaceState({}, '', frame.contentWindow.location.href);
+    document.title = innerDocument.title;
+
     activeNote = null;
-  }
+    annotate();
+  };
 
   const toExport = {installFrame, annotate};
 

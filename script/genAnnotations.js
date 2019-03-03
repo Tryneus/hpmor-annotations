@@ -150,7 +150,7 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
     });
 
     const code = `
-(function(){
+(() => {
   const data = ${data};
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = data;
