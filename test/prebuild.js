@@ -17,7 +17,7 @@ describe('raw annotations', () => {
         const validator = new jsonschema.Validator();
         const result = validator.validate(data, schema.rawAnnotations);
         assert(
-          result.errors.length == 0,
+          result.errors.length === 0,
           `Schema validation failed:\n${result.errors.map((x) => x.stack).join('\n')}`,
         );
       });
@@ -26,13 +26,13 @@ describe('raw annotations', () => {
 });
 
 describe('topics', () => {
-  topics().forEach(({id, data}) =>{
+  topics().forEach(({id, data}) => {
     describe(id, () => {
       it('matches schema', () => {
         const validator = new jsonschema.Validator();
         const result = validator.validate(data, schema.topic);
         assert(
-          result.errors.length == 0,
+          result.errors.length === 0,
           `Schema validation failed:\n${result.errors.map((x) => x.stack).join('\n')}`,
         );
       });

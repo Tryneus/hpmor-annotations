@@ -4,4 +4,7 @@ module.exports = {
     // node: true,
     mocha: true,
   },
+  rules: {
+    'strict': ['error', 'global'],
+  },
 }

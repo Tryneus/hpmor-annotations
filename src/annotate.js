@@ -34,7 +34,7 @@
     const innerDocument = frame.contentDocument;
 
     // Rewrite links to open in this frame
-    Array.from(innerDocument.getElementsByTagName('a')).map((x) => {
+    Array.from(innerDocument.getElementsByTagName('a')).forEach((x) => {
       if (x.target === '_top') {
         x.target = '_self';
       }
@@ -66,13 +66,13 @@
         document.body.removeChild(document.body.children[0]);
       }
 
-      const frame = document.createElement('iframe');
-      frame.id = 'hpmor-annotations-frame';
+      const newFrame = document.createElement('iframe');
+      newFrame.id = 'hpmor-annotations-frame';
 
       // TODO: is it possible to move the existing body into the iframe without reloading?
       // maybe set innerHTML?
-      frame.src = window.location.href;
-      document.body.appendChild(frame);
+      newFrame.src = window.location.href;
+      document.body.appendChild(newFrame);
     }
 
     const frame = document.getElementById('hpmor-annotations-frame');
@@ -487,10 +487,10 @@
 
       // Find the top/bottom offsets of the annotation
       const dimensions = spans.reduce((acc, span) => {
-        const {top, bottom} = span.getBoundingClientRect();
+        const r = span.getBoundingClientRect();
         return {
-          top: (acc && (acc.top < top ? acc.top : top)) || top,
-          bottom: (acc && (acc.bottom > bottom ? acc.bottom : bottom)) || bottom,
+          top: (acc && (acc.top < r.top ? acc.top : r.top)) || r.top,
+          bottom: (acc && (acc.bottom > r.bottom ? acc.bottom : r.bottom)) || r.bottom,
         };
       }, {});
 
@@ -514,17 +514,19 @@
 
   function dismissNote() {
     // This happens if someone clicks on the div of a hidden note
-    if (!activeNote) { return; }
+    if (!activeNote) {
+      return;
+    }
 
     activeNote.style.display = null;
     activeNote = null;
   }
 
-  const exports = {installFrame, annotate};
+  const toExport = {installFrame, annotate};
 
   // Dev function for quicker debugging
   if (isLocal) {
-    exports.reloadScript = () => {
+    toExport.reloadScript = () => {
       const oldScript = document.getElementById('hpmor-annotations-script');
 
       if (!oldScript) {
@@ -549,8 +551,8 @@
 
   // Export everything for unit tests
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = exports;
+    module.exports = toExport;
   } else {
-    window.hpmorAnnotations = exports;
+    window.hpmorAnnotations = toExport;
   }
 })();

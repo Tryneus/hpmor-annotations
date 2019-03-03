@@ -12,22 +12,29 @@ fs.mkdirSync(topicDestDir, {recursive: true});
 
 // Load the annotations from the easy-to-edit JS file and output a JSON file for
 // consumption
-fs.readdir(annotationDir, (err, filelist) => {
-  if (err) { throw err; }
-  const files = filelist.filter((x) => Boolean(x.match(/^[0-9]+\.js$/)));
+fs.readdir(annotationDir, (err, annotationFilelist) => {
+  if (err) {
+    throw err;
+  }
 
-  const annotations = files.reduce((acc, filename) => {
+  const annotationFiles =
+    annotationFilelist.filter((x) => Boolean(x.match(/^[0-9]+\.js$/)));
+
+  const annotations = annotationFiles.reduce((acc, filename) => {
     const sourceFile = path.join(annotationDir, filename);
     const chapter = filename.match(/^([0-9]+)\.js$/)[1];
     acc[chapter] = require(sourceFile);
     return acc;
   }, {});
 
-  fs.readdir(topicSourceDir, (err, filelist) => {
-    if (err) { throw err; }
-    const files = filelist.filter((x) => Boolean(x.match(/.*\.js$/)));
+  fs.readdir(topicSourceDir, (err, topicFilelist) => {
+    if (err) {
+      throw err;
+    }
 
-    const topics = files.reduce((acc, filename) => {
+    const topicFiles = topicFilelist.filter((x) => Boolean(x.match(/.*\.js$/)));
+
+    const topics = topicFiles.reduce((acc, filename) => {
       const sourceFile = path.join(topicSourceDir, filename);
       const topic = filename.match(/^(.*)\.js$/)[1];
       acc[topic] = require(sourceFile);
@@ -52,7 +59,6 @@ ${annotations.length}
     const listMarkdown = Object.entries(topics).map(([topic, info]) =>
       `* [${info.title}](${path.join('dist', 'topic', topic)})`
     ).join('\n');
-
 
     fs.writeFileSync(listMarkdownFile, listMarkdown);
     console.log(`Generated topic list (${Object.entries(topics).length}):`, listMarkdownFile);

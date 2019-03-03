@@ -22,7 +22,7 @@ async function downloadChapters() {
 
   // Links to other chapters leave out the .html, and I don't want to run a
   // real webserver locally, so just make symlinks to avoid solving this nicely.
-  urls.map((info) => {
+  urls.forEach((info) => {
     const htmlFile = path.join(outputDir, info.filename);
     const link = path.join(outputDir, info.filename.replace('.html', ''));
     fs.symlinkSync(htmlFile, link);

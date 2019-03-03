@@ -9,7 +9,7 @@ const outputDir = path.join(__dirname, '..', 'dist');
 
 fs.readdir(sourceDir, (err, filelist) => {
   const files = filelist.filter((x) => Boolean(x.match(/\.js$/)));
-  files.map((filename) => {
+  files.forEach((filename) => {
     const sourceFile = path.join(sourceDir, filename);
     const outputFile = path.join(outputDir, filename);
     const outputMapFile = path.join(outputDir, `${filename}.map`);

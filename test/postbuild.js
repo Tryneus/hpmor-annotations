@@ -16,13 +16,13 @@ const {
 const schema = require('./schema.js');
 
 describe('annotations', () => {
-  processedAnnotations().forEach(({id, data: {annotations, anchors}}) => {
-    describe(`chapter ${id}`, () => {
+  processedAnnotations().forEach(({chapterId, data: {annotations, anchors}}) => {
+    describe(`chapter ${chapterId}`, () => {
       it('anchors match schema', () => {
         const validator = new jsonschema.Validator();
         const result = validator.validate(anchors, schema.anchors);
         assert(
-          result.errors.length == 0,
+          result.errors.length === 0,
           `Schema validation failed:\n${result.errors.map((x) => x.stack).join('\n')}`,
         );
 
@@ -45,7 +45,7 @@ describe('annotations', () => {
         const validator = new jsonschema.Validator();
         const result = validator.validate(annotations, schema.annotations);
         assert(
-          result.errors.length == 0,
+          result.errors.length === 0,
           `Schema validation failed:\n${result.errors.map((x) => x.stack).join('\n')}`,
         );
 
@@ -58,19 +58,19 @@ describe('annotations', () => {
         });
       });
 
-      Object.values(anchors).map((a) => {
+      Object.values(anchors).forEach((a) => {
         describe(`Anchor ${a.id}`, () => {
           it('uniquely matches', () => {
-            const region = a.title ? chapter(id).title : chapter(id).text;
+            const region = a.title ? chapter(chapterId).title : chapter(chapterId).text;
             checkUnique(a.text, region);
           });
         });
       });
 
-      Object.values(annotations).map((a) => {
+      Object.values(annotations).forEach((a) => {
         describe(`Annotation ${a.id}`, () => {
           it('text uniquely matches lines', () => {
-            const region = a.title ? chapter(id).title : chapter(id).text;
+            const region = a.title ? chapter(chapterId).title : chapter(chapterId).text;
             checkUnique(a.text, region);
           });
 

@@ -11,7 +11,7 @@ const chapterDir = path.join(__dirname, '..', 'chapter');
 const rawAnnotationDir = path.join(__dirname, '..', 'annotation');
 const processedAnnotationDir = path.join(__dirname, '..', 'dist', 'annotation');
 
-const parseChapterNumber = (path) => path.match(/\/([0-9]+)\.[A-z]+$/)[1];
+const parseChapterNumber = (x) => x.match(/\/([0-9]+)\.[A-z]+$/)[1];
 
 const loadTopics = (filepaths) =>
   filepaths.map((filepath) => ({

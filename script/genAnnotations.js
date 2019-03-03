@@ -71,7 +71,7 @@ const partitionAnnotations = (filename) => {
 
   // Filter out notes that are incomplete and assign IDs while we have indices
   annotations.forEach((a, i) => {
-    a.id = `hpmor-${chapter}-${i + 1}`,
+    a.id = `hpmor-${chapter}-${i + 1}`;
     a.disambiguation = a.disambiguation || {expect: 1, useIndex: 0};
     a.notes = a.notes && a.notes.filter((x) => !x.tags.includes('TODO'));
   });
