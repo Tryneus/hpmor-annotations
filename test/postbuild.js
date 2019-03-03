@@ -32,10 +32,12 @@ describe('annotations', () => {
             a.disambiguation.useIndex < a.disambiguation.expect,
             `Anchor ${id} disambiguation index is larger than expected matches.`,
           );
-          assert(
-            id.startsWith(a.annotationId),
-            `Anchor ${id} should be a postfixed string of the annotation ${a.annotationId}`,
-          );
+          if (a.annotationId) {
+            assert(
+              id.startsWith(a.annotationId),
+              `Anchor ${id} should be a postfixed string of the annotation ${a.annotationId}`,
+            );
+          }
         });
       });
 

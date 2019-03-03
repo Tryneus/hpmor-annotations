@@ -114,7 +114,6 @@ const anchors = {
   propertyNames: {pattern: '^hpmor-[0-9]+-[0-9]+-[0-9]+$'},
   additionalProperties: {
     type: 'object',
-    required: ['id', 'annotationId', 'annotationChapter', 'text', 'disambiguation'],
     additionalProperties: false,
     properties: {
       id: {type: 'string'},
@@ -123,6 +122,11 @@ const anchors = {
       text: {type: 'string'},
       disambiguation,
     },
+    // This is either an anchor for a topic or a cross-link from another annotation
+    anyOf: [
+      {required: ['id', 'text', 'disambiguation']},
+      {required: ['id', 'text', 'disambiguation', 'annotationId', 'annotationChapter']},
+    ],
   },
 };
 

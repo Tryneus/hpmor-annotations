@@ -64,6 +64,25 @@ const processNote = (rawNote, id, annotationChapter) => {
   return {tags, note, chapterLinks};
 };
 
+const partitionAnnotations = (filename) => {
+  const sourceFile = path.join(annotationSourceDir, filename);
+  const chapter = filename.match(/^([0-9]+)\.js$/)[1];
+  const annotations = require(sourceFile);
+
+  // Filter out notes that are incomplete and assign IDs while we have indices
+  annotations.forEach((a, i) => {
+    a.id = `hpmor-${chapter}-${i + 1}`,
+    a.disambiguation = a.disambiguation || {expect: 1, useIndex: 0};
+    a.notes = a.notes && a.notes.filter((x) => !x.tags.includes('TODO'));
+  });
+
+  return {
+    chapter,
+    annotations: annotations.filter((a) => a.notes && a.notes.length > 0),
+    anchors: annotations.filter((a) => a.topics && a.topics.length > 0),
+  };
+};
+
 const generateReplacement = (text, id) => {
   // Include an id on the first span so we can link to it with a fragment
   const firstStart = `<span id="${id}" annotation="${id}" class="hpmor-annotations-span">`;
@@ -79,47 +98,33 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
   const links = [];
 
   const allChapters = _.keyBy(files.map((filename) => {
-    const sourceFile = path.join(annotationSourceDir, filename);
-    const chapter = filename.match(/^([0-9]+)\.js$/)[1];
+    const {chapter, annotations, anchors} = partitionAnnotations(filename);
 
-    // Perform some normalization here because why not
-    const rawAnnotations = require(sourceFile);
+    return {
+      chapter,
+      anchors: anchors.map((a) => {
+        const {id, text, disambiguation} = a;
+        return {id, text, disambiguation};
+      }),
+      annotations: annotations.map((a) => {
+        // Fields that are not required to be explicitly defined in the source
+        const result = {
+          title: Boolean(a.title),
+          topics: (a.topics || []).map((topic) => topic.split('.')),
+          text: processText(a.text || a.title),
+        };
 
-    // Filter out annotations that are incomplete
-    rawAnnotations.forEach((a) => {
-      a.notes = a.notes && a.notes.filter((x) => !x.tags.includes('TODO'));
-    });
+        const processedNotes = (a.notes || []).map((note) => processNote(note, a.id, chapter));
+        processedNotes.forEach((note) => links.push(...note.chapterLinks));
 
-    // Filter out tombstones and annotations with no remaining notes or topics
-    const filteredAnnotations = rawAnnotations.filter((a) =>
-      (a.notes && a.notes.length !== 0) &&
-      !(a.topics && a.topics.includes('tombstone'))
-    );
-
-    console.log(`Chapter ${chapter}: ${rawAnnotations.length} raw annotations, ${filteredAnnotations.length} filtered annotations`);
-
-    const annotations = filteredAnnotations.map((x, i) => {
-      // Fields that are not required to be explicitly defined in the source
-      const result = {
-        id: `hpmor-${chapter}-${i + 1}`,
-        title: Boolean(x.title),
-        topics: (x.topics || []).map((x) => x.split('.')),
-        text: processText(x.text || x.title),
-        disambiguation: {expect: 1, useIndex: 0},
-      };
-
-      const processedNotes = (x.notes || []).map((note) => processNote(note, result.id, chapter));
-      processedNotes.forEach((x) => links.push(...x.chapterLinks));
-
-      return {
-        ...x,
-        ...result,
-        replacement: generateReplacement(result.text, result.id),
-        notes: processedNotes.map((x) => ({tags: x.tags, note: x.note})),
-      };
-    });
-
-    return {chapter, annotations, anchors: []};
+        return {
+          ...a,
+          ...result,
+          replacement: generateReplacement(result.text, a.id),
+          notes: processedNotes.map((note) => ({tags: note.tags, note: note.note})),
+        };
+      }),
+    };
   }), 'chapter');
 
   // add anchors to each chapter linked to

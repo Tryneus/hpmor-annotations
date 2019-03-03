@@ -62,13 +62,13 @@ the world.
 
   {
     text: `
-"Anyway," Petunia said, her voice small, "she gave in. She told me it
-was dangerous, and I said I didn't care any more, and I drank this
-potion and I was sick for weeks, but when I got better my skin cleared
-up and I finally filled out and... I was beautiful, people were <em>nice</em>
-to me," her voice broke, "and after that I couldn't hate my sister any
-more, especially when I learned what her magic brought her in the end
--"
+"Anyway," Petunia said, her voice small, "she gave in. She told
+me it was dangerous, and I said I didn't care any more, and I drank
+this potion and I was sick for weeks, but when I got better my skin
+cleared up and I finally filled out and... I was beautiful, people
+were <em>nice</em> to me," her voice broke, "and after that I
+couldn't hate my sister any more, especially when I learned what
+her magic brought her in the end -"
     `,
     topics: ['prophecy-threading'],
     notes: [
