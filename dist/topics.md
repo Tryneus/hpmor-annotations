@@ -4,7 +4,7 @@
 * [Interdict of Merlin](dist/topic/interdict-of-merlin)
 * [Phoenix](dist/topic/phoenix)
 * [Prophecy Threading Project](dist/topic/prophecy-threading)
-* [Spells](dist/topic/rituals)
+* [Rituals](dist/topic/rituals)
 * [Rules of a Dark Lord](dist/topic/rules)
 * [Shipping](dist/topic/shipping)
 * [Snapping](dist/topic/snapping)

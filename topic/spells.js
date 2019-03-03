@@ -1,302 +1,450 @@
 module.exports = {
+  icon: 'magic',
   title: 'Spells',
   description: 'Latin for the underachiever',
-  sections: {
-    accio: {
+  sections: [
+    {
+      id: 'accio',
       title: 'Accio',
       description: 'The Fetching Curse',
     },
-    aguamenti: {
+
+    {
+      id: 'aguamenti',
       title: 'Aguamenti',
       description: 'The Waterfall Curse',
     },
-    'alienis-nervus-mobile-lignum': {
+
+    {
+      id: 'alienis-nervus-mobile-lignum',
       title: 'Alienis Nervus Mobile Lignum',
       description: 'The Snape Guard the Door Curse',
     },
-    alohomora: {
+
+    {
+      id: 'alohomora',
       title: 'Alohomora',
       description: 'The Sequence Break Curse',
     },
-    'arresto-momentum': {
+
+    {
+      id: 'arresto-momentum',
       title: 'Arresto Momentum',
       description: 'The Speed Trap Curse',
     },
-    'avada-kedavra': {
+
+    {
+      id: 'avada-kedavra',
       title: 'Avada Kedavra',
       description: 'The Killing Curse',
     },
-    'becomus-godus': {
+
+    {
+      id: 'becomus-godus',
       title: 'Becomus Godus',
       description: 'iddqd',
     },
-    changemyvoiceio: {
+
+    {
+      id: 'changemyvoiceio',
       title: 'Changemyvoiceio',
       description: 'The Puberty Curse',
     },
-    cluthe: {
+
+    {
+      id: 'cluthe',
       title: 'Cluthe',
       description: 'The Run Like a Girl Curse',
     },
-    colloportus: {
+
+    {
+      id: 'colloportus',
       title: 'Colloportus',
       description: 'The Security Theater Curse',
     },
-    confundus: {
+
+    {
+      id: 'confundus',
       title: 'Confundus',
       description: 'The Suspension of Disbelief Curse',
     },
-    contego: {
+
+    {
+      id: 'contego',
       title: 'Contego',
       description: 'The Personal Space Curse',
     },
-    crucio: {
+
+    {
+      id: 'crucio',
       title: 'Crucio',
       description: 'The War Crime Curse',
     },
-    crystferrium: {
+
+    {
+      id: 'crystferrium',
       title: 'Crystferrium',
       description: 'The Exposition Curse',
     },
-    'deligitor-prodi': {
+
+    {
+      id: 'deligitor-prodi',
       title: 'Deligitor Prodi',
       description: 'The Deus Ex Curse',
     },
-    densaugeo: {
+
+    {
+      id: 'densaugeo',
       title: 'Densaugeo',
       description: 'The Chipmunk Curse',
     },
-    diffindo: {
+
+    {
+      id: 'diffindo',
       title: 'Diffindo',
       description: 'The Severus Curse',
     },
-    dulak: {
+
+    {
+      id: 'dulak',
       title: 'Dulak',
       description: 'The Dark Lord Curse',
     },
-    elmekia: {
+
+    {
+      id: 'elmekia',
       title: 'Elmekia',
       description: 'The Flaming Curse',
     },
-    episkey: {
+
+    {
+      id: 'episkey',
       title: 'Episkey',
       description: 'The Pocket Medic Curse',
     },
-    eunoe: {
+
+    {
+      id: 'eunoe',
       title: 'Eunoe',
       description: 'The You Know Curse',
     },
-    eureka: {
+
+    {
+      id: 'eureka',
       title: 'Eureka',
       description: 'The Rationalist Curse',
     },
-    everto: {
+
+    {
+      id: 'everto',
       title: 'Everto',
       description: 'The Heat Death Curse',
     },
-    'expecto-patronum': {
+
+    {
+      id: 'expecto-patronum',
       title: 'Expecto Patronum',
       description: 'The Patronus Curse',
     },
-    expelliarmus: {
+
+    {
+      id: 'expelliarmus',
       title: 'Expelliarmus',
       description: 'The Overpowered Curse',
     },
-    'finite-incantatem': {
+
+    {
+      id: 'finite-incantatem',
       title: 'Finite Incantatem',
       description: 'The Undo Curse',
     },
-    'fixus-everythingus': {
+
+    {
+      id: 'fixus-everythingus',
       title: 'Fixus Everythingus',
       description: 'The Wishful Thinking Curse',
     },
-    flipendo: {
+
+    {
+      id: 'flipendo',
       title: 'Flipendo',
       description: 'The Tears for Fears Curse',
     },
-    frigideiro: {
+
+    {
+      id: 'frigideiro',
       title: 'Frigideiro',
       description: 'The Maytag Curse',
     },
-    fuego: {
+
+    {
+      id: 'fuego',
       title: 'Fuego',
       description: 'The Spanish Curse',
     },
-    glisseo: {
+
+    {
+      id: 'glisseo',
       title: 'Glisseo',
       description: 'The Mundane Curse',
     },
-    'gom-jabbar': {
+
+    {
+      id: 'gom-jabbar',
       title: 'Gom Jabbar',
       description: 'The Bene Gesserit Curse',
     },
-    'harmonia-nectere-passus': {
+
+    {
+      id: 'harmonia-nectere-passus',
       title: 'Harmonia Nectere Passus',
       description: 'The Starting to Look Like Actual Latin Curse',
     },
-    'homenum-revelio': {
+
+    {
+      id: 'homenum-revelio',
       title: 'Homenum Revelio',
       description: 'The Gaydar Curse',
     },
-    'hyakuju-montauk': {
+
+    {
+      id: 'hyakuju-montauk',
       title: 'Hyakuju Montauk',
       description: 'The Possibly Japanese Curse',
     },
-    impedimenta: {
+
+    {
+      id: 'impedimenta',
       title: 'Impedimenta',
       description: 'The Short Bus Curse',
     },
-    imperio: {
+
+    {
+      id: 'imperio',
       title: 'Imperio',
       description: 'The Imperius Curse',
     },
-    incendio: {
+
+    {
+      id: 'incendio',
       title: 'Incendio',
       description: 'The Hot Foot Curse',
     },
-    incendium: {
+
+    {
+      id: 'incendium',
       title: 'Incendio',
       description: 'The Probably Mispelled Incendio Curse',
     },
-    inferius: {
+
+    {
+      id: 'inferius',
       title: 'Inferius',
       description: 'The Crime Against Humanity Curse',
     },
-    inflammare: {
+
+    {
+      id: 'inflammare',
       title: 'Inflammare',
       description: 'The Other Way To Burn Someone Curse',
     },
-    innervate: {
+
+    {
+      id: 'innervate',
       title: 'Innervate',
       description: 'The Plain English Curse',
     },
-    jellyfy: {
+
+    {
+      id: 'jellyfy',
       title: 'Jellyfy',
       description: 'The Jealousy Curse',
     },
-    lagann: {
+
+    {
+      id: 'lagann',
       title: 'Lagann',
       description: 'The Heaven Piercer Curse',
     },
-    legilimens: {
+
+    {
+      id: 'legilimens',
       title: 'Legilimens',
       description: 'The Waterboarding Curse',
     },
-    luminos: {
+
+    {
+      id: 'luminos',
       title: 'Luminos',
       description: 'The Verbose Lumos Curse',
     },
-    lumos: {
+
+    {
+      id: 'lumos',
       title: 'Lumos',
       description: 'The Abbreviated Luminos Curse',
     },
-    mahasu: {
+
+    {
+      id: 'mahasu',
       title: 'Mahasu',
       description: 'The Montage Curse',
     },
-    muffliato: {
+
+    {
+      id: 'muffliato',
       title: 'Muffliato',
       description: 'The Sweep Under the Rug Curse',
     },
-    'nullus-confundio': {
+
+    {
+      id: 'nullus-confundio',
       title: 'Nullus Confundio',
       description: 'The Of Course That\'s a Thing Curse',
     },
-    obliviate: {
+
+    {
+      id: 'obliviate',
       title: 'Obliviate',
       description: 'The Plausible Deniability Curse',
     },
-    'oogely-boogely': {
+
+    {
+      id: 'oogely-boogely',
       title: 'Oogely Boogely',
       description: 'The Surprisingly Not a Chekov\'s Gun Curse',
     },
-    'polyfluis-reverso': {
+
+    {
+      id: 'polyfluis-reverso',
       title: 'Polyfluis Reverso',
       description: 'The DM Decided to Add Balance Curse',
     },
-    'prior-incantato': {
+
+    {
+      id: 'prior-incantato',
       title: 'Prior Incantato',
       description: 'The Really Straightforward Curse',
     },
-    prismatis: {
+
+    {
+      id: 'prismatis',
       title: 'Prismatis',
       description: 'The D&D Did It First Curse',
     },
-    protego: {
+
+    {
+      id: 'protego',
       title: 'Protego',
       description: 'The Low Level Shield Curse',
     },
-    'protego-maximus': {
+
+    {
+      id: 'protego-maximus',
       title: 'Protego Maximus',
       description: 'The Still Fairly Low Level Shield Curse',
     },
-    quiescus: {
+
+    {
+      id: 'quiescus',
       title: 'Quiescus',
       description: 'The Handkerchief Curse',
     },
-    quietus: {
+
+    {
+      id: 'quietus',
       title: 'Quietus',
       description: 'The Why Does This Have a Vocal Component Curse',
     },
-    requiescus: {
+
+    {
+      id: 'requiescus',
       title: 'Requiescus',
       description: 'The Jesus Curse',
     },
-    scourgify: {
+
+    {
+      id: 'scourgify',
       title: 'Scourgify',
       description: 'The Fuck Matter Curse',
     },
-    silencio: {
+
+    {
+      id: 'silencio',
       title: 'Silencio',
       description: 'The Really Big Overlap With Quietus Curse',
     },
-    somnium: {
+
+    {
+      id: 'somnium',
       title: 'Somnium',
       description: 'The Surprisingly Useful in Everyday Life Curse',
     },
-    sonorus: {
+
+    {
+      id: 'sonorus',
       title: 'Sonorus',
       description: 'The Opamp Curse',
     },
-    steleus: {
+
+    {
+      id: 'steleus',
       title: 'Steleus',
       description: 'The Sneezing Curse',
     },
-    stupefy: {
+
+    {
+      id: 'stupefy',
       title: 'Stupefy',
       description: 'The Curse Curse',
     },
-    stuporfy: {
+
+    {
+      id: 'stuporfy',
       title: 'Stuporfy',
       description: 'The Conveniently Useful Curse',
     },
-    thermos: {
+
+    {
+      id: 'thermos',
       title: 'Thermos',
       description: 'The Product Placement Curse',
     },
-    'tonare-ravum-calvaria-lucis-gladius': {
+
+    {
+      id: 'tonare-ravum-calvaria-lucis-gladius',
       title: 'Tonare Ravum Calvaria Lucis Gladius',
       description: 'The Legal Action from Disney Curse. Mispronounced by Daphne in Ch. 73?',
     },
-    ventriliquo: {
+
+    {
+      id: 'ventriliquo',
       title: 'Ventriliquo',
       description: 'The Teamspeak Curse',
     },
-    ventus: {
+
+    {
+      id: 'ventus',
       title: 'Ventus',
       description: 'The Weasley Curse',
     },
-    'veritas-oculum': {
+
+    {
+      id: 'veritas-oculum',
       title: 'Veritas Oculum',
       description: '',
     },
-    'vitalis-revelio': {
+
+    {
+      id: 'vitalis-revelio',
       title: 'Vitalis Revelio',
       description: 'The Predator Curse',
     },
-    'wingardium-leviosa': {
+
+    {
+      id: 'wingardium-leviosa',
       title: 'Wingardium Leviosa',
       description: 'The Poorly Named Curse',
     },
-  },
+  ],
 };

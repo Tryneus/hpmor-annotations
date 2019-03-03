@@ -196,7 +196,7 @@
 
   function installRanges(innerDocument, annotations) {
     const oldRanges = innerDocument.getElementById('hpmor-annotations-ranges');
-    
+
     if (oldRanges) {
       oldRanges.parentNode.removeChild(oldRanges);
     }

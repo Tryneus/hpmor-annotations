@@ -1,4 +1,4 @@
-# Spells
+# Rituals
 
 Latin for the underachiever
 

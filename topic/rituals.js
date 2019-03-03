@@ -1,8 +1,10 @@
 module.exports = {
-  title: 'Spells',
+  icon: 'dice-d20',
+  title: 'Rituals',
   description: 'Latin for the underachiever',
-  sections: {
-    'dark-ritual': {
+  sections: [
+    {
+      id: 'dark-ritual',
       title: 'Harry\'s Dark Ritual',
       description: `
 *snap*
@@ -33,7 +35,9 @@ HARRY JAMES POTTER-EVANS-VERRES
 *snap*
       `,
     },
-    'horcrux-ritual': {
+
+    {
+      id: 'horcrux-ritual',
       title: 'Horcrux Ritual',
       description: `
 *hold item to be enchanted in off-hand*
@@ -42,7 +46,9 @@ HARRY JAMES POTTER-EVANS-VERRES
 *kill sacrifice*
       `,
     },
-    'resurrection-ritual': {
+
+    {
+      id: 'resurrection-ritual',
       title: 'Resurrection Ritual',
       description: `
 Full version:
@@ -64,7 +70,9 @@ Version without blood component:
 *cast true Patronus charm*
       `,
     },
-    'sacrifice-ritual': {
+
+    {
+      id: 'sacrifice-ritual',
       title: 'Sacrifice Ritual',
       description: `
 *four obelisks flat on ground, evenly spaced in a circle*
@@ -73,5 +81,5 @@ Version without blood component:
 *sacrifice crumbles to dust*
       `,
     },
-  },
+  ],
 };

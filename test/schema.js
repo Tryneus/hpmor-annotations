@@ -130,8 +130,33 @@ const anchors = {
   },
 };
 
+const topic = {
+  type: 'object',
+  required: ['icon', 'title', 'description'],
+  additionalProperties: false,
+  properties: {
+    icon: {type: 'string'},
+    title: {type: 'string'},
+    description: {type: 'string'},
+    sections: {
+      type: 'array',
+      items: {
+        type: 'object',
+        required: ['id', 'title', 'description'],
+        additionalProperties: false,
+        properties: {
+          id: {type: 'string'},
+          title: {type: 'string'},
+          description: {type: 'string'},
+        },
+      },
+    },
+  },
+};
+
 module.exports = {
   rawAnnotations,
   annotations,
   anchors,
+  topic,
 };

@@ -217,7 +217,7 @@ https://en.wikipedia.org/wiki/%C3%89mile_Cou%C3%A9#La_m.C3.A9thode_Cou.C3.A9_.28
       },
     ],
   },
-  
+
   {
     text: `
 Harry couldn't help but feel the urge to drink another Comed-Tea.

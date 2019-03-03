@@ -9,6 +9,7 @@ module.exports = {
     ecmaVersion: 2018,
   },
   rules: {
+    'no-trailing-spaces': ['error'],
     'linebreak-style': ['error', 'unix'],
     'no-console': ['error', {allow: ['log', 'error']}],
     indent: ['error', 2],

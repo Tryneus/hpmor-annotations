@@ -141,7 +141,7 @@ will spread.
     `,
     notes: [
       {
-      tags: ['foreshadowing', 'spoiler'],
+        tags: ['foreshadowing', 'spoiler'],
         note: `
 Eventually, Harry gets a wish from Professor Quirrell, and he wishes
 for Hogwarts to play Quidditch without the snitch {34/in Hogwarts we

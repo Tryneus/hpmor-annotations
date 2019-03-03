@@ -7,7 +7,7 @@ const _ = require('lodash');
 const eslint = require('eslint');
 const jsonschema = require('jsonschema');
 
-const {rawAnnotations} = require('./common.js');
+const {rawAnnotations, topics} = require('./common.js');
 const schema = require('./schema.js');
 
 describe('raw annotations', () => {
@@ -25,12 +25,29 @@ describe('raw annotations', () => {
   });
 });
 
+describe('topics', () => {
+  topics().forEach(({id, data}) =>{
+    describe(id, () => {
+      it('matches schema', () => {
+        const validator = new jsonschema.Validator();
+        const result = validator.validate(data, schema.topic);
+        assert(
+          result.errors.length == 0,
+          `Schema validation failed:\n${result.errors.map((x) => x.stack).join('\n')}`,
+        );
+      });
+    });
+  });
+});
+
 describe('eslint', () => {
   before(function () {
     const dirs = [
       path.join(__dirname, '..', 'src'),
       path.join(__dirname, '..', 'script'),
       path.join(__dirname, '..', 'test'),
+      path.join(__dirname, '..', 'topic'),
+      path.join(__dirname, '..', 'annotation'),
     ];
 
     const engine = new eslint.CLIEngine();

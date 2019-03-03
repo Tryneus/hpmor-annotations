@@ -6,11 +6,18 @@ const path = require('path');
 
 const jsdom = require('jsdom').JSDOM;
 
+const topicDir = path.join(__dirname, '..', 'topic');
 const chapterDir = path.join(__dirname, '..', 'chapter');
 const rawAnnotationDir = path.join(__dirname, '..', 'annotation');
 const processedAnnotationDir = path.join(__dirname, '..', 'dist', 'annotation');
 
 const parseChapterNumber = (path) => path.match(/\/([0-9]+)\.[A-z]+$/)[1];
+
+const loadTopics = (filepaths) =>
+  filepaths.map((filepath) => ({
+    id: filepath.match(/\/([^/]+)\.[A-z]+$/)[1],
+    data: require(filepath),
+  }));
 
 const loadAnnotations = (filepaths) =>
   filepaths.map((filepath) => ({
@@ -18,14 +25,21 @@ const loadAnnotations = (filepaths) =>
     data: require(filepath),
   }));
 
+const getTopicFiles = (directory) =>
+  fs.readdirSync(directory)
+    .filter((x) => Boolean(x.match(/^.+\.js$/)))
+    .map((x) => path.join(directory, x));
+
 const getAnnotationFiles = (directory) =>
   fs.readdirSync(directory)
     .filter((x) => Boolean(x.match(/^[0-9]+\.js$/)))
     .map((x) => path.join(directory, x));
 
+const topicFiles = () => getTopicFiles(topicDir);
 const rawAnnotationFiles = () => getAnnotationFiles(rawAnnotationDir);
 const processedAnnotationFiles = () => getAnnotationFiles(processedAnnotationDir);
 
+const topics = () => loadTopics(topicFiles());
 const rawAnnotations = () => loadAnnotations(rawAnnotationFiles());
 const processedAnnotations = () => loadAnnotations(processedAnnotationFiles());
 
@@ -60,6 +74,7 @@ const checkUnique = (text, html, expect) => {
 module.exports = {
   chapter,
   checkUnique,
+  topics,
   rawAnnotations,
   processedAnnotations,
 };
