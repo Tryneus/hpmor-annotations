@@ -79,7 +79,14 @@ const annotations = {
     additionalProperties: false,
     properties: {
       id: {type: 'string'},
-      topics: {type: 'array', items: {type: 'string'}},
+      topics: {
+        type: 'array',
+        items: {
+          type: 'array',
+          items: {type: 'string'},
+          minItems: 1,
+        },
+      },
       text: {type: 'string'},
       title: {type: 'boolean'},
       replacement: {type: 'string'},

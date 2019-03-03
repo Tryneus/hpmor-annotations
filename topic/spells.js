@@ -2,10 +2,6 @@ module.exports = {
   title: 'Spells',
   description: 'Latin for the underachiever',
   sections: {
-    'avada-kedavra': {
-      title: 'Avada Kedavra',
-      description: 'The Killing Curse',
-    },
     accio: {
       title: 'Accio',
       description: 'The Fetching Curse',
@@ -26,6 +22,10 @@ module.exports = {
       title: 'Arresto Momentum',
       description: 'The Speed Trap Curse',
     },
+    'avada-kedavra': {
+      title: 'Avada Kedavra',
+      description: 'The Killing Curse',
+    },
     'becomus-godus': {
       title: 'Becomus Godus',
       description: 'iddqd',
@@ -33,37 +33,6 @@ module.exports = {
     changemyvoiceio: {
       title: 'Changemyvoiceio',
       description: 'The Puberty Curse',
-    },
-    'dark-ritual': {
-      title: 'Harry\'s Dark Ritual',
-      description: `
-*snap*
-Acathla, mundatus sum
-*snap*
-Mabra, brahoring, mabra
-Shuffle, duffle, muzzle, muff
-Fista, wista, mista-cuff
-Lemarchand, Lament, Lemarchand
-*point left*
-Khornath
-*point down*
-Slaaneth
-*point up*
-Nurgolth
-*point right*
-Tzintchi
-*snap*
-Darkness beyond darkness, deeper than pitchest black
-Buried beneath the flow of time
-From darkness to darkness, your voice echoes in the emptiness
-Unknown to death, nor known to life
-You who know the gate, who are the gate, the key and guardian of the gate
-I bid you open the way for him, and manifest his power before me
-Harry James Potter-Evans-Verres
-Harry James Potter-Evans-Verres
-HARRY JAMES POTTER-EVANS-VERRES
-*snap*
-      `,
     },
     cluthe: {
       title: 'Cluthe',
@@ -132,10 +101,6 @@ HARRY JAMES POTTER-EVANS-VERRES
     expelliarmus: {
       title: 'Expelliarmus',
       description: 'The Overpowered Curse',
-    },
-    'fal-tor-pan': {
-      title: 'Fal Tor Pan',
-      description: 'The Very Specific Curse',
     },
     'finite-incantatem': {
       title: 'Finite Incantatem',
@@ -273,10 +238,6 @@ HARRY JAMES POTTER-EVANS-VERRES
       title: 'Quietus',
       description: 'The Why Does This Have a Vocal Component Curse',
     },
-    'tonare-ravum-calvaria-lucis-gladius': {
-      title: 'Tonare Ravum Calvaria Lucis Gladius',
-      description: 'The Legal Action from Disney Curse',
-    },
     requiescus: {
       title: 'Requiescus',
       description: 'The Jesus Curse',
@@ -295,27 +256,31 @@ HARRY JAMES POTTER-EVANS-VERRES
     },
     sonorus: {
       title: 'Sonorus',
-      description: '',
+      description: 'The Opamp Curse',
     },
     steleus: {
       title: 'Steleus',
-      description: '',
+      description: 'The Sneezing Curse',
     },
     stupefy: {
       title: 'Stupefy',
-      description: '',
+      description: 'The Curse Curse',
     },
     stuporfy: {
       title: 'Stuporfy',
-      description: '',
+      description: 'The Conveniently Useful Curse',
     },
     thermos: {
       title: 'Thermos',
-      description: '',
+      description: 'The Product Placement Curse',
+    },
+    'tonare-ravum-calvaria-lucis-gladius': {
+      title: 'Tonare Ravum Calvaria Lucis Gladius',
+      description: 'The Legal Action from Disney Curse. Mispronounced by Daphne in Ch. 73?',
     },
     ventriliquo: {
       title: 'Ventriliquo',
-      description: '',
+      description: 'The Teamspeak Curse',
     },
     ventus: {
       title: 'Ventus',

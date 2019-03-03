@@ -100,24 +100,23 @@ fs.readdir(annotationSourceDir, (err, filelist) => {
 
     const annotations = filteredAnnotations.map((x, i) => {
       // Fields that are not required to be explicitly defined in the source
-      const defaults = {
+      const result = {
+        id: `hpmor-${chapter}-${i + 1}`,
+        title: Boolean(x.title),
+        topics: (x.topics || []).map((x) => x.split('.')),
+        text: processText(x.text || x.title),
         disambiguation: {expect: 1, useIndex: 0},
-        topics: [],
       };
 
-      const id = `hpmor-${chapter}-${i + 1}`;
-      const title = Boolean(x.title);
-      const text = processText(x.text || x.title);
-      const replacement = generateReplacement(text, id);
-      const processedNotes = (x.notes || []).map((note) => processNote(note, id, chapter));
-      const notes = processedNotes.map((x) => ({
-        tags: x.tags,
-        note: x.note,
-      }));
-
+      const processedNotes = (x.notes || []).map((note) => processNote(note, result.id, chapter));
       processedNotes.forEach((x) => links.push(...x.chapterLinks));
 
-      return {...defaults, ...x, id, text, title, replacement, notes};
+      return {
+        ...x,
+        ...result,
+        replacement: generateReplacement(result.text, result.id),
+        notes: processedNotes.map((x) => ({tags: x.tags, note: x.note})),
+      };
     });
 
     return {chapter, annotations, anchors: []};

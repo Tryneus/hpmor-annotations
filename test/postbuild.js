@@ -104,8 +104,7 @@ describe('topics', () => {
           processedAnnotations(),
           (x) => Object.values(x.data.annotations),
         ),
-        // Only use the first component of the topic, the rest is for subsections
-        (x) => x.topics.map((y) => y.split('.')[0]),
+        (x) => x.topics.map((topic) => topic[0]),
       ),
     );
 
